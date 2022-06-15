@@ -1,6 +1,5 @@
 service: wombo-api-service
 useDotenv: true
-variablesResolutionMode: 20210219
 
 plugins:
   - serverless-webpack
@@ -13,11 +12,10 @@ package:
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs16.x
   stage: ${opt:stage}
   deploymentBucket:
     name: ${self:service}-${opt:stage}-deployment-bucket
-  lambdaHashingVersion: 20201221
   apiGateway:
     minimumCompressionSize: 512 # Compress response when larger than specified size in bytes
     shouldStartNameWithService: true
