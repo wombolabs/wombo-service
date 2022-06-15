@@ -1,0 +1,45 @@
+{
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/npm",
+    [
+      "@google/semantic-release-replace-plugin",
+      {
+        "replacements": [
+          {
+            "files": [
+              "openapi-schema.yaml"
+            ],
+            "from": "  version: \\d+\\.\\d+\\.\\d+",
+            "to": "  version: ${nextRelease.version}"
+          }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "package.json",
+          "package-lock.json",
+          "openapi-schema.yaml",
+          "CHANGELOG.md"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    "@semantic-release/github",
+    [
+      "@eclass/semantic-release-sentry-releases",
+      {
+        "repositoryUrl": "https://github.com/wombolabs/wombo-service",
+        "tagsUrl": "https://github.com/wombolabs/wombo-service/tags",
+        "environment": "Production",
+        "sourcemaps": ".webpack/service/src",
+        "urlPrefix": "/var/task/src"
+      }
+    ]
+  ]
+}

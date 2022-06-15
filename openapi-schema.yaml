@@ -1,0 +1,320 @@
+---
+openapi: 3.0.0
+info:
+  title: Wombo user service API
+  description: Wombo user service API. Provides endpoints to fetch and manage users from Wombo.
+  contact:
+    email: dev@wombo.gg
+  version: 1.0.0
+tags:
+  - name: private
+    description: Secured with an api token
+security:
+  - ApiKeyAuth: []
+paths:
+  /users/signup:
+    post:
+      tags:
+        - private
+      security:
+        - ApiKeyAuth: []
+      summary: create or update a womber user
+      description: |
+        Create a new womber user or update it if already exists
+      operationId: upsertUser
+      parameters:
+        - $ref: "#/components/parameters/extraUserFieldsParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "400":
+          $ref: "#/components/responses/InvalidData"
+  /users:
+    post:
+      tags:
+        - private
+      security:
+        - ApiKeyAuth: []
+      summary: create a user
+      description: |
+        Create a new user
+      operationId: createUser
+      parameters:
+        - $ref: "#/components/parameters/extraUserFieldsParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "400":
+          $ref: "#/components/responses/InvalidData"
+    get:
+      tags:
+        - private
+      security:
+        - ApiKeyAuth: []
+      summary: list users
+      description: |
+        Get a list of existing users
+      operationId: listUsers
+      parameters:
+        - $ref: "#/components/parameters/extraUserFieldsParameter"
+        - name: username
+          in: query
+          description: filter returned user by username
+          required: false
+          schema:
+            type: string
+        - name: userType
+          in: query
+          description: filter returned users by userType
+          required: false
+          schema:
+            type: string
+            enum: [proplayer, womber]
+      responses:
+        "200":
+          description: existing users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserResponse"
+        "400":
+          $ref: "#/components/responses/InvalidData"
+components:
+  responses:
+    InvalidData:
+      description: The provided data is invalid
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ValidationError"
+    NotFound:
+      description: The specified resource could not be found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GenericError"
+    Conflict:
+      description: The specified resource or operation conflicts with current database or application restrictions
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GenericError"
+  parameters:
+    idPathParameter:
+      name: id
+      required: true
+      in: path
+      schema:
+        type: string
+        description: document's id
+    extraUserFieldsParameter:
+      name: extraFields
+      in: query
+      description: list of extra fields to include on the user response
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: array
+        items:
+          type: string
+          enum: [provider, profile.description]
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+          readOnly: true
+        email:
+          type: string
+          format: email
+        username:
+          type: string
+        name:
+          type: string
+        userType:
+          type: string
+          enum:
+            - proplayer
+            - womber
+        provider:
+          type: string
+          enum:
+            - discord
+            - twitter
+            - google
+            - facebook
+            - twitch
+        shortDescription:
+          type: string
+        description:
+          type: string
+        videoPresentation:
+          $ref: "#/components/schemas/Video"
+        profilePicture:
+          type: string
+        coverImage:
+          type: string
+        videoGames:
+          type: array
+          items:
+            type: string
+        discordUser:
+          type: string
+        locale:
+          type: string
+        language:
+          type: string
+          enum:
+            - es
+            - en
+        feedbacks:
+          type: array
+          items:
+            $ref: "#/components/schemas/Feedback"
+        isActive:
+          type: boolean
+        lastLogin:
+          type: string
+          format: date-time
+          readOnly: true
+        deletedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        address:
+          $ref: "#/components/schemas/Address"
+      required:
+        - email
+    Feedback:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+          readOnly: true
+        sender:
+          type: string
+        body:
+          type: string
+        isApproved:
+          type: boolean
+      required:
+        - sender
+        - body
+    Video:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+          readOnly: true
+        title:
+          type: string
+        description:
+          type: string
+        videoId:
+          type: string
+        source:
+          type: string
+          enum:
+            - youtube
+            - vimeo
+      required:
+        - videoId
+        - source
+    VideoGame:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+          readOnly: true
+        name:
+          type: string
+        image:
+          type: string
+      required:
+        - name
+    Address:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+          readOnly: true
+        country:
+          type: string
+        state:
+          type: string
+        city:
+          type: string
+        address:
+          type: string
+        zipcode:
+          type: string
+    UserResponse:
+      allOf:
+        - $ref: "#/components/schemas/User"
+        - type: object
+          required:
+            - id
+            - name
+            - email
+          properties:
+            accessToken:
+              type: string
+    GenericError:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    ValidationError:
+      allOf:
+        - $ref: "#/components/schemas/GenericError"
+        - type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+          required:
+            - details
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+servers:
+  - url: https://user-test.wombo.gg
+    description: Test server
+  - url: https://user-staging.wombo.gg
+    description: Staging server
+  - url: https://user.wombo.gg
+    description: Production server

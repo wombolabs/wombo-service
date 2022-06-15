@@ -1,0 +1,109 @@
+service: wombo-api-service
+useDotenv: true
+variablesResolutionMode: 20210219
+
+plugins:
+  - serverless-webpack
+  - serverless-webpack-prisma
+  - serverless-deployment-bucket
+  - serverless-offline
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage}
+  deploymentBucket:
+    name: ${self:service}-${opt:stage}-deployment-bucket
+  lambdaHashingVersion: 20201221
+  apiGateway:
+    minimumCompressionSize: 512 # Compress response when larger than specified size in bytes
+    shouldStartNameWithService: true
+    apiKeys:
+      - name: ${env:SUBDOMAIN}-apiKey
+        value: ${env:DEFAULT_API_KEY}
+  environment:
+    SENTRY_DSN: ${env:SENTRY_DSN}
+    SENTRY_ENVIRONMENT: ${env:SENTRY_ENVIRONMENT}
+    SENTRY_ERROR_RATE: ${env:SENTRY_ERROR_RATE}
+    SENTRY_TRANSACTION_RATE: ${env:SENTRY_TRANSACTION_RATE}
+    DEFAULT_API_KEY: ${env:DEFAULT_API_KEY}
+    JWT_SECRET: ${env:JWT_SECRET}
+    SUBDOMAIN: ${env:SUBDOMAIN}
+    COCKROACHDB_DATABASE_URL: ${env:COCKROACHDB_DATABASE_URL}
+    STRIPE_SECRET_KEY: ${env:STRIPE_SECRET_KEY}
+    STRIPE_WEBHOOK_SECRET: ${env:STRIPE_WEBHOOK_SECRET}
+    DISCORD_BOT_TOKEN: ${env:DISCORD_BOT_TOKEN}
+    DISCORD_GUILD_WOMBO: ${env:DISCORD_GUILD_WOMBO}
+
+custom:
+  serverless-offline:
+    apiKey: ${env:DEFAULT_API_KEY}
+    httpPort: ${env:SERVERLESS_OFFLINE_HTTP_PORT, 8001}
+    lambdaPort: ${env:SERVERLESS_OFFLINE_LAMBDA_PORT, 3001}
+  webpack:
+    includeModules: true
+
+functions:
+  # Coaches
+  listCoaches:
+    handler: src/index.listCoachesHandler
+    events:
+      - http:
+          path: /coaches
+          method: get
+          private: true
+  getCoach:
+    handler: src/index.getCoachHandler
+    events:
+      - http:
+          path: /coaches/{username}
+          method: get
+          private: true
+  # Students
+  signinStudent:
+    handler: src/index.signinStudentHandler
+    events:
+      - http:
+          path: /students/signin
+          method: post
+          private: true
+  signupStudent:
+    handler: src/index.signupStudentHandler
+    events:
+      - http:
+          path: /students/signup
+          method: post
+          private: true
+  getStudentMe:
+    handler: src/index.getStudentMeHandler
+    events:
+      - http:
+          path: /students/me
+          method: get
+          private: true
+  getStudentMeOrders:
+    handler: src/index.getStudentMeOrdersHandler
+    events:
+      - http:
+          path: /students/me/orders
+          method: get
+          private: true
+  # VideoGames
+  listVideoGames:
+    handler: src/index.listVideoGamesHandler
+    events:
+      - http:
+          path: /videogames
+          method: get
+          private: true
+  # Stripe
+  webhook:
+    handler: src/index.stripeWebhookHandler
+    events:
+      - http:
+          path: /stripe/webhook
+          method: post
+          private: false
