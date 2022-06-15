@@ -2,14 +2,14 @@ import R from 'ramda'
 import prisma from '~/services/prisma'
 
 export const listVideoGames = async (filters = {}) => {
-  const { isActive, isFeatured } = filters
+  const { isActive, category } = filters
 
   const where = {}
   if (typeof isActive === 'boolean') {
     where.isActive = isActive
   }
-  if (typeof isFeatured === 'boolean') {
-    where.isFeatured = isFeatured
+  if (!R.isEmpty(category)) {
+    where.category = { in: category }
   }
 
   const query = {}
