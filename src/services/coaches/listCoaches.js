@@ -2,7 +2,7 @@ import R from 'ramda'
 import prisma from '~/services/prisma'
 
 export const listCoaches = async (filters = {}) => {
-  const { isActive, category, withVideoGames, withTiers } = filters
+  const { id, isActive, category, withVideoGames, withTiers } = filters
 
   const include = {}
   if (withVideoGames) {
@@ -15,6 +15,9 @@ export const listCoaches = async (filters = {}) => {
   const where = {}
   if (typeof isActive === 'boolean') {
     where.isActive = isActive
+  }
+  if (!R.isEmpty(id)) {
+    where.id = { in: id }
   }
   if (!R.isEmpty(category)) {
     where.category = { in: category }
