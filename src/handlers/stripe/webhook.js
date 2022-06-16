@@ -5,25 +5,9 @@ import prisma from '~/services/prisma'
 import * as Sentry from '@sentry/serverless'
 import { addGuildMemberRole } from '~/services/discord'
 import { getTier } from '~/services/tiers'
-import { InsufficientDataError, MethodNotAllowedError, RequestError, ResourceNotFoundError } from '~/errors'
+import { InsufficientDataError, MethodNotAllowedError, RequestError } from '~/errors'
 import R from 'ramda'
-
-const getStudentDiscordData = async (studentId) => {
-  const student = await prisma.student.findUnique({
-    where: { id: studentId },
-    select: {
-      discord: true,
-    },
-  })
-  if (student == null) {
-    throw new ResourceNotFoundError('Student not found.')
-  }
-  const { discord: { id, accessToken } = {} } = student
-  if (id == null || accessToken == null) {
-    throw new InsufficientDataError('Discord required fields are missing.')
-  }
-  return { id, accessToken }
-}
+import { getStudentById } from '~/services/students'
 
 const handlePaymentSuccess = async ({ data }) => {
   const stripePayload = data?.object
@@ -98,13 +82,17 @@ const handlePaymentSuccess = async ({ data }) => {
 
   if (customerId && invoiceId) {
     // SUBSCRIPTION
-    const studentDiscordData = await getStudentDiscordData(studentId)
-
-    const { discordRoleIds } = tier
-    if (discordRoleIds == null || discordRoleIds.length === 0) {
-      throw new Error('Tier discord role ids are missing.')
+    const { discordRoleIds = [] } = tier
+    if (R.isEmpty(discordRoleIds)) {
+      throw new Error(`Tier discord role ids are missing for tier ${tierId}.`)
     }
-    await Promise.all(discordRoleIds.map((rid) => addGuildMemberRole(studentDiscordData.id, rid)))
+
+    const { discord = {} } = await getStudentById(studentId, ['discord'])
+    if (discord?.id == null || discord?.accessToken == null || !discord?.scope.includes('guilds.join')) {
+      throw new InsufficientDataError(`Discord required fields are missing for student ${studentId}.`)
+    }
+
+    await Promise.all(discordRoleIds.map((roleId) => addGuildMemberRole(discord.id, roleId)))
   }
 }
 
@@ -140,7 +128,7 @@ const webhookHandler = async (req, res) => {
       await handler(event)
     } else {
       /** Not really an error, just letting Stripe know that the webhook was received but unhandled */
-      return res.status(202).json({ message: `Unhandled Stripe Webhook event type ${event?.type}` })
+      return res.status(202).json({ message: `Unhandled Stripe webhook event type ${event?.type}` })
     }
 
     // Return a response to acknowledge receipt of the event

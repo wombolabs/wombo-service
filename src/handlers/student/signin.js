@@ -5,10 +5,13 @@ import { buildHandler, comparePasswordHash } from '~/utils'
 
 const handler = async ({ body }, res) => {
   if (body.email == null || body.password == null) {
-    throw new InsufficientDataError()
+    throw new InsufficientDataError('Email and password are required.')
   }
 
-  const { id, email, password, displayName, isDiscordMember, timeZone, createdAt } = await getStudentByEmail(
+  // eslint-disable-next-line no-param-reassign
+  body.lastLogin = new Date()
+
+  const { id, email, password, displayName, discordJoinDate, timeZone, createdAt } = await getStudentByEmail(
     body.email?.toLowerCase()
   )
 
@@ -24,9 +27,9 @@ const handler = async ({ body }, res) => {
       id,
       email,
       displayName,
-      isDiscordMember,
+      discordJoinDate,
       timeZone,
-      createdAt,
+      signUpDate: createdAt,
     }),
   })
 }
