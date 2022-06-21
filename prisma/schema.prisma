@@ -2,8 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-1.1.x", "rhel-openssl-1.0.x"]
+  provider        = "prisma-client-js"
+  binaryTargets   = ["native", "debian-openssl-1.1.x", "rhel-openssl-1.0.x"]
+  previewFeatures = ["filterJson"]
 }
 
 datasource db {
@@ -138,6 +139,7 @@ model Order {
   billingCurrency    Currency
   isCancelled        Boolean?
   cancellationReason String?
+  metadata           Json        @default("{}")
   livemode           Boolean     @default(true)
   isActive           Boolean     @default(true)
   createdAt          DateTime    @default(now())
