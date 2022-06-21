@@ -3,7 +3,7 @@ import { ResourceNotFoundError, InsufficientDataError } from '~/errors'
 
 export const getStudentByEmail = async (email) => {
   if (!email) {
-    throw new InsufficientDataError()
+    throw new InsufficientDataError('Email field is required.')
   }
 
   const result = await prisma.student.findFirst({

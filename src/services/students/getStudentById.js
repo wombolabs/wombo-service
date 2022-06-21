@@ -7,7 +7,7 @@ const processFields = R.reduce((acc, value) => { acc[value] = true; return acc }
 
 export const getStudentById = async (id, selectFields = []) => {
   if (!uuidValidate(id)) {
-    throw new InsufficientDataError()
+    throw new InsufficientDataError('Invalid UUID.')
   }
 
   const query = {

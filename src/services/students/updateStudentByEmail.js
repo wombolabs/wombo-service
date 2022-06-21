@@ -3,12 +3,11 @@ import prisma from '~/services/prisma'
 import { getStudentByEmail } from './getStudentByEmail'
 
 export const updateStudentByEmail = async (email, student) => {
-  const savedStudent = await getStudentByEmail(email)
-
   const newStudent = student
   delete newStudent.email
 
-  if (newStudent.discord) {
+  if (!R.isEmpty(newStudent.discord)) {
+    const savedStudent = await getStudentByEmail(email)
     newStudent.discord = R.mergeDeepLeft(newStudent.discord, savedStudent.discord)
   }
 
