@@ -4,7 +4,7 @@ import { stripe as stripeConfig } from '~/config'
 import prisma from '~/services/prisma'
 import * as Sentry from '@sentry/serverless'
 import { addGuildMemberRole } from '~/services/discord'
-import { getTier } from '~/services/tiers'
+import { getTierById } from '~/services/tiers'
 import { InsufficientDataError, MethodNotAllowedError, RequestError } from '~/errors'
 import R from 'ramda'
 import { getStudentById } from '~/services/students'
@@ -37,7 +37,7 @@ const handlePaymentSuccess = async ({ data }) => {
   let tier = {}
 
   if (tierId) {
-    tier = await getTier(tierId)
+    tier = await getTierById(tierId, ['billingInterval', 'discordRoleIds'])
   }
 
   const order = {
@@ -84,7 +84,7 @@ const handlePaymentSuccess = async ({ data }) => {
     // SUBSCRIPTION
     const { discordRoleIds = [] } = tier
     if (R.isEmpty(discordRoleIds)) {
-      throw new Error(`Tier discord role ids are missing for tier ${tierId}.`)
+      throw new Error(`Tier discord role ids are missing for tier ${tierId}. Student ${studentId}.`)
     }
 
     const { discord = {} } = await getStudentById(studentId, ['discord'])

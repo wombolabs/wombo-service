@@ -8,14 +8,15 @@ const handler = async ({ body }, res) => {
   if (body.email == null) {
     throw new InsufficientDataError('Email field is required.')
   }
-  if (body.discord?.id == null || body.discord?.accessToken == null || !body.discord?.scope.includes('guilds.join')) {
-    throw new InsufficientDataError(`Discord required fields are missing for student ${body.email}.`)
-  }
 
   // eslint-disable-next-line no-param-reassign
   body.lastLogin = new Date()
 
   const { id, email, displayName, discord, discordJoinDate, timeZone, createdAt } = await upsertStudent(body)
+
+  if (discord?.id == null || discord?.accessToken == null || !discord?.scope.includes('guilds.join')) {
+    throw new InsufficientDataError(`Discord required fields are missing for student ${body.email}.`)
+  }
 
   console.log(`signup | student=${id}, isDiscordMember=${discordJoinDate != null}`)
   if (discordJoinDate == null) {

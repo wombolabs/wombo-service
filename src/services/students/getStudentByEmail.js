@@ -14,7 +14,7 @@ export const getStudentByEmail = async (email) => {
   })
 
   if (!result) {
-    throw new ResourceNotFoundError()
+    throw new ResourceNotFoundError(`Student not found with email ${email}.`)
   }
 
   return result

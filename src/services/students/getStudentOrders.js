@@ -1,10 +1,10 @@
 import R from 'ramda'
 import prisma from '~/services/prisma'
-import { ResourceNotFoundError, InsufficientDataError } from '~/errors'
+import { InsufficientDataError } from '~/errors'
 
 export const getStudentOrders = async (email, filters = {}) => {
   if (!email) {
-    throw new InsufficientDataError()
+    throw new InsufficientDataError('Email field is required.')
   }
 
   const { type, isActive } = filters
@@ -29,10 +29,6 @@ export const getStudentOrders = async (email, filters = {}) => {
       },
     })
     .orders(queryOrders)
-
-  if (!result) {
-    throw new ResourceNotFoundError()
-  }
 
   return result
 }

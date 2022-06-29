@@ -3,6 +3,7 @@ useDotenv: true
 
 plugins:
   - serverless-webpack
+  - serverless-domain-manager
   - serverless-webpack-prisma
   - serverless-deployment-bucket
   - serverless-offline
@@ -43,6 +44,18 @@ custom:
     lambdaPort: ${env:SERVERLESS_OFFLINE_LAMBDA_PORT, 3001}
   webpack:
     includeModules: true
+  domainEnabled:
+    local: false
+    test: true
+    staging: true
+    production: true
+  customDomain:
+    enabled: ${self:custom.domainEnabled.${self:provider.stage}}
+    domainName: ${env:SUBDOMAIN}.wombo.gg
+    certificateName: 'wombo.gg'
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
 
 functions:
   # Coaches
@@ -89,12 +102,35 @@ functions:
           path: /students/me/orders
           method: get
           private: true
+  updateStudentMe:
+    handler: src/index.updateStudentMeHandler
+    events:
+      - http:
+          path: /students/me
+          method: put
+          private: true
+  # Tiers
+  getTier:
+    handler: src/index.getTierHandler
+    events:
+      - http:
+          path: /tiers/{id}
+          method: get
+          private: true
   # VideoGames
   listVideoGames:
     handler: src/index.listVideoGamesHandler
     events:
       - http:
           path: /videogames
+          method: get
+          private: true
+  # Coupons
+  getCoupon:
+    handler: src/index.getCouponHandler
+    events:
+      - http:
+          path: /coupons/{name}
           method: get
           private: true
   # Stripe
@@ -111,5 +147,13 @@ functions:
     events:
       - http:
           path: /booking/webhook
+          method: post
+          private: true
+  # Discord
+  discordConnect:
+    handler: src/index.discordConnectHandler
+    events:
+      - http:
+          path: /discord/connect
           method: post
           private: true

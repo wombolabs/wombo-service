@@ -8,12 +8,13 @@ const handler = async ({ body }, res) => {
     throw new InsufficientDataError('Email and password are required.')
   }
 
-  // eslint-disable-next-line no-param-reassign
-  body.lastLogin = new Date()
-
   const { id, email, password, displayName, discordJoinDate, timeZone, createdAt } = await getStudentByEmail(
-    body.email?.toLowerCase()
+    body.email.toLowerCase()
   )
+
+  if (password == null) {
+    throw new InsufficientDataError('Your account use a different signin method.')
+  }
 
   const isValid = comparePasswordHash(body.password, password)
   if (!isValid) {

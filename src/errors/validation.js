@@ -1,9 +1,9 @@
 export class ValidationError extends Error {
-  constructor(errors, message = 'Validation Failed', statusCode = 400) {
+  constructor(errors, message, statusCode) {
     super()
     this.name = 'ValidationError'
-    this.message = message
-    this.statusCode = statusCode
+    this.message = message ?? 'Validation Failed'
+    this.statusCode = statusCode ?? 400
     this.details = errors
     Error.captureStackTrace(this, ValidationError)
   }

@@ -4,7 +4,9 @@ import { getStudentByEmail } from './getStudentByEmail'
 
 export const updateStudentByEmail = async (email, student) => {
   const newStudent = student
+
   delete newStudent.email
+  delete newStudent.password // TODO implement change password for WP users
 
   if (!R.isEmpty(newStudent.discord)) {
     const savedStudent = await getStudentByEmail(email)

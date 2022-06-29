@@ -31,7 +31,7 @@ jobs:
           SENTRY_ENVIRONMENT: ${{ secrets.SENTRY_ENVIRONMENT_TEST }}
           SENTRY_ERROR_RATE: ${{ secrets.SENTRY_ERROR_RATE_TEST }}
           SENTRY_TRANSACTION_RATE: ${{ secrets.SENTRY_TRANSACTION_RATE_TEST }}
-          DEFAULT_API_KEY: ${{ secrets.USER_SERVICE_API_KEY_TEST }}
+          DEFAULT_API_KEY: ${{ secrets.API_SERVICE_API_KEY_TEST }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           SUBDOMAIN: ${{ secrets.SUBDOMAIN_TEST }}
           COCKROACHDB_DATABASE_URL: ${{ secrets.COCKROACHDB_DATABASE_URL_TEST }}

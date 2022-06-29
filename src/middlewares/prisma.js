@@ -18,11 +18,11 @@ export function prismaErrorMiddleware(error, req, res, next) {
     if (error.code === 'P2002') {
       throw new DuplicateResourceError(error.message)
     }
-    throw new PrismaError(error.message)
+    throw new PrismaError(error.message, 500, error)
   } else if (error instanceof Prisma.PrismaClientValidationError) {
-    throw new PrismaValidationError(error.message)
+    throw new PrismaValidationError(error.message, 412, error)
   } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
-    throw new PrismaError(error.message)
+    throw new PrismaError(error.message, 500, error)
   }
 
   next(error)

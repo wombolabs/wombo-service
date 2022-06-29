@@ -1,6 +1,5 @@
 import serverlessExpress from '@vendia/serverless-express'
 import express from 'express'
-import qs from 'qs'
 import helmet from 'helmet'
 import Router from 'express-promise-router'
 import { queryParser } from 'express-query-parser'
@@ -37,7 +36,6 @@ export const buildHandler = (
 
   router[method](route, ...middlewares, handler)
 
-  app.set('query parser', (str) => qs.parse(str, { arrayLimit: 250 }))
   app.use(queryParser({ parseBoolean: true }))
   app.use(helmet())
   app.use(

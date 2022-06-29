@@ -46,7 +46,7 @@ jobs:
       - id: install-npm-dependencies
         name: Install Dependencies
         env:
-          HUSKY_SKIP_INSTALL: 1
+          HUSKY: 0
         run: npm ci
       - id: do-lint
         name: Lint

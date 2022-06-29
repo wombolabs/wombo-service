@@ -1,3 +1,4 @@
 export * from './listCoaches'
-export * from './getCoach'
+export * from './getCoachByUsername'
 export * from './getCoachByEmail'
+export * from './constants'

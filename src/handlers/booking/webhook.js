@@ -6,7 +6,17 @@ import { getCoachByEmail } from '~/services/coaches'
 import moment from 'moment-timezone'
 import { createOrder, getOrderIdByBookingId, updateOrderById } from '~/services/orders'
 
-const handleBookingCreated = async ({ organizer, attendees, startTime, endTime, metadata, uid, location }) => {
+const handleBookingCreated = async ({
+  organizer,
+  attendees,
+  startTime,
+  endTime,
+  metadata,
+  uid,
+  location,
+  title,
+  description,
+}) => {
   const { email: coachEmail, timeZone: coachTimeZone } = organizer
   const { email: studentEmail, timeZone: studentTimeZone } = attendees[0]
 
@@ -28,6 +38,8 @@ const handleBookingCreated = async ({ organizer, attendees, startTime, endTime, 
       location,
       coachTimeZone,
       studentTimeZone,
+      title,
+      description,
     },
   }
 

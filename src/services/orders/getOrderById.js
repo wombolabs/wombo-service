@@ -17,7 +17,7 @@ export const getOrderById = async (id) => {
   const result = await prisma.order.findFirst(query)
 
   if (!result) {
-    throw new ResourceNotFoundError()
+    throw new ResourceNotFoundError(`Order not found with id ${id}.`)
   }
 
   return result

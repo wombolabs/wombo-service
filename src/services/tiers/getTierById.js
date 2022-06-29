@@ -1,6 +1,6 @@
 import prisma from '~/services/prisma'
-import { ResourceNotFoundError, InsufficientDataError } from '~/errors'
 import { validate as uuidValidate } from 'uuid'
+import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
 import R from 'ramda'
 
 const processFields = R.reduce((acc, value) => {
@@ -8,7 +8,7 @@ const processFields = R.reduce((acc, value) => {
   return acc
 }, {})
 
-export const getStudentById = async (id, selectFields = []) => {
+export const getTierById = async (id, selectFields = []) => {
   if (!uuidValidate(id)) {
     throw new InsufficientDataError('Invalid UUID.')
   }
@@ -24,10 +24,10 @@ export const getStudentById = async (id, selectFields = []) => {
     query.select = processFields(selectFields)
   }
 
-  const result = await prisma.student.findFirst(query)
+  const result = await prisma.tier.findFirst(query)
 
   if (!result) {
-    throw new ResourceNotFoundError(`Student not found with id ${id}.`)
+    throw new ResourceNotFoundError(`Tier not found with id ${id}.`)
   }
 
   return result

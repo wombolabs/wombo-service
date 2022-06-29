@@ -6,7 +6,10 @@
   "private": true,
   "scripts": {
     "prisma:client": "npx prisma generate",
+    "prisma:seed": "npx dotenv -e .env.local -- npx prisma db seed",
     "migrate:dev": "npx dotenv -e .env.local -- npx prisma migrate dev --name init",
+    "migrate:deploy": "npx dotenv -e .env.test -- npx prisma migrate deploy",
+    "subdomain:create": "npx dotenv -e .env.test -- npx serverless create_domain --stage test",
     "build:local": "serverless webpack --stage local",
     "build:test": "serverless webpack --stage test",
     "build:production": "serverless webpack --stage production",
@@ -28,7 +31,7 @@
   },
   "homepage": "https://github.com/wombolabs/wombo-service#readme",
   "dependencies": {
-    "@prisma/client": "^3.15.2",
+    "@prisma/client": "4.0.0",
     "@sentry/integrations": "^7.2.0",
     "@sentry/serverless": "^7.2.0",
     "@sentry/tracing": "^7.2.0",
@@ -42,7 +45,6 @@
     "jsonwebtoken": "^8.5.1",
     "moment-timezone": "^0.5.34",
     "openapi-validator-middleware": "^3.2.6",
-    "qs": "^6.10.5",
     "ramda": "^0.28.0",
     "saslprep": "^1.0.3",
     "stripe": "^9.9.0",
@@ -68,13 +70,14 @@
     "eslint-import-resolver-webpack": "^0.13.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.5.3",
-    "husky": "^4.3.6",
-    "lint-staged": "^10.5.3",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
-    "prisma": "^3.15.2",
+    "prisma": "4.0.0",
     "semantic-release": "^19.0.3",
     "serverless": "^3.19.0",
     "serverless-deployment-bucket": "^1.6.0",
+    "serverless-domain-manager": "^6.0.3",
     "serverless-offline": "^8.8.0",
     "serverless-webpack": "^5.7.1",
     "serverless-webpack-prisma": "^1.1.0",
@@ -83,6 +86,12 @@
   },
   "prisma": {
     "seed": "node prisma/seed/index.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npx prettier --write",
+      "npx eslint --cache --fix"
+    ]
   },
   "engines": {
     "node": "16.15.0",

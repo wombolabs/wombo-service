@@ -2,12 +2,17 @@ import R from 'ramda'
 import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
 import prisma from '~/services/prisma'
 
-export const getCoachByEmail = async (email, filters = {}) => {
-  if (!email) {
-    throw new InsufficientDataError('Email field is required.')
+export const getCoachByUsername = async (username, filters = {}) => {
+  if (!username) {
+    throw new InsufficientDataError('Username field is required.')
   }
 
-  const { withVideoGames, withTiers } = filters
+  const { withVideoGames, withTiers, isActive } = filters
+
+  const query = { where: { username } }
+  if (typeof isActive === 'boolean') {
+    query.where.isActive = isActive
+  }
 
   const include = {}
   if (withVideoGames) {
@@ -16,13 +21,6 @@ export const getCoachByEmail = async (email, filters = {}) => {
   if (withTiers) {
     include.tiers = true
   }
-
-  const query = {
-    where: {
-      email,
-      isActive: true,
-    },
-  }
   if (!R.isEmpty(include)) {
     query.include = include
   }
@@ -30,7 +28,7 @@ export const getCoachByEmail = async (email, filters = {}) => {
   const result = await prisma.coach.findFirst(query)
 
   if (!result) {
-    throw new ResourceNotFoundError(`Coach not found with email ${email}.`)
+    throw new ResourceNotFoundError(`Coach not found with username ${username}.`)
   }
 
   return result

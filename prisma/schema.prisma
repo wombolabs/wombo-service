@@ -2,9 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  binaryTargets   = ["native", "debian-openssl-1.1.x", "rhel-openssl-1.0.x"]
-  previewFeatures = ["filterJson"]
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin", "debian-openssl-1.1.x", "rhel-openssl-1.0.x"]
 }
 
 datasource db {
@@ -78,8 +77,8 @@ model VideoGame {
   id        String            @id(map: "primary") @db.Uuid
   codename  String
   category  VideoGameCategory @default(general)
+  coaches   Coach[]           @relation("VideoGamesOnCoaches")
   isActive  Boolean           @default(true)
-  coaches   Coach[]           @relation(references: [id])
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
   deletedAt DateTime?
@@ -89,7 +88,7 @@ model Coach {
   id              String        @id(map: "primary") @db.Uuid
   email           String        @unique
   username        String        @unique
-  videoGames      VideoGame[]   @relation(references: [id])
+  videoGames      VideoGame[]   @relation("VideoGamesOnCoaches")
   discord         Json? // {id, username, discriminator, accessToken, refreshToken, expireIn}
   discordJoinDate DateTime?
   languages       Language[]
@@ -110,7 +109,7 @@ model Student {
   username        String?   @unique
   displayName     String?
   password        String?
-  discord         Json? // {id, username, discriminator, accessToken, refreshToken, expireIn, scope, verified}
+  discord         Json?
   discordJoinDate DateTime?
   locale          Language?
   timeZone        String?
@@ -132,11 +131,12 @@ model Order {
   stripe             Json?
   coachId            String?
   tierId             String?
+  videoGameId        String?
   validFrom          DateTime?
   validTill          DateTime?
   billingInterval    Frequency?
   billingAmount      Float
-  billingCurrency    Currency
+  billingCurrency    Currency    @default(usd)
   isCancelled        Boolean?
   cancellationReason String?
   metadata           Json        @default("{}")
@@ -147,6 +147,22 @@ model Order {
   deletedAt          DateTime?
 }
 
+model Coupon {
+  id             String    @id(map: "primary") @db.Uuid
+  name           String    @unique
+  tiers          String[]
+  currency       Currency  @default(usd)
+  amountOff      Float?
+  percentOff     Float?
+  maxRedemptions Int?
+  validTill      DateTime
+  timesRedeemed  Int       @default(0)
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+}
+
 model Tier {
   id              String      @id(map: "primary") @db.Uuid
   coach           Coach?      @relation(fields: [coachId], references: [id], map: "fk_coachId_ref_Coach")
@@ -154,7 +170,7 @@ model Tier {
   codename        String
   type            PaymentType
   price           Float
-  currency        Currency
+  currency        Currency    @default(usd)
   billingInterval Frequency?
   language        Language
   discordRoleIds  String[]
@@ -170,7 +186,7 @@ model Payment {
   orderId   String        @db.Uuid
   method    PaymentMethod
   amount    Float
-  currency  Currency
+  currency  Currency      @default(usd)
   stripe    Json?
   livemode  Boolean       @default(true)
   createdAt DateTime      @default(now())
