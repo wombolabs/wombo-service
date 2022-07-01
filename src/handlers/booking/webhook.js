@@ -20,8 +20,7 @@ const handleBookingCreated = async ({
   const { email: coachEmail, timeZone: coachTimeZone } = organizer
   const { email: studentEmail, timeZone: studentTimeZone } = attendees[0]
 
-  const student = await getStudentByEmail(studentEmail)
-  const coach = await getCoachByEmail(coachEmail)
+  const [student, coach] = await Promise.all([getStudentByEmail(studentEmail), getCoachByEmail(coachEmail)])
 
   const order = {
     type: 'one_time',
