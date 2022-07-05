@@ -63,6 +63,17 @@ enum Currency {
   usd
 }
 
+enum OrderStatus {
+  incomplete
+  incomplete_expired
+  trialing
+  active
+  past_due
+  canceled
+  unpaid
+  paid
+}
+
 model Video {
   id          String      @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title       String?
@@ -137,9 +148,10 @@ model Order {
   billingInterval    Frequency?
   billingAmount      Float
   billingCurrency    Currency    @default(usd)
-  isCancelled        Boolean?
-  cancellationReason String?
   metadata           Json        @default("{}")
+  status             OrderStatus
+  cancelAtPeriodEnd  Boolean     @default(false)
+  cancellationReason String? // status = canceled
   livemode           Boolean     @default(true)
   isActive           Boolean     @default(true)
   createdAt          DateTime    @default(now())

@@ -29,6 +29,7 @@ const createCoupons = async () => {
       },
     ],
   })
+  console.log('Added coupons data')
 }
 
 module.exports = { createCoupons }

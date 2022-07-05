@@ -25,6 +25,9 @@ CREATE TYPE "PaymentType" AS ENUM ('one_time', 'subscription', 'donation');
 -- CreateEnum
 CREATE TYPE "Currency" AS ENUM ('usd');
 
+-- CreateEnum
+CREATE TYPE "OrderStatus" AS ENUM ('incomplete', 'incomplete_expired', 'trialing', 'active', 'past_due', 'canceled', 'unpaid', 'paid');
+
 -- CreateTable
 CREATE TABLE "Video" (
     "id" UUID NOT NULL DEFAULT gen_random_uuid(),
@@ -106,9 +109,10 @@ CREATE TABLE "Order" (
     "billingInterval" "Frequency",
     "billingAmount" FLOAT8 NOT NULL,
     "billingCurrency" "Currency" NOT NULL DEFAULT 'usd',
-    "isCancelled" BOOL,
-    "cancellationReason" STRING,
     "metadata" JSONB NOT NULL DEFAULT '{}',
+    "status" "OrderStatus" NOT NULL,
+    "cancelAtPeriodEnd" BOOL NOT NULL DEFAULT false,
+    "cancellationReason" STRING,
     "livemode" BOOL NOT NULL DEFAULT true,
     "isActive" BOOL NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

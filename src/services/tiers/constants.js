@@ -7,4 +7,5 @@ export const DEFAULT_TIER_FIELDS = [
   'currency',
   'billingInterval',
   'language',
+  'trialPeriodDays',
 ]

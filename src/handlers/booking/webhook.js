@@ -40,6 +40,7 @@ const handleBookingCreated = async ({
       title,
       description,
     },
+    status: 'active',
   }
 
   await createOrder(order)
@@ -66,7 +67,7 @@ const handleBookingCancelled = async ({ uid, cancellationReason }) => {
   const orderId = await getOrderIdByBookingId(uid)
 
   const order = {
-    isCancelled: true,
+    status: 'canceled',
     cancellationReason,
   }
 
