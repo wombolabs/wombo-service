@@ -150,7 +150,7 @@ module.exports = [
   },
   {
     id: '37e096f7-4506-4637-994c-409c01b12a8a',
-    email: 'stan@gmail.com',
+    email: 'soystancontacto@gmail.com',
     username: 'stan',
     videoGames: {
       connect: [{ id: '9887a158-6de9-49a3-aced-175d12f1b802' }],
@@ -288,6 +288,90 @@ module.exports = [
           billingInterval: 'month',
           language: 'es',
           discordRoleIds: ['983773028238368769'],
+        },
+      ],
+    },
+  },
+  {
+    id: '37ecebc9-f39b-4591-b346-d5aca7f4766c',
+    email: 'agustintomasdilalla@live.com',
+    username: 'adniel',
+    videoGames: {
+      connect: [{ id: 'b03a1553-07ce-4ffa-b5e6-515a8eafd4ae' }],
+    },
+    discord: {
+      username: 'Adniel Coach',
+      discriminator: '9375',
+    },
+    languages: ['es'],
+    isActive: true,
+    tiers: {
+      create: [
+        {
+          id: 'd7613067-35da-41bf-a26b-c5dbb0cbdcfd',
+          codename: 'adniel_suscripcion',
+          type: 'subscription',
+          price: 6.0,
+          currency: 'usd',
+          billingInterval: 'month',
+          language: 'es',
+          discordRoleIds: ['993881912076673125'],
+        },
+      ],
+    },
+  },
+  {
+    id: 'f5cdf27b-1fb1-42b1-8685-fa98cedf4d53',
+    email: 'julianlauandos@gmail.com',
+    username: 'beast',
+    videoGames: {
+      connect: [{ id: '9887a158-6de9-49a3-aced-175d12f1b802' }],
+    },
+    discord: {
+      username: 'BEAST',
+      discriminator: '2300',
+    },
+    languages: ['es'],
+    isActive: true,
+    tiers: {
+      create: [
+        {
+          id: '07104de9-9fab-4126-87dc-b06417b69ad9',
+          codename: 'beast_suscripcion',
+          type: 'subscription',
+          price: 6.0,
+          currency: 'usd',
+          billingInterval: 'month',
+          language: 'es',
+          discordRoleIds: ['992062558288752662'],
+        },
+      ],
+    },
+  },
+  {
+    id: '1669b52c-6375-4693-aaba-6606cb8b780d',
+    email: 'leagueofgralou@gmail.com',
+    username: 'gralou',
+    videoGames: {
+      connect: [{ id: 'b03a1553-07ce-4ffa-b5e6-515a8eafd4ae' }],
+    },
+    discord: {
+      username: 'Gralou',
+      discriminator: '0212',
+    },
+    languages: ['es'],
+    isActive: true,
+    tiers: {
+      create: [
+        {
+          id: 'a357786c-3b88-4108-a717-1eafa22f1e68',
+          codename: 'gralou_suscripcion',
+          type: 'subscription',
+          price: 6.0,
+          currency: 'usd',
+          billingInterval: 'month',
+          language: 'es',
+          discordRoleIds: ['993624720220094504'],
         },
       ],
     },

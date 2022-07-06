@@ -136,6 +136,13 @@ functions:
           path: /coupons/{name}
           method: get
           private: true
+  createCoupon:
+    handler: src/index.createCouponHandler
+    events:
+      - http:
+          path: /coupons
+          method: post
+          private: true
   # Stripe
   stripeWebhook:
     handler: src/index.stripeWebhookHandler
