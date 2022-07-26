@@ -105,7 +105,7 @@ model Coach {
   languages       Language[]
   locale          Language?
   timeZone        String?
-  tiers           Tier[]
+  tiers           Tier[]        @relation("TiersOnCoaches")
   category        CoachCategory @default(general)
   isActive        Boolean       @default(false)
   lastLogin       DateTime?
@@ -177,8 +177,7 @@ model Coupon {
 
 model Tier {
   id              String      @id(map: "primary") @db.Uuid
-  coach           Coach?      @relation(fields: [coachId], references: [id], map: "fk_coachId_ref_Coach")
-  coachId         String      @db.Uuid
+  coaches         Coach[]     @relation("TiersOnCoaches")
   codename        String
   type            PaymentType
   price           Float
