@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+
+# Local Environment
+.env*
+!.env.example
+
+# Build directory
+.webpack
+.serverless
+
+# Others
+npm-debug.log
+
+# IDE Specific
+.idea
+.vscode
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+
+# Jest
+jest-coverage/

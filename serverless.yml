@@ -1,0 +1,168 @@
+service: wombo-api-service
+useDotenv: true
+
+plugins:
+  - serverless-webpack
+  - serverless-domain-manager
+  - serverless-webpack-prisma
+  - serverless-deployment-bucket
+  - serverless-offline
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: ${opt:stage}
+  deploymentBucket:
+    name: ${self:service}-${opt:stage}-deployment-bucket
+  apiGateway:
+    minimumCompressionSize: 512 # Compress response when larger than specified size in bytes
+    shouldStartNameWithService: true
+    apiKeys:
+      - name: ${env:SUBDOMAIN}-apiKey
+        value: ${env:DEFAULT_API_KEY}
+  environment:
+    SUBDOMAIN: ${env:SUBDOMAIN}
+    DEFAULT_API_KEY: ${env:DEFAULT_API_KEY}
+    JWT_SECRET: ${env:JWT_SECRET}
+    SENTRY_DSN: ${env:SENTRY_DSN}
+    SENTRY_ENVIRONMENT: ${env:SENTRY_ENVIRONMENT}
+    SENTRY_ERROR_RATE: ${env:SENTRY_ERROR_RATE}
+    SENTRY_TRANSACTION_RATE: ${env:SENTRY_TRANSACTION_RATE}
+    COCKROACHDB_DATABASE_URL: ${env:COCKROACHDB_DATABASE_URL}
+    PRISMA_DATAPROXY: ${env:PRISMA_DATAPROXY}
+    CHECKPOINT_DISABLE: ${env:CHECKPOINT_DISABLE}
+    STRIPE_SECRET_KEY: ${env:STRIPE_SECRET_KEY}
+    STRIPE_WEBHOOK_SECRET: ${env:STRIPE_WEBHOOK_SECRET}
+    DISCORD_BOT_TOKEN: ${env:DISCORD_BOT_TOKEN}
+    DISCORD_GUILD_WOMBO: ${env:DISCORD_GUILD_WOMBO}
+
+custom:
+  serverless-offline:
+    apiKey: ${env:DEFAULT_API_KEY}
+    httpPort: ${env:SERVERLESS_OFFLINE_HTTP_PORT, 8001}
+    lambdaPort: ${env:SERVERLESS_OFFLINE_LAMBDA_PORT, 3001}
+  webpack:
+    includeModules: true
+  domainEnabled:
+    local: false
+    test: true
+    staging: true
+    production: true
+  customDomain:
+    enabled: ${self:custom.domainEnabled.${self:provider.stage}}
+    domainName: ${env:SUBDOMAIN}.wombo.gg
+    certificateName: 'wombo.gg'
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+
+functions:
+  # Coaches
+  listCoaches:
+    handler: src/index.listCoachesHandler
+    events:
+      - http:
+          path: /coaches
+          method: get
+          private: true
+  getCoach:
+    handler: src/index.getCoachHandler
+    events:
+      - http:
+          path: /coaches/{username}
+          method: get
+          private: true
+  # Students
+  signinStudent:
+    handler: src/index.signinStudentHandler
+    events:
+      - http:
+          path: /students/signin
+          method: post
+          private: true
+  signupStudent:
+    handler: src/index.signupStudentHandler
+    events:
+      - http:
+          path: /students/signup
+          method: post
+          private: true
+  getStudentMe:
+    handler: src/index.getStudentMeHandler
+    events:
+      - http:
+          path: /students/me
+          method: get
+          private: true
+  getStudentMeOrders:
+    handler: src/index.getStudentMeOrdersHandler
+    events:
+      - http:
+          path: /students/me/orders
+          method: get
+          private: true
+  updateStudentMe:
+    handler: src/index.updateStudentMeHandler
+    events:
+      - http:
+          path: /students/me
+          method: put
+          private: true
+  # Tiers
+  getTier:
+    handler: src/index.getTierHandler
+    events:
+      - http:
+          path: /tiers/{id}
+          method: get
+          private: true
+  # VideoGames
+  listVideoGames:
+    handler: src/index.listVideoGamesHandler
+    events:
+      - http:
+          path: /videogames
+          method: get
+          private: true
+  # Coupons
+  getCoupon:
+    handler: src/index.getCouponHandler
+    events:
+      - http:
+          path: /coupons/{name}
+          method: get
+          private: true
+  createCoupon:
+    handler: src/index.createCouponHandler
+    events:
+      - http:
+          path: /coupons
+          method: post
+          private: true
+  # Stripe
+  stripeWebhook:
+    handler: src/index.stripeWebhookHandler
+    events:
+      - http:
+          path: /stripe/webhook
+          method: post
+          private: false
+  # Booking
+  bookingWebhook:
+    handler: src/index.bookingWebhookHandler
+    events:
+      - http:
+          path: /booking/webhook
+          method: post
+          private: true
+  # Discord
+  discordConnect:
+    handler: src/index.discordConnectHandler
+    events:
+      - http:
+          path: /discord/connect
+          method: post
+          private: true
