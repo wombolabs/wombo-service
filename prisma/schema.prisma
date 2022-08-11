@@ -1,0 +1,207 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin", "debian-openssl-1.1.x", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("COCKROACHDB_DATABASE_URL")
+}
+
+enum IdentityProvider {
+  credentials
+  discord
+  google
+  twitter
+}
+
+enum CoachCategory {
+  general
+  is_featured
+  is_coming_out
+}
+
+enum VideoGameCategory {
+  general
+  is_featured
+}
+
+enum VideoSource {
+  vimeo
+  youtube
+}
+
+enum PaymentMethod {
+  stripe
+  paypal
+  mercado_pago
+}
+
+enum Frequency {
+  day
+  week
+  month
+  year
+}
+
+enum Language {
+  en
+  es
+  pt
+}
+
+enum PaymentType {
+  one_time
+  subscription
+  donation
+}
+
+enum Currency {
+  usd
+}
+
+enum OrderStatus {
+  incomplete
+  incomplete_expired
+  trialing
+  active
+  past_due
+  canceled
+  unpaid
+  paid
+}
+
+model Video {
+  id          String      @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String?
+  description String?
+  source      VideoSource
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  deletedAt   DateTime?
+}
+
+model VideoGame {
+  id        String            @id(map: "primary") @db.Uuid
+  codename  String
+  category  VideoGameCategory @default(general)
+  coaches   Coach[]           @relation("VideoGamesOnCoaches")
+  isActive  Boolean           @default(true)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  deletedAt DateTime?
+}
+
+model Coach {
+  id              String        @id(map: "primary") @db.Uuid
+  email           String        @unique
+  username        String        @unique
+  videoGames      VideoGame[]   @relation("VideoGamesOnCoaches")
+  discord         Json          @default("{}")
+  discordJoinDate DateTime?
+  languages       Language[]
+  locale          Language?
+  timeZone        String?
+  tiers           Tier[]        @relation("TiersOnCoaches")
+  category        CoachCategory @default(general)
+  isActive        Boolean       @default(false)
+  lastLogin       DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  deletedAt       DateTime?
+}
+
+model Student {
+  id              String    @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email           String    @unique
+  username        String?   @unique
+  displayName     String?
+  password        String?
+  discord         Json      @default("{}")
+  discordJoinDate DateTime?
+  locale          Language?
+  timeZone        String?
+  orders          Order[]
+  stripe          Json      @default("{}")
+  isActive        Boolean   @default(true)
+  lastLogin       DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+}
+
+model Order {
+  id                 String      @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student            Student     @relation(fields: [studentId], references: [id], map: "fk_studentId_ref_Student")
+  studentId          String      @db.Uuid
+  type               PaymentType
+  payments           Payment[]
+  stripe             Json        @default("{}")
+  coachId            String?
+  tierId             String?
+  videoGameId        String?
+  validFrom          DateTime?
+  validTill          DateTime?
+  billingInterval    Frequency?
+  billingAmount      Float
+  billingCurrency    Currency    @default(usd)
+  metadata           Json        @default("{}")
+  status             OrderStatus
+  cancelAtPeriodEnd  Boolean     @default(false)
+  cancellationReason String? // status = canceled
+  livemode           Boolean     @default(true)
+  isActive           Boolean     @default(true)
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  deletedAt          DateTime?
+}
+
+model Coupon {
+  id             String    @id(map: "primary") @db.Uuid
+  name           String    @unique
+  tiers          String[]
+  currency       Currency  @default(usd)
+  amountOff      Float?
+  percentOff     Float?
+  maxRedemptions Int?
+  validTill      DateTime?
+  timesRedeemed  Int       @default(0)
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+}
+
+model Tier {
+  id              String      @id(map: "primary") @db.Uuid
+  coaches         Coach[]     @relation("TiersOnCoaches")
+  codename        String
+  type            PaymentType
+  price           Float
+  currency        Currency    @default(usd)
+  billingInterval Frequency?
+  language        Language
+  discordRoleIds  String[]
+  trialPeriodDays Int?
+  isActive        Boolean     @default(true)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  deletedAt       DateTime?
+}
+
+model Payment {
+  id        String        @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  order     Order         @relation(fields: [orderId], references: [id], map: "fk_orderId_ref_Order")
+  orderId   String        @db.Uuid
+  method    PaymentMethod
+  amount    Float
+  currency  Currency      @default(usd)
+  stripe    Json          @default("{}")
+  livemode  Boolean       @default(true)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  deletedAt DateTime?
+}
