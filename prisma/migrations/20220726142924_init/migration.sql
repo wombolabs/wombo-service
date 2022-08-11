@@ -144,7 +144,6 @@ CREATE TABLE "Coupon" (
 -- CreateTable
 CREATE TABLE "Tier" (
     "id" UUID NOT NULL,
-    "coachId" UUID NOT NULL,
     "codename" STRING NOT NULL,
     "type" "PaymentType" NOT NULL,
     "price" FLOAT8 NOT NULL,
@@ -183,6 +182,12 @@ CREATE TABLE "_VideoGamesOnCoaches" (
     "B" UUID NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "_TiersOnCoaches" (
+    "A" UUID NOT NULL,
+    "B" UUID NOT NULL
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Coach_email_key" ON "Coach"("email");
 
@@ -204,11 +209,14 @@ CREATE UNIQUE INDEX "_VideoGamesOnCoaches_AB_unique" ON "_VideoGamesOnCoaches"("
 -- CreateIndex
 CREATE INDEX "_VideoGamesOnCoaches_B_index" ON "_VideoGamesOnCoaches"("B");
 
--- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "fk_studentId_ref_Student" FOREIGN KEY ("studentId") REFERENCES "Student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "_TiersOnCoaches_AB_unique" ON "_TiersOnCoaches"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_TiersOnCoaches_B_index" ON "_TiersOnCoaches"("B");
 
 -- AddForeignKey
-ALTER TABLE "Tier" ADD CONSTRAINT "fk_coachId_ref_Coach" FOREIGN KEY ("coachId") REFERENCES "Coach"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "fk_studentId_ref_Student" FOREIGN KEY ("studentId") REFERENCES "Student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Payment" ADD CONSTRAINT "fk_orderId_ref_Order" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -218,3 +226,9 @@ ALTER TABLE "_VideoGamesOnCoaches" ADD CONSTRAINT "_VideoGamesOnCoaches_A_fkey" 
 
 -- AddForeignKey
 ALTER TABLE "_VideoGamesOnCoaches" ADD CONSTRAINT "_VideoGamesOnCoaches_B_fkey" FOREIGN KEY ("B") REFERENCES "VideoGame"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_TiersOnCoaches" ADD CONSTRAINT "_TiersOnCoaches_A_fkey" FOREIGN KEY ("A") REFERENCES "Coach"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_TiersOnCoaches" ADD CONSTRAINT "_TiersOnCoaches_B_fkey" FOREIGN KEY ("B") REFERENCES "Tier"("id") ON DELETE CASCADE ON UPDATE CASCADE;
