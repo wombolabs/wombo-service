@@ -1,5 +1,5 @@
 # Dependencies
-**/node_modules/
+node_modules
 
 # Local Environment
 .env*
@@ -10,7 +10,7 @@
 .serverless
 
 # Others
-**/npm-debug.log
+npm-debug.log
 
 # IDE Specific
 .idea
