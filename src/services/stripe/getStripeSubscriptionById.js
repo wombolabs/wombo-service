@@ -1,5 +1,5 @@
 import { ResourceNotFoundError } from '~/errors'
-import stripe from '~/services/stripe'
+import stripe from './stripe'
 
 export const getStripeSubscriptionById = async (id) => {
   let subscription
