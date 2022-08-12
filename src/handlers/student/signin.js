@@ -8,9 +8,7 @@ const handler = async ({ body }, res) => {
     throw new InsufficientDataError('Email and password are required.')
   }
 
-  const { id, email, password, displayName, discordJoinDate, timeZone, createdAt } = await getStudentByEmail(
-    body.email.toLowerCase()
-  )
+  const { id, email, password } = await getStudentByEmail(body.email.toLowerCase())
 
   if (password == null) {
     throw new InsufficientDataError('Your account use a different signin method.')
@@ -24,14 +22,7 @@ const handler = async ({ body }, res) => {
   await updateStudentByEmail(email, { lastLogin: new Date() })
 
   return res.json({
-    accessToken: generateUserToken({
-      id,
-      email,
-      displayName,
-      discordJoinDate,
-      timeZone,
-      signUpDate: createdAt,
-    }),
+    accessToken: generateUserToken({ id, email }),
   })
 }
 

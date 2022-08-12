@@ -12,7 +12,7 @@ const handler = async ({ body }, res) => {
   // eslint-disable-next-line no-param-reassign
   body.lastLogin = new Date()
 
-  const { id, email, displayName, discord, discordJoinDate, timeZone, createdAt } = await upsertStudent(body)
+  const { id, email, discord, discordJoinDate } = await upsertStudent(body)
 
   if (discord?.id == null || discord?.accessToken == null || !discord?.scope.includes('guilds.join')) {
     throw new InsufficientDataError(`Discord required fields are missing for student ${body.email}.`)
@@ -26,14 +26,7 @@ const handler = async ({ body }, res) => {
   }
 
   return res.json({
-    accessToken: generateUserToken({
-      id,
-      email,
-      displayName,
-      discordJoinDate,
-      timeZone,
-      signUpDate: createdAt,
-    }),
+    accessToken: generateUserToken({ id, email }),
   })
 }
 
