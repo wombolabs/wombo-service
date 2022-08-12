@@ -16,6 +16,9 @@ jobs:
       - id: install-npm-dependencies
         name: Install Dependencies
         run: npm ci
+      - id: generate-prisma-client
+        name: Generate Prisma Client
+        run: npm run prisma:client
       - id: configure-aws-credentials
         name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -36,7 +39,6 @@ jobs:
           SENTRY_TRANSACTION_RATE: ${{ secrets.SENTRY_TRANSACTION_RATE_TEST }}
           COCKROACHDB_DATABASE_URL: ${{ secrets.COCKROACHDB_DATABASE_URL_TEST }}
           PRISMA_DATAPROXY: ${{ secrets.PRISMA_DATAPROXY_TEST }}
-          PRISMA_GENERATE_DATAPROXY: ${{ secrets.PRISMA_GENERATE_DATAPROXY_TEST }}
           CHECKPOINT_DISABLE: ${{ secrets.CHECKPOINT_DISABLE }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY_TEST }}
           STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET_TEST }}
