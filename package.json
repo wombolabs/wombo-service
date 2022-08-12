@@ -13,16 +13,17 @@
     "subdomain:create": "npx dotenv -e .env.test -- npx serverless create_domain --stage test",
     "build:local": "npx serverless webpack --stage local",
     "build:test": "npx serverless webpack --stage test",
-    "build:staging": "npm run prisma:client && npx serverless webpack --stage production",
-    "build:production": "npm run prisma:client-proxy && npx serverless webpack --stage production",
+    "build:staging": "npx serverless webpack --stage production",
+    "build:production": "npx serverless webpack --stage production",
     "deploy:offline": "node --inspect=localhost:9240 node_modules/.bin/serverless offline --stage local",
-    "deploy:test": "npm run prisma:client && npx serverless deploy --stage test",
+    "deploy:test": "npx serverless deploy --stage test",
     "deploy:staging": "npx serverless deploy --stage staging",
     "deploy:production": "npx serverless deploy --stage production",
     "release": "semantic-release",
     "lint": "npx eslint . --ext .js",
     "lint:fix": "npm run lint -- --fix",
-    "prettier:fix": "npx prettier --write src/"
+    "prettier:fix": "npx prettier --write src/",
+    "postinstall": "npm run prisma:client"
   },
   "repository": {
     "type": "git",
