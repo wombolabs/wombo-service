@@ -83,7 +83,7 @@ jobs:
           aws-region: us-east-1
       - id: do-production-build
         name: Build
-        run: npm run build:production
+        run: npm run build:staging
         env:
           SUBDOMAIN: ${{ secrets.SUBDOMAIN_STAGING }}
           DEFAULT_API_KEY: ${{ secrets.API_SERVICE_API_KEY_STAGING }}
