@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/wombolabs/wombo-service/compare/v1.0.0...v1.1.0) (2022-08-12)
+
+
+### Features
+
+* add tier seed ([7318135](https://github.com/wombolabs/wombo-service/commit/7318135d7372c187e1aed9adff406823327aeae6))
+
 # 1.0.0 (2022-08-11)
 
 
