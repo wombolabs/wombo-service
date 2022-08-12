@@ -1,5 +1,6 @@
 const prisma = require('./prisma')
 const { createVideoGames } = require('./scripts/videoGames')
+const { createTiers } = require('./scripts/tiers')
 const { createCoaches } = require('./scripts/coaches')
 const { createStudentWithCredentials } = require('./scripts/students')
 const { createCoupons } = require('./scripts/coupons')
@@ -7,6 +8,7 @@ const { createCoupons } = require('./scripts/coupons')
 async function main() {
   // Order is IMPORTANT!!!
   await createVideoGames()
+  await createTiers()
   await createCoaches()
 
   await createStudentWithCredentials()
