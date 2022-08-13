@@ -9,7 +9,7 @@ export const getCoachByUsername = async (username, filters = {}) => {
 
   const { withVideoGames, withTiers, isActive } = filters
 
-  const query = { where: { username } }
+  const query = { where: { username: { contains: username, mode: 'insensitive'  }} }
   if (typeof isActive === 'boolean') {
     query.where.isActive = isActive
   }
