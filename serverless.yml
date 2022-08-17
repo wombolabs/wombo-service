@@ -119,6 +119,13 @@ functions:
           path: /tiers/{id}
           method: get
           private: true
+  listTiers:
+    handler: src/index.listTiersHandler
+    events:
+      - http:
+          path: /tiers
+          method: get
+          private: true
   # VideoGames
   listVideoGames:
     handler: src/index.listVideoGamesHandler
