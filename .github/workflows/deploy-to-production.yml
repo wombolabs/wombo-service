@@ -49,6 +49,9 @@ jobs:
         name: Install Dependencies
         run: npm ci
         if: steps.manage-test-build-cache.cache-hit != 'true'
+      - id: generate-prisma-client
+        name: Generate Prisma Client with Data Proxy
+        run: npm run prisma:client-proxy
       - id: configure-aws-credentials
         name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -69,7 +72,6 @@ jobs:
           SENTRY_TRANSACTION_RATE: ${{ secrets.SENTRY_TRANSACTION_RATE }}
           COCKROACHDB_DATABASE_URL: ${{ secrets.COCKROACHDB_DATABASE_URL }}
           PRISMA_DATAPROXY: ${{ secrets.PRISMA_DATAPROXY }}
-          PRISMA_GENERATE_DATAPROXY: ${{ secrets.PRISMA_GENERATE_DATAPROXY }}
           CHECKPOINT_DISABLE: ${{ secrets.CHECKPOINT_DISABLE }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
@@ -96,7 +98,6 @@ jobs:
           SENTRY_TRANSACTION_RATE: ${{ secrets.SENTRY_TRANSACTION_RATE }}
           COCKROACHDB_DATABASE_URL: ${{ secrets.COCKROACHDB_DATABASE_URL }}
           PRISMA_DATAPROXY: ${{ secrets.PRISMA_DATAPROXY }}
-          PRISMA_GENERATE_DATAPROXY: ${{ secrets.PRISMA_GENERATE_DATAPROXY }}
           CHECKPOINT_DISABLE: ${{ secrets.CHECKPOINT_DISABLE }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
