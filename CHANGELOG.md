@@ -1,3 +1,13 @@
+# [1.2.0](https://github.com/wombolabs/wombo-service/compare/v1.1.0...v1.2.0) (2022-08-18)
+
+
+### Features
+
+* add filter coach by username case-insensitive ([d175c21](https://github.com/wombolabs/wombo-service/commit/d175c21606939cff7f32a29fc73f1e9945c1cf48))
+* add list tiers endpoint ([1d742be](https://github.com/wombolabs/wombo-service/commit/1d742be1d6b68aadca8748c30987358a3e0120a6))
+* update dependencies ([a22be5f](https://github.com/wombolabs/wombo-service/commit/a22be5fcf8bdb8784b17d46f18e1ee205ae2b5e2))
+* update dependencies ([873f0b8](https://github.com/wombolabs/wombo-service/commit/873f0b8f1e35a7e34b850e0a1575c131c69fd22a))
+
 # [1.1.0](https://github.com/wombolabs/wombo-service/compare/v1.0.0...v1.1.0) (2022-08-12)
 
 
