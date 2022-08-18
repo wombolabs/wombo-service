@@ -1,19 +1,18 @@
 {
   "name": "@wombolabs/wombo-api-service",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Wombo API Service",
   "author": "WomboLabs <dev@wombo.gg>",
   "private": true,
   "scripts": {
+    "domain:create": "npx dotenv -e .env.test -- npx serverless create_domain --stage test",
     "prisma:client": "npx prisma generate",
     "prisma:client-proxy": "npx prisma generate --data-proxy",
     "prisma:seed": "npx dotenv -e .env.local -- npx prisma db seed",
     "migrate:dev": "npx dotenv -e .env.local -- npx prisma migrate dev --name init",
     "migrate:deploy": "npx dotenv -e .env.test -- npx prisma migrate deploy",
-    "subdomain:create": "npx dotenv -e .env.test -- npx serverless create_domain --stage test",
     "build:local": "npx serverless webpack --stage local",
     "build:test": "npx serverless webpack --stage test",
-    "build:staging": "npx serverless webpack --stage production",
     "build:production": "npx serverless webpack --stage production",
     "deploy:offline": "node --inspect=localhost:9240 node_modules/.bin/serverless offline --stage local",
     "deploy:test": "npx serverless deploy --stage test",
@@ -22,8 +21,7 @@
     "release": "semantic-release",
     "lint": "npx eslint . --ext .js",
     "lint:fix": "npm run lint -- --fix",
-    "prettier:fix": "npx prettier --write src/",
-    "postinstall": "npm run prisma:client"
+    "prettier:fix": "npx prettier --write src/"
   },
   "repository": {
     "type": "git",
@@ -35,9 +33,9 @@
   "homepage": "https://github.com/wombolabs/wombo-service#readme",
   "dependencies": {
     "@prisma/client": "4.2.1",
-    "@sentry/integrations": "^7.10.0",
-    "@sentry/serverless": "^7.10.0",
-    "@sentry/tracing": "^7.10.0",
+    "@sentry/integrations": "^7.11.1",
+    "@sentry/serverless": "^7.11.1",
+    "@sentry/tracing": "^7.11.1",
     "@vendia/serverless-express": "^4.10.1",
     "axios": "^0.27.2",
     "crypto": "^1.0.1",
@@ -50,7 +48,7 @@
     "openapi-validator-middleware": "^3.2.6",
     "ramda": "^0.28.0",
     "saslprep": "^1.0.3",
-    "stripe": "^10.1.0",
+    "stripe": "^10.2.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
