@@ -46,6 +46,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment-timezone": "^0.5.34",
     "openapi-validator-middleware": "^3.2.6",
+    "pg": "^8.7.3",
     "ramda": "^0.28.0",
     "saslprep": "^1.0.3",
     "stripe": "^10.2.0",
