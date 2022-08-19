@@ -27,6 +27,8 @@ jobs:
         name: Install Dependencies
         run: npm ci
         if: steps.cache-deps.outputs.cache-hit != 'true'
+        env:
+          PRISMA_GENERATE_DATAPROXY: true
   do-production-deploy:
     runs-on: ubuntu-latest
     needs: setup-npm-cache
@@ -49,6 +51,8 @@ jobs:
         name: Install Dependencies
         run: npm ci
         if: steps.manage-test-build-cache.cache-hit != 'true'
+        env:
+          PRISMA_GENERATE_DATAPROXY: true
       - id: generate-prisma-client
         name: Generate Prisma Client with Data Proxy
         run: npm run prisma:client-proxy
@@ -63,6 +67,7 @@ jobs:
         name: Build
         run: npm run build:production
         env:
+          PRISMA_GENERATE_DATAPROXY: true
           SUBDOMAIN: ${{ secrets.SUBDOMAIN }}
           DEFAULT_API_KEY: ${{ secrets.API_SERVICE_API_KEY }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -77,6 +82,7 @@ jobs:
           STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_GUILD_WOMBO: ${{ secrets.DISCORD_GUILD_WOMBO }}
+          BOOKING_DATABASE_URL: ${{ secrets.BOOKING_DATABASE_URL }}
       - id: do-github-release
         name: Release
         run: npm run release
@@ -89,6 +95,7 @@ jobs:
         name: Deploy
         run: npm run deploy:production
         env:
+          PRISMA_GENERATE_DATAPROXY: true
           SUBDOMAIN: ${{ secrets.SUBDOMAIN }}
           DEFAULT_API_KEY: ${{ secrets.API_SERVICE_API_KEY }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -103,3 +110,4 @@ jobs:
           STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_GUILD_WOMBO: ${{ secrets.DISCORD_GUILD_WOMBO }}
+          BOOKING_DATABASE_URL: ${{ secrets.BOOKING_DATABASE_URL }}

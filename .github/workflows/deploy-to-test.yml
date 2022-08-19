@@ -16,9 +16,6 @@ jobs:
       - id: install-npm-dependencies
         name: Install Dependencies
         run: npm ci
-      - id: generate-prisma-client
-        name: Generate Prisma Client
-        run: npm run prisma:client
       - id: configure-aws-credentials
         name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -44,3 +41,4 @@ jobs:
           STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET_TEST }}
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_GUILD_WOMBO: ${{ secrets.DISCORD_GUILD_WOMBO }}
+          BOOKING_DATABASE_URL: ${{ secrets.BOOKING_DATABASE_URL_TEST }}
