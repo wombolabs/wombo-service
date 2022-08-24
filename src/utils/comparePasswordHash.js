@@ -1,4 +1,4 @@
-const crypto = require('crypto')
+const { createHash } = require('node:crypto')
 
 const itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
@@ -82,9 +82,9 @@ export const comparePasswordHash = (password, storedPasswordHash) => {
 
   const salt = storedPasswordHash.substr(4, 8)
 
-  let hash = crypto.createHash('md5').update(`${salt}${password}`, 'binary').digest('binary')
+  let hash = createHash('md5').update(`${salt}${password}`, 'binary').digest('binary')
   do {
-    hash = crypto.createHash('md5').update(`${hash}${password}`, 'binary').digest('binary')
+    hash = createHash('md5').update(`${hash}${password}`, 'binary').digest('binary')
   } while (--count)
   let output = storedPasswordHash.substr(0, 12)
   output = `${output}${encode64(hash, 16)}`
