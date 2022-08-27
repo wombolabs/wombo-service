@@ -7,18 +7,21 @@ jobs:
     steps:
       - id: checkout
         name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - id: setup-node
         name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16.15.0
-      - id: install-npm-dependencies
+      - id: manage-npm-cache
+        name: Cache/Restore npm cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+      - id: install-dependencies
         name: Install Dependencies
         run: npm ci
-      - id: generate-prisma-client
-        name: Generate Prisma Client
-        run: npm run prisma:client
       - id: configure-aws-credentials
         name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -39,8 +42,9 @@ jobs:
           SENTRY_TRANSACTION_RATE: ${{ secrets.SENTRY_TRANSACTION_RATE_TEST }}
           COCKROACHDB_DATABASE_URL: ${{ secrets.COCKROACHDB_DATABASE_URL_TEST }}
           PRISMA_DATAPROXY: ${{ secrets.PRISMA_DATAPROXY_TEST }}
-          CHECKPOINT_DISABLE: ${{ secrets.CHECKPOINT_DISABLE }}
+          CHECKPOINT_DISABLE: 1
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY_TEST }}
           STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET_TEST }}
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_GUILD_WOMBO: ${{ secrets.DISCORD_GUILD_WOMBO }}
+          BOOKING_DATABASE_URL: ${{ secrets.BOOKING_DATABASE_URL_TEST }}

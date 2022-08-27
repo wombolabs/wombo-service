@@ -150,21 +150,18 @@ const handleInvoicePaymentSucceeded = async ({ data }) => {
 
   if (customerId && invoiceId) {
     // SUBSCRIPTION
-    const { discordRoleIds = [] } = tier
-    if (R.isEmpty(discordRoleIds)) {
-      throw new Error(`Tier discord role ids are missing for tier ${tierId}. Student ${studentId}.`)
-    }
-
     const { discord = {} } = await getStudentById(studentId, ['discord'])
-    if (discord?.id == null || discord?.accessToken == null || !discord?.scope.includes('guilds.join')) {
-      throw new InsufficientDataError(`Discord required fields are missing for student ${studentId}.`)
+    if (discord?.id != null && discord?.accessToken != null && discord?.scope.includes('guilds.join')) {
+      // send DM to user
+      const response = await createUserDM(discord.id)
+      await createChannelMessage(response.id, discordConfig.messageSubscriptionCreated)
+
+      const { discordRoleIds = [] } = tier
+      if (!R.isEmpty(discordRoleIds)) {
+        // add roles on Discord server
+        await Promise.all(discordRoleIds.map((roleId) => addGuildMemberRole(discord.id, roleId)))
+      }
     }
-
-    await Promise.all(discordRoleIds.map((roleId) => addGuildMemberRole(discord.id, roleId)))
-
-    // send DM to user
-    const response = await createUserDM(discord.id)
-    await createChannelMessage(response.id, discordConfig.messageSubscriptionCreated)
   }
 }
 
