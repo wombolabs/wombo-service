@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/wombolabs/wombo-service/compare/v1.2.0...v1.3.0) (2022-08-27)
+
+
+### Features
+
+* add private sessions from booking on coach ([f6e73da](https://github.com/wombolabs/wombo-service/commit/f6e73dac8f08a242a556c76f2341ff5591ccb8f0))
+* update stripe webhook ([0030683](https://github.com/wombolabs/wombo-service/commit/00306833d62be3360ba1734b5ef45fefd63ef0aa))
+
 # [1.2.0](https://github.com/wombolabs/wombo-service/compare/v1.1.0...v1.2.0) (2022-08-18)
 
 
