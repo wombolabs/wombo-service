@@ -74,16 +74,6 @@ enum OrderStatus {
   paid
 }
 
-model Video {
-  id          String      @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  title       String?
-  description String?
-  source      VideoSource
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  deletedAt   DateTime?
-}
-
 model VideoGame {
   id        String            @id(map: "primary") @db.Uuid
   codename  String
@@ -107,6 +97,7 @@ model Coach {
   timeZone        String?
   tiers           Tier[]        @relation("TiersOnCoaches")
   category        CoachCategory @default(general)
+  metadata        Json          @default("{}")
   isActive        Boolean       @default(false)
   lastLogin       DateTime?
   createdAt       DateTime      @default(now())
@@ -126,6 +117,7 @@ model Student {
   timeZone        String?
   orders          Order[]
   stripe          Json      @default("{}")
+  metadata        Json      @default("{}")
   isActive        Boolean   @default(true)
   lastLogin       DateTime?
   createdAt       DateTime  @default(now())
