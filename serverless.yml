@@ -166,6 +166,13 @@ functions:
           path: /booking/webhook
           method: post
           private: true
+  listBookingSessions:
+    handler: src/index.listBookingSessionsHandler
+    events:
+      - http:
+          path: /booking/sessions
+          method: get
+          private: true
   # Discord
   discordConnect:
     handler: src/index.discordConnectHandler

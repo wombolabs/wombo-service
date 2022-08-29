@@ -1,5 +1,5 @@
-import R from 'ramda'
 import prisma from '~/services/prisma'
+import { notNilNorEmpty } from '~/utils'
 
 export const listCoaches = async (filters = {}) => {
   const { id, isActive, category, withVideoGames, withTiers } = filters
@@ -16,18 +16,18 @@ export const listCoaches = async (filters = {}) => {
   if (typeof isActive === 'boolean') {
     where.isActive = isActive
   }
-  if (!R.isEmpty(id)) {
+  if (notNilNorEmpty(id)) {
     where.id = { in: id }
   }
-  if (!R.isEmpty(category)) {
+  if (notNilNorEmpty(category)) {
     where.category = { in: category }
   }
 
   const query = {}
-  if (!R.isEmpty(where)) {
+  if (notNilNorEmpty(where)) {
     query.where = where
   }
-  if (!R.isEmpty(include)) {
+  if (notNilNorEmpty(include)) {
     query.include = include
   }
 
