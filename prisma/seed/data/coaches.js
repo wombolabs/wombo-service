@@ -407,4 +407,21 @@ module.exports = [
       bookingUserId: 13,
     },
   },
+  {
+    id: 'e62e8ae8-80cf-4334-9045-5b5cdf84d3d9',
+    email: 'lucianomaliziacaro@gmail.com',
+    username: 'luco',
+    videoGames: {
+      connect: [{ id: 'b03a1553-07ce-4ffa-b5e6-515a8eafd4ae' }],
+    },
+    discord: {
+      username: 'Luco',
+      discriminator: '8298',
+    },
+    languages: ['es'],
+    isActive: true,
+    metadata: {
+      bookingUserId: 32,
+    },
+  },
 ]
