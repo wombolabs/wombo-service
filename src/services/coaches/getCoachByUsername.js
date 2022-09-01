@@ -1,6 +1,6 @@
-import R from 'ramda'
 import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
 import prisma from '~/services/prisma'
+import { notNilNorEmpty } from '~/utils'
 
 export const getCoachByUsername = async (username, filters = {}) => {
   if (!username) {
@@ -21,7 +21,7 @@ export const getCoachByUsername = async (username, filters = {}) => {
   if (withTiers) {
     include.tiers = true
   }
-  if (!R.isEmpty(include)) {
+  if (notNilNorEmpty(include)) {
     query.include = include
   }
 
