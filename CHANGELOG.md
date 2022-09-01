@@ -1,3 +1,17 @@
+# [1.4.0](https://github.com/wombolabs/wombo-service/compare/v1.3.0...v1.4.0) (2022-09-01)
+
+
+### Bug Fixes
+
+* resolve issue on session serializer ([25b5416](https://github.com/wombolabs/wombo-service/commit/25b5416dfa37e6673f08208cdeae48809e82f6a0))
+
+
+### Features
+
+* add endpoint for private sessions from booking ([8be91b1](https://github.com/wombolabs/wombo-service/commit/8be91b1d5a8581a746851257557a454d0dddde1d))
+* improve sql private sessions from booking ([0eaa35f](https://github.com/wombolabs/wombo-service/commit/0eaa35f9036b13b456ea45e6c54d6d25348e52a0))
+* update coaches seed ([321655c](https://github.com/wombolabs/wombo-service/commit/321655c4d0156490ba338e01a249912bd6361a29))
+
 # [1.3.0](https://github.com/wombolabs/wombo-service/compare/v1.2.0...v1.3.0) (2022-08-27)
 
 
