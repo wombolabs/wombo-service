@@ -173,6 +173,16 @@ functions:
           path: /booking/sessions
           method: get
           private: true
+  bookingSessionNotification:
+    handler: src/index.bookingSessionNotificationHandler
+    events:
+      - stream:
+          type: dynamodb
+          arn: arn:aws:dynamodb:us-east-1:067112320023:table/PrivateSessionNotifications/stream/2022-08-31T19:32:09.523
+          maximumRetryAttempts: 1
+          batchSize: 1
+          filterPatterns:
+            - eventName: [REMOVE]
   # Discord
   discordConnect:
     handler: src/index.discordConnectHandler
