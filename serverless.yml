@@ -181,3 +181,11 @@ functions:
           path: /discord/connect
           method: post
           private: true
+  # League Hub
+  leagueHubEnrollment:
+    handler: src/index.leagueHubEnrollmentHandler
+    events:
+      - http:
+          path: /league/hub/enrollment
+          method: post
+          private: true
