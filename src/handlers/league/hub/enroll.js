@@ -14,7 +14,7 @@ import { InsufficientDataError } from '~/errors'
  *   }
  *   faceItId: string
  *   user {
- *     birthday: string yyyy-mm-dd
+ *     birthdate: string yyyy-mm-dd
  *     displayName: string
  *     country: string
  *   }
@@ -34,10 +34,10 @@ const handler = async ({ user, body }, res) => {
   }
   await addGuildMemberRole(discord.id, roleId)
 
-  const { displayName, birthday, country } = player
+  const { displayName, birthdate, country } = player
   await updateStudentByEmail(user.email, {
     displayName,
-    metadata: { birthday, country, valorant, faceItId, leagueHubEnrolled: true },
+    metadata: { birthdate, country, valorant, faceItId, leagueHubEnrolled: true },
   })
 
   res.json({ enrolled: true })
