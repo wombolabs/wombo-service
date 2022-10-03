@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/wombolabs/wombo-service/compare/v1.4.0...v1.5.0) (2022-10-03)
+
+
+### Features
+
+* add endpoint for league hub enrollment ([0373eea](https://github.com/wombolabs/wombo-service/commit/0373eea6960bcd8a1d602f4ae41ee59108f1cfc2))
+
 # [1.4.0](https://github.com/wombolabs/wombo-service/compare/v1.3.0...v1.4.0) (2022-09-01)
 
 
