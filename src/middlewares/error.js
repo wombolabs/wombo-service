@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/serverless'
-import { ValidationError } from '~/errors'
+import { ResourceNotFoundError, ValidationError } from '~/errors'
 
 /**
  * @callback nextCallback
@@ -14,7 +14,7 @@ import { ValidationError } from '~/errors'
  */
 // eslint-disable-next-line no-unused-vars
 export function errorMiddleware(error, req, res, next) {
-  if (!(error instanceof ValidationError)) {
+  if (!(error instanceof ValidationError) && !(error instanceof ResourceNotFoundError)) {
     Sentry.captureException(error)
   }
 
