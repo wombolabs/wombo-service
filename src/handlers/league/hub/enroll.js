@@ -14,7 +14,7 @@ import { InsufficientDataError } from '~/errors'
  *   }
  *   faceItId: string
  *   user {
- *     birthdate: string yyyy-mm-dd
+ *     birthdate: string yyyy/mm/dd
  *     displayName: string
  *     country: string
  *   }
