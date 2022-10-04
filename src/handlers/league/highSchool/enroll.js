@@ -9,16 +9,18 @@ import { InsufficientDataError } from '~/errors'
  * body {
  *   highSchoolId: string uuid
  *   teamName: string
+ *   videoGameId: string uuid
  *   user {
- *     birthdate: string yyyy-mm-dd
+ *     birthdate: string yyyy/mm/dd
  *     displayName: string
  *     cellphone: string
  *     country: string
+ *     state: string
  *   }
  * }
  */
 const handler = async ({ user, body }, res) => {
-  const { highSchoolId, teamName, user: player = {} } = body
+  const { highSchoolId, videoGameId, teamName, user: player = {} } = body
 
   const { discord = {} } = user
   if (discord?.id == null || discord?.accessToken == null || !discord?.scope.includes('guilds.join')) {
@@ -27,10 +29,19 @@ const handler = async ({ user, body }, res) => {
 
   await addGuildMemberRole(discord.id, discordConfig.leagueHighSchoolRoleId)
 
-  const { displayName, birthdate, cellphone, country } = player
+  const { displayName, birthdate, cellphone, country, state } = player
   await updateStudentByEmail(user.email, {
     displayName,
-    metadata: { birthdate, cellphone, country, highSchoolId, teamName, leagueHighSchoolEnrolled: true },
+    metadata: {
+      videoGameId,
+      birthdate,
+      cellphone,
+      country,
+      state,
+      highSchoolId,
+      teamName,
+      leagueHighSchoolEnrolled: true,
+    },
   })
 
   res.json({ enrolled: true })
