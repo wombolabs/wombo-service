@@ -1,8 +1,10 @@
+<div align='center'>
+  <img width="30%" src="https://www.datocms-assets.com/66310/1650468917-img_main_logo.svg" />
+</div>
+
 # wombo-api-service
 
-# CockroachDB
-
-# Prisma
+# Prisma with CockroachDB
 
 ## Generate Client
 
