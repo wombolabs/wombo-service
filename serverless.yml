@@ -189,3 +189,11 @@ functions:
           path: /league/hub/enrollment
           method: post
           private: true
+  # League High School
+  leagueHighSchoolEnrollment:
+    handler: src/index.leagueHighSchoolEnrollmentHandler
+    events:
+      - http:
+          path: /league/highschool/enrollment
+          method: post
+          private: true
