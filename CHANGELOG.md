@@ -1,3 +1,14 @@
+# [1.6.0](https://github.com/wombolabs/wombo-service/compare/v1.5.0...v1.6.0) (2022-10-07)
+
+
+### Features
+
+* add endpoint for league highschool enrollment ([41dc52e](https://github.com/wombolabs/wombo-service/commit/41dc52effac55916523a4eebdd7c08500baf3426))
+* add endpoint for league hub enrollment ([9e12283](https://github.com/wombolabs/wombo-service/commit/9e12283b99efb34d61c9bc9e2bccfd7f41f5f8fb))
+* add endpoint for league hub enrollment ([7e6aef6](https://github.com/wombolabs/wombo-service/commit/7e6aef631397160a62705438c0962ff5436ea419))
+* update dependencies ([f095136](https://github.com/wombolabs/wombo-service/commit/f095136f9ff9671f01cbae5ae818b78d42f15038))
+* update dependencies ([59cd8d8](https://github.com/wombolabs/wombo-service/commit/59cd8d8397b043f1f7f4824ec19be69d6b4fd63c))
+
 # [1.5.0](https://github.com/wombolabs/wombo-service/compare/v1.4.0...v1.5.0) (2022-10-03)
 
 
