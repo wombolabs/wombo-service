@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/wombolabs/wombo-service/compare/v1.6.0...v1.7.0) (2022-10-12)
+
+
+### Features
+
+* add field on enroll highschool league ([14c920e](https://github.com/wombolabs/wombo-service/commit/14c920e9060b64a6a9ce85241ad9940a91d99454))
+* update dependencies ([aca4110](https://github.com/wombolabs/wombo-service/commit/aca4110b5e74399ecd00d0c9e8624e0c4e73121f))
+
 # [1.6.0](https://github.com/wombolabs/wombo-service/compare/v1.5.0...v1.6.0) (2022-10-07)
 
 
