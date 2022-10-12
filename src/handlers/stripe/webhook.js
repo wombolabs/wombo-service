@@ -32,7 +32,7 @@ const handleChargeSucceeded = async ({ data }) => {
   const { studentId, coachId, paymentType } = metadata
 
   if (paymentType !== 'donation') {
-    const error = new Error('Handler charge.succeeded only for order type donation')
+    const error = new Error('Handler charge.succeeded only for order type donation.')
     error.statusCode = 202
     throw error
   }
@@ -71,11 +71,6 @@ const handleChargeSucceeded = async ({ data }) => {
   }
 
   await prisma.order.create({ data: order })
-
-  const { discord = {} } = await getStudentById(studentId, ['discord'])
-  if (discord?.id == null || discord?.accessToken == null || !discord?.scope.includes('guilds.join')) {
-    throw new InsufficientDataError(`Discord required fields are missing for student ${studentId}.`)
-  }
 }
 
 const handleInvoicePaymentSucceeded = async ({ data }) => {
@@ -207,6 +202,11 @@ const handleSubscriptionUpdated = async ({ data }) => {
   const { id: subscriptionId, cancel_at_period_end: cancelAtPeriodEnd } = stripePayload
 
   const orderId = await getOrderIdBySubscriptionId(subscriptionId)
+  if (!orderId) {
+    const error = new Error('Handler customer.subscription.updated only for subscription cancellation.')
+    error.statusCode = 202
+    throw error
+  }
 
   await prisma.order.update({ where: { id: orderId }, data: { cancelAtPeriodEnd } })
 }

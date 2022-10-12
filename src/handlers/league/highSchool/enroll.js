@@ -8,6 +8,7 @@ import { InsufficientDataError } from '~/errors'
 /**
  * body {
  *   highSchoolId: string uuid
+ *   highSchoolStudyYear: number
  *   teamName: string
  *   videoGameId: string uuid
  *   user {
@@ -20,7 +21,7 @@ import { InsufficientDataError } from '~/errors'
  * }
  */
 const handler = async ({ user, body }, res) => {
-  const { highSchoolId, videoGameId, teamName, user: player = {} } = body
+  const { highSchoolId, highSchoolStudyYear, videoGameId, teamName, user: player = {} } = body
 
   const { discord = {} } = user
   if (discord?.id == null || discord?.accessToken == null || !discord?.scope.includes('guilds.join')) {
@@ -39,6 +40,7 @@ const handler = async ({ user, body }, res) => {
       country,
       state,
       highSchoolId,
+      highSchoolStudyYear,
       teamName,
       leagueHighSchoolEnrolled: true,
     },
