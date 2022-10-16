@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/wombolabs/wombo-service/compare/v1.7.0...v1.8.0) (2022-10-16)
+
+
+### Features
+
+* add endpoint for listing enrolled users on hub and highschool leagues ([dae95e5](https://github.com/wombolabs/wombo-service/commit/dae95e5a36e462dd211cef98dcc50d7463866186))
+
 # [1.7.0](https://github.com/wombolabs/wombo-service/compare/v1.6.0...v1.7.0) (2022-10-12)
 
 
