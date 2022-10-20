@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/wombolabs/wombo-service/compare/v1.8.0...v1.9.0) (2022-10-20)
+
+
+### Features
+
+* update deploy pipeline ([74b9d7a](https://github.com/wombolabs/wombo-service/commit/74b9d7a4b566d1b9c032260d265c3f7e08117ed6))
+
 # [1.8.0](https://github.com/wombolabs/wombo-service/compare/v1.7.0...v1.8.0) (2022-10-16)
 
 
