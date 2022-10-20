@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/wombolabs/wombo-service/compare/v1.9.0...v1.10.0) (2022-10-20)
+
+
+### Features
+
+* update serverless configuration and dependencies ([ac12a00](https://github.com/wombolabs/wombo-service/commit/ac12a00975b8b05152099fa3207cb25e6e47ce20))
+
 # [1.9.0](https://github.com/wombolabs/wombo-service/compare/v1.8.0...v1.9.0) (2022-10-20)
 
 
