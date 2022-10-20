@@ -1,47 +1,51 @@
-import { discord as discordConfig } from '~/config'
-import { addGuildMemberRole } from '~/services/discord'
+// import { discord as discordConfig } from '~/config'
+// import { addGuildMemberRole } from '~/services/discord'
 import { buildHandler } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
 import { updateStudentByEmail } from '~/services/students'
-import { InsufficientDataError } from '~/errors'
+// import { InsufficientDataError } from '~/errors'
 
 /**
  * body {
- *   highSchoolId: string uuid
- *   highSchoolStudyYear: number
+ *   highSchoolName: string
+ *   highSchoolYear: number
  *   teamName: string
- *   videoGameId: string uuid
+ *   videoGames: [string]
  *   user {
  *     birthdate: string yyyy/mm/dd
  *     displayName: string
  *     cellphone: string
  *     country: string
  *     state: string
+ *     city: string
  *   }
  * }
  */
 const handler = async ({ user, body }, res) => {
-  const { highSchoolId, highSchoolStudyYear, videoGameId, teamName, user: player = {} } = body
+  const { highSchoolName, highSchoolYear, videoGames, teamName, teamHaveCoach, user: player = {} } = body
 
-  const { discord = {} } = user
+  // WIP
+  /* const { discord = {} } = user
   if (discord?.id == null || discord?.accessToken == null || !discord?.scope.includes('guilds.join')) {
     throw new InsufficientDataError(`Discord required fields are missing for player ${user.email}.`)
   }
 
-  await addGuildMemberRole(discord.id, discordConfig.leagueHighSchoolRoleId)
+  await addGuildMemberRole(discord.id, discordConfig.leagueHighSchoolRoleId) */
 
-  const { displayName, birthdate, cellphone, country, state } = player
+  const { displayName, birthdate, cellphone, country, state, city } = player
   await updateStudentByEmail(user.email, {
     displayName,
     metadata: {
-      videoGameId,
+      videoGames,
       birthdate,
       cellphone,
       country,
       state,
-      highSchoolId,
-      highSchoolStudyYear,
+      city,
+      highSchoolName,
+      highSchoolYear,
       teamName,
+      teamHaveCoach,
       leagueHighSchoolEnrolled: true,
     },
   })
