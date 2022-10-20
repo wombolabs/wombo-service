@@ -6,6 +6,7 @@ plugins:
   - serverless-domain-manager
   - serverless-webpack-prisma
   - serverless-deployment-bucket
+  - serverless-prune-plugin
   - serverless-offline
 
 package:
@@ -15,6 +16,7 @@ provider:
   name: aws
   runtime: nodejs16.x
   stage: ${opt:stage}
+  versionFunctions: false
   deploymentBucket:
     name: ${self:service}-${opt:stage}-deployment-bucket
   apiGateway:
