@@ -41,6 +41,7 @@ provider:
     DISCORD_BOT_TOKEN: ${env:DISCORD_BOT_TOKEN}
     DISCORD_GUILD_WOMBO: ${env:DISCORD_GUILD_WOMBO}
     BOOKING_DATABASE_URL: ${env:BOOKING_DATABASE_URL}
+    FACEIT_API_KEY: ${env:FACEIT_API_KEY}
 
 custom:
   serverless-offline:
@@ -211,5 +212,13 @@ functions:
     events:
       - http:
           path: /league/highschool/enrollment
+          method: get
+          private: true
+  # Providers
+  faceItHubsLeaderboard:
+    handler: src/index.faceItHubsLeaderboardHandler
+    events:
+      - http:
+          path: /providers/faceit/hubsleaderboard
           method: get
           private: true
