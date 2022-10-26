@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/wombolabs/wombo-service/compare/v1.10.0...v1.11.0) (2022-10-26)
+
+
+### Features
+
+* **highschool:** add discord role on enrollment ([9581403](https://github.com/wombolabs/wombo-service/commit/9581403f159a5059d34d56f3bdc8e547525cb432))
+
 # [1.10.0](https://github.com/wombolabs/wombo-service/compare/v1.9.0...v1.10.0) (2022-10-20)
 
 
