@@ -13,5 +13,5 @@ export const discord = {
     high: '1025102985119940709',
     radiant: '1025102759332171857',
   },
-  leagueHighSchoolRoleId: '',
+  leagueHighSchoolRoleId: '1034699612906344508',
 }
