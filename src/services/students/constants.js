@@ -4,7 +4,7 @@ export const DEFAULT_STUDENT_FIELDS = [
   'username',
   'displayName',
   'discordJoinDate',
-  'timeZone',
+  'metadata',
   'lastLogin',
   'createdAt',
 ]

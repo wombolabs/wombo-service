@@ -31,7 +31,6 @@ jobs:
           aws-region: us-east-1
       - id: do-test-deploy
         name: Deploy
-        run: npm run deploy:test
         env:
           SUBDOMAIN: ${{ secrets.SUBDOMAIN_TEST }}
           DEFAULT_API_KEY: ${{ secrets.API_SERVICE_API_KEY_TEST }}
@@ -48,3 +47,5 @@ jobs:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_GUILD_WOMBO: ${{ secrets.DISCORD_GUILD_WOMBO }}
           BOOKING_DATABASE_URL: ${{ secrets.BOOKING_DATABASE_URL_TEST }}
+          FACEIT_API_KEY: ${{ secrets.FACEIT_API_KEY }}
+        run: npm run deploy:test

@@ -58,7 +58,6 @@ jobs:
           aws-region: us-east-1
       - id: do-production-build
         name: Build
-        run: npm run build:production
         env:
           SUBDOMAIN: ${{ secrets.SUBDOMAIN_STAGING }}
           DEFAULT_API_KEY: ${{ secrets.API_SERVICE_API_KEY_STAGING }}
@@ -75,9 +74,10 @@ jobs:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_GUILD_WOMBO: ${{ secrets.DISCORD_GUILD_WOMBO }}
           BOOKING_DATABASE_URL: ${{ secrets.BOOKING_DATABASE_URL_STAGING }}
+          FACEIT_API_KEY: ${{ secrets.FACEIT_API_KEY }}
+        run: npm run build:production
       - id: do-staging-deploy
         name: Deploy
-        run: npm run deploy:staging
         env:
           SUBDOMAIN: ${{ secrets.SUBDOMAIN_STAGING }}
           DEFAULT_API_KEY: ${{ secrets.API_SERVICE_API_KEY_STAGING }}
@@ -94,3 +94,5 @@ jobs:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_GUILD_WOMBO: ${{ secrets.DISCORD_GUILD_WOMBO }}
           BOOKING_DATABASE_URL: ${{ secrets.BOOKING_DATABASE_URL_STAGING }}
+          FACEIT_API_KEY: ${{ secrets.FACEIT_API_KEY }}
+        run: npm run deploy:staging
