@@ -51,7 +51,7 @@ jobs:
         run: npm ci
       - id: configure-aws-credentials
         name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -75,6 +75,11 @@ jobs:
           DISCORD_GUILD_WOMBO: ${{ secrets.DISCORD_GUILD_WOMBO }}
           BOOKING_DATABASE_URL: ${{ secrets.BOOKING_DATABASE_URL_STAGING }}
           FACEIT_API_KEY: ${{ secrets.FACEIT_API_KEY }}
+          FACEIT_USER_TOKEN: ${{ secrets.FACEIT_USER_TOKEN }}
+          TWITTER_APP_TOKEN: ${{ secrets.TWITTER_APP_TOKEN }}
+          TWITTER_APP_SECRET: ${{ secrets.TWITTER_APP_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
         run: npm run build:production
       - id: do-staging-deploy
         name: Deploy
@@ -95,4 +100,9 @@ jobs:
           DISCORD_GUILD_WOMBO: ${{ secrets.DISCORD_GUILD_WOMBO }}
           BOOKING_DATABASE_URL: ${{ secrets.BOOKING_DATABASE_URL_STAGING }}
           FACEIT_API_KEY: ${{ secrets.FACEIT_API_KEY }}
+          FACEIT_USER_TOKEN: ${{ secrets.FACEIT_USER_TOKEN }}
+          TWITTER_APP_TOKEN: ${{ secrets.TWITTER_APP_TOKEN }}
+          TWITTER_APP_SECRET: ${{ secrets.TWITTER_APP_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
         run: npm run deploy:staging
