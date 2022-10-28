@@ -22,4 +22,5 @@ export const faceit = {
     },
   ],
   apiKey: process.env.FACEIT_API_KEY,
+  userToken: process.env.FACEIT_USER_TOKEN,
 }

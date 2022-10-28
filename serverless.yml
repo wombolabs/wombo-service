@@ -42,6 +42,11 @@ provider:
     DISCORD_GUILD_WOMBO: ${env:DISCORD_GUILD_WOMBO}
     BOOKING_DATABASE_URL: ${env:BOOKING_DATABASE_URL}
     FACEIT_API_KEY: ${env:FACEIT_API_KEY}
+    FACEIT_USER_TOKEN: ${env:FACEIT_USER_TOKEN}
+    TWITTER_APP_TOKEN: ${env:TWITTER_APP_TOKEN}
+    TWITTER_APP_SECRET: ${env:TWITTER_APP_SECRET}
+    TWITTER_ACCESS_TOKEN: ${env:TWITTER_ACCESS_TOKEN}
+    TWITTER_ACCESS_SECRET: ${env:TWITTER_ACCESS_SECRET}
 
 custom:
   serverless-offline:
@@ -62,6 +67,11 @@ custom:
     basePath: ''
     stage: ${self:provider.stage}
     createRoute53Record: true
+  faceItBotEnabled:
+    local: true
+    test: false
+    staging: false
+    production: true
 
 functions:
   # Coaches
@@ -222,3 +232,16 @@ functions:
           path: /providers/faceit/hubsleaderboard
           method: get
           private: true
+  faceItHubsQueue:
+    handler: src/index.faceItHubsQueueHandler
+    events:
+      - http:
+          path: /providers/faceit/hubsqueue
+          method: get
+          private: true
+  faceItBotHubsQueue:
+    handler: src/index.faceItBotHubsQueueHandler
+    events:
+      - schedule:
+          rate: rate(15 minutes)
+          enabled: ${self:custom.faceItBotEnabled.${self:provider.stage}}
