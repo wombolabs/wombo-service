@@ -1,3 +1,13 @@
+# [1.12.0](https://github.com/wombolabs/wombo-service/compare/v1.11.0...v1.12.0) (2022-10-28)
+
+
+### Features
+
+* add bot for notify faceit hub queues on twitter ([1cfd926](https://github.com/wombolabs/wombo-service/commit/1cfd9261542178974d4b7305ee81114ce2e82e09))
+* add endpoint to get faceit hubs leaderboard ([e497929](https://github.com/wombolabs/wombo-service/commit/e4979296868ca8d9c8cc2a5bf8dcdfbacdf4ae43))
+* get ongoing hub leaderboards ([cbefa1e](https://github.com/wombolabs/wombo-service/commit/cbefa1ef610ae011b85ab824002a98b003d4de60))
+* update faceit leagues leaderboard ([b728653](https://github.com/wombolabs/wombo-service/commit/b728653a775850a429162769ed18ac6ffa816968))
+
 # [1.11.0](https://github.com/wombolabs/wombo-service/compare/v1.10.0...v1.11.0) (2022-10-26)
 
 
