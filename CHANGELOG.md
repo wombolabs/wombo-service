@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/wombolabs/wombo-service/compare/v1.12.0...v1.13.0) (2022-11-04)
+
+
+### Features
+
+* **highschool:** add player role on model ([950d81c](https://github.com/wombolabs/wombo-service/commit/950d81cb6cf0d7a2fd13b8618ef604c06d5f45b4))
+
 # [1.12.0](https://github.com/wombolabs/wombo-service/compare/v1.11.0...v1.12.0) (2022-10-28)
 
 
