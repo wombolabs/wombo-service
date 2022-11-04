@@ -11,6 +11,7 @@ import { InsufficientDataError } from '~/errors'
  *   highSchoolYear: number
  *   teamName: string
  *   videoGames: [string]
+ *   role: PLAYER | CAPTAIN
  *   user {
  *     birthdate: string yyyy/mm/dd
  *     displayName: string
@@ -22,7 +23,7 @@ import { InsufficientDataError } from '~/errors'
  * }
  */
 const handler = async ({ user, body }, res) => {
-  const { highSchoolName, highSchoolYear, videoGames, teamName, teamHaveCoach, user: player = {} } = body
+  const { highSchoolName, highSchoolYear, videoGames, teamName, teamHaveCoach, role, user: player = {} } = body
 
   const { discord = {} } = user
   if (discord?.id == null || discord?.accessToken == null || !discord?.scope.includes('guilds.join')) {
@@ -45,6 +46,7 @@ const handler = async ({ user, body }, res) => {
       highSchoolYear,
       teamName,
       teamHaveCoach,
+      role,
       leagueHighSchoolEnrolled: true,
     },
   })
