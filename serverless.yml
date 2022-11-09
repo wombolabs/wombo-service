@@ -72,6 +72,10 @@ custom:
     test: false
     staging: false
     production: true
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 0
 
 functions:
   # Coaches
