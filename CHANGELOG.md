@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/wombolabs/wombo-service/compare/v1.13.0...v1.14.0) (2022-11-09)
+
+
+### Features
+
+* add serverless prune configuration ([e8cb108](https://github.com/wombolabs/wombo-service/commit/e8cb108ab70a08ae574148c964dfda255d570b98))
+
 # [1.13.0](https://github.com/wombolabs/wombo-service/compare/v1.12.0...v1.13.0) (2022-11-04)
 
 
