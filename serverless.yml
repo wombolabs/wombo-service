@@ -129,6 +129,13 @@ functions:
           path: /students/me
           method: put
           private: true
+  setStudentFreePass:
+    handler: src/index.setStudentMeFreePassHandler
+    events:
+      - http:
+          path: /students/me/freepass
+          method: post
+          private: true
   # Tiers
   getTier:
     handler: src/index.getTierHandler
