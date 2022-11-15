@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/wombolabs/wombo-service/compare/v1.14.0...v1.15.0) (2022-11-15)
+
+
+### Features
+
+* add endpoint to set free pass on student ([8ec50a9](https://github.com/wombolabs/wombo-service/commit/8ec50a951e1f5de89471d8f55395c39c105f198e))
+
 # [1.14.0](https://github.com/wombolabs/wombo-service/compare/v1.13.0...v1.14.0) (2022-11-09)
 
 
