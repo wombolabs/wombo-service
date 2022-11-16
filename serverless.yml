@@ -205,7 +205,7 @@ functions:
           path: /discord/connect
           method: post
           private: true
-  # League Hub
+  # League Hub Valorant
   leagueHubEnrollment:
     handler: src/index.leagueHubEnrollmentHandler
     events:
@@ -218,6 +218,21 @@ functions:
     events:
       - http:
           path: /league/hub/enrollment
+          method: get
+          private: true
+  # League Hub League of Legends
+  leagueHubLoLEnrollment:
+    handler: src/index.leagueHubLoLEnrollmentHandler
+    events:
+      - http:
+          path: /league/hub/lol/enrollment
+          method: post
+          private: true
+  leagueHubLoLEnrolled:
+    handler: src/index.leagueHubLoLEnrolledHandler
+    events:
+      - http:
+          path: /league/hub/lol/enrollment
           method: get
           private: true
   # League High School

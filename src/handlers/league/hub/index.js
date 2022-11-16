@@ -1,2 +1,2 @@
-export * from './enroll'
-export * from './listEnrolled'
+export * from './valorant'
+export * from './leagueOfLegends'
