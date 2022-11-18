@@ -16,7 +16,7 @@ export const discord = {
   leagueHighSchoolRoleId: '1034699612906344508',
   leagueHubLoLRoleIds: {
     free: '1042534521096122378',
-    mid: '1042534447116980274',
+    high: '1042534447116980274',
     promise: '1042533812384563311',
   },
 }
