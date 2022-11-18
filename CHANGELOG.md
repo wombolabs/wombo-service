@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/wombolabs/wombo-service/compare/v1.16.0...v1.17.0) (2022-11-18)
+
+
+### Features
+
+* add endpoint to listing enrolled users with free pass ([4d8d744](https://github.com/wombolabs/wombo-service/commit/4d8d7447c96ade4c46bc87d6a47a9f8eb1f66b5b))
+
 # [1.16.0](https://github.com/wombolabs/wombo-service/compare/v1.15.0...v1.16.0) (2022-11-16)
 
 
