@@ -1,3 +1,12 @@
+# [1.18.0](https://github.com/wombolabs/wombo-service/compare/v1.17.0...v1.18.0) (2022-11-29)
+
+
+### Features
+
+* add endpoint to get neatqueue channels leaderboard and queue - add scheduler to tweet neatqueue channels queue ([bc766e9](https://github.com/wombolabs/wombo-service/commit/bc766e921f70dc829f84a2b05d9888ddabbeda2f))
+* update dependencies ([ab9f9fc](https://github.com/wombolabs/wombo-service/commit/ab9f9fc0f20a8bd959036f63e4ac99531d69a4d4))
+* update serverless configuration ([adf6dd9](https://github.com/wombolabs/wombo-service/commit/adf6dd945e05b44bfa067fa223d2c591a122a6e7))
+
 # [1.17.0](https://github.com/wombolabs/wombo-service/compare/v1.16.0...v1.17.0) (2022-11-18)
 
 
