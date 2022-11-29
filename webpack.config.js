@@ -1,15 +1,14 @@
-const path = require('path');
-const webpack = require('webpack');
-const CopyPlugin = require('copy-webpack-plugin');
-const slsw = require('serverless-webpack');
-const nodeExternals = require('webpack-node-externals');
+const path = require('path')
+const webpack = require('webpack')
+const CopyPlugin = require('copy-webpack-plugin')
+const slsw = require('serverless-webpack')
+const nodeExternals = require('webpack-node-externals')
 
-const isLocal = slsw.lib.webpack.isLocal
-  || (slsw.lib.options && slsw.lib.options.stage === 'local');
+const isLocal = slsw.lib.webpack.isLocal || (slsw.lib.options && slsw.lib.options.stage === 'local')
 
 module.exports = {
   entry: slsw.lib.entries,
-  target: 'node',
+  externalsPresets: { node: true },
   devtool: isLocal ? 'inline-cheap-module-source-map' : 'source-map',
   mode: isLocal ? 'development' : 'production',
   node: {
@@ -42,4 +41,4 @@ module.exports = {
       patterns: ['openapi-schema.yaml'],
     }),
   ],
-};
+}
