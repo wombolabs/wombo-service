@@ -11,6 +11,9 @@ plugins:
 
 package:
   individually: true
+  patterns:
+    - '!node_modules/**'
+    - '!prisma/**'
 
 provider:
   name: aws
