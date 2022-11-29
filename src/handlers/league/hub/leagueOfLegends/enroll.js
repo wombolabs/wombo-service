@@ -27,7 +27,7 @@ const handler = async ({ user, body }, res) => {
     throw new InsufficientDataError(`Discord required fields are missing for player ${user.email}.`)
   }
 
-  const roleId = discordConfig.leagueHubLoLRoleIds[leagueOfLegends?.league?.toLowerCase()]
+  const roleId = discordConfig.lolInHouseRoleIds[leagueOfLegends?.league?.toLowerCase()]
   if (!roleId) {
     throw new InsufficientDataError(`League of Legends required fields are missing for player ${user.email}.`)
   }

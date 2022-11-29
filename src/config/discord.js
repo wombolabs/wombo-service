@@ -14,9 +14,15 @@ export const discord = {
     radiant: '1025102759332171857',
   },
   leagueHighSchoolRoleId: '1034699612906344508',
-  leagueHubLoLRoleIds: {
+  lolInHouseRoleIds: {
     free: '1042534521096122378',
     high: '1042534447116980274',
     promise: '1042533812384563311',
+  },
+  lolInHouseChannelIds: {
+    free: '1042590074463854632',
+    high: '1042893448514109510',
+    promise: '1042589468500164698',
+    pro: '1042889168793120828',
   },
 }

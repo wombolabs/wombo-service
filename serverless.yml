@@ -19,6 +19,7 @@ provider:
   versionFunctions: false
   deploymentBucket:
     name: ${self:service}-${opt:stage}-deployment-bucket
+    maxPreviousDeploymentArtifacts: 1
   apiGateway:
     minimumCompressionSize: 512 # Compress response when larger than specified size in bytes
     shouldStartNameWithService: true
@@ -43,10 +44,15 @@ provider:
     BOOKING_DATABASE_URL: ${env:BOOKING_DATABASE_URL}
     FACEIT_API_KEY: ${env:FACEIT_API_KEY}
     FACEIT_USER_TOKEN: ${env:FACEIT_USER_TOKEN}
-    TWITTER_APP_TOKEN: ${env:TWITTER_APP_TOKEN}
-    TWITTER_APP_SECRET: ${env:TWITTER_APP_SECRET}
-    TWITTER_ACCESS_TOKEN: ${env:TWITTER_ACCESS_TOKEN}
-    TWITTER_ACCESS_SECRET: ${env:TWITTER_ACCESS_SECRET}
+    TWITTER_BOT_VAL_APP_TOKEN: ${env:TWITTER_BOT_VAL_APP_TOKEN}
+    TWITTER_BOT_VAL_APP_SECRET: ${env:TWITTER_BOT_VAL_APP_SECRET}
+    TWITTER_BOT_VAL_ACCESS_TOKEN: ${env:TWITTER_BOT_VAL_ACCESS_TOKEN}
+    TWITTER_BOT_VAL_ACCESS_SECRET: ${env:TWITTER_BOT_VAL_ACCESS_SECRET}
+    TWITTER_BOT_LOL_APP_TOKEN: ${env:TWITTER_BOT_LOL_APP_TOKEN}
+    TWITTER_BOT_LOL_APP_SECRET: ${env:TWITTER_BOT_LOL_APP_SECRET}
+    TWITTER_BOT_LOL_ACCESS_TOKEN: ${env:TWITTER_BOT_LOL_ACCESS_TOKEN}
+    TWITTER_BOT_LOL_ACCESS_SECRET: ${env:TWITTER_BOT_LOL_ACCESS_SECRET}
+    NEATQUEUE_API_KEY:  ${env:NEATQUEUE_API_KEY}
 
 custom:
   serverless-offline:
@@ -68,7 +74,12 @@ custom:
     stage: ${self:provider.stage}
     createRoute53Record: true
   faceItBotEnabled:
-    local: true
+    local: false
+    test: false
+    staging: false
+    production: true
+  neatQueueBotEnabled:
+    local: false
     test: false
     staging: false
     production: true
@@ -257,7 +268,7 @@ functions:
           path: /league/highschool/enrollment
           method: get
           private: true
-  # Providers
+  # Provider: Face It
   faceItHubsLeaderboard:
     handler: src/index.faceItHubsLeaderboardHandler
     events:
@@ -278,3 +289,24 @@ functions:
       - schedule:
           rate: rate(15 minutes)
           enabled: ${self:custom.faceItBotEnabled.${self:provider.stage}}
+  # Provider: Neat Queue
+  neatQueueChannelsLeaderboard:
+    handler: src/index.neatQueueChannelsLeaderboardHandler
+    events:
+      - http:
+          path: /providers/neatqueue/channelsleaderboard
+          method: get
+          private: true
+  neatQueueChannelsQueue:
+    handler: src/index.neatQueueChannelsQueueHandler
+    events:
+      - http:
+          path: /providers/neatqueue/channelsqueue
+          method: get
+          private: true
+  neatQueueBotChannelsQueue:
+    handler: src/index.neatQueueBotChannelsQueueHandler
+    events:
+      - schedule:
+          rate: rate(15 minutes)
+          enabled: ${self:custom.neatQueueBotEnabled.${self:provider.stage}}

@@ -2,6 +2,7 @@ import R from 'ramda'
 import * as Sentry from '@sentry/serverless'
 import { listHubsQueue } from '~/services/providers/faceit'
 import { tweet } from '~/services/providers/twitter'
+import { twitter as twitterConfig } from '~/config'
 
 const handler = async () => {
   try {
@@ -33,7 +34,7 @@ const handler = async () => {
 
     if (!R.isEmpty(msg)) {
       const text = `${msg}\n\n#WomboProHub`
-      await tweet(text)
+      await tweet(twitterConfig.account.wombotValorant.credentials, text)
     }
   } catch (error) {
     Sentry.captureException(error)

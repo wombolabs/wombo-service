@@ -76,10 +76,15 @@ jobs:
           BOOKING_DATABASE_URL: ${{ secrets.BOOKING_DATABASE_URL_STAGING }}
           FACEIT_API_KEY: ${{ secrets.FACEIT_API_KEY }}
           FACEIT_USER_TOKEN: ${{ secrets.FACEIT_USER_TOKEN }}
-          TWITTER_APP_TOKEN: ${{ secrets.TWITTER_APP_TOKEN }}
-          TWITTER_APP_SECRET: ${{ secrets.TWITTER_APP_SECRET }}
-          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          TWITTER_BOT_VAL_APP_TOKEN: ${{ secrets.TWITTER_BOT_VAL_APP_TOKEN }}
+          TWITTER_BOT_VAL_APP_SECRET: ${{ secrets.TWITTER_BOT_VAL_APP_SECRET }}
+          TWITTER_BOT_VAL_ACCESS_TOKEN: ${{ secrets.TWITTER_BOT_VAL_ACCESS_TOKEN }}
+          TWITTER_BOT_VAL_ACCESS_SECRET: ${{ secrets.TWITTER_BOT_VAL_ACCESS_SECRET }}
+          TWITTER_BOT_LOL_APP_TOKEN: ${{ secrets.TWITTER_BOT_LOL_APP_TOKEN }}
+          TWITTER_BOT_LOL_APP_SECRET: ${{ secrets.TWITTER_BOT_LOL_APP_SECRET }}
+          TWITTER_BOT_LOL_ACCESS_TOKEN: ${{ secrets.TWITTER_BOT_LOL_ACCESS_TOKEN }}
+          TWITTER_BOT_LOL_ACCESS_SECRET: ${{ secrets.TWITTER_BOT_LOL_ACCESS_SECRET }}
+          NEATQUEUE_API_KEY: ${{ secrets.NEATQUEUE_API_KEY }}
         run: npm run build:production
       - id: do-staging-deploy
         name: Deploy
@@ -101,8 +106,13 @@ jobs:
           BOOKING_DATABASE_URL: ${{ secrets.BOOKING_DATABASE_URL_STAGING }}
           FACEIT_API_KEY: ${{ secrets.FACEIT_API_KEY }}
           FACEIT_USER_TOKEN: ${{ secrets.FACEIT_USER_TOKEN }}
-          TWITTER_APP_TOKEN: ${{ secrets.TWITTER_APP_TOKEN }}
-          TWITTER_APP_SECRET: ${{ secrets.TWITTER_APP_SECRET }}
-          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          TWITTER_BOT_VAL_APP_TOKEN: ${{ secrets.TWITTER_BOT_VAL_APP_TOKEN }}
+          TWITTER_BOT_VAL_APP_SECRET: ${{ secrets.TWITTER_BOT_VAL_APP_SECRET }}
+          TWITTER_BOT_VAL_ACCESS_TOKEN: ${{ secrets.TWITTER_BOT_VAL_ACCESS_TOKEN }}
+          TWITTER_BOT_VAL_ACCESS_SECRET: ${{ secrets.TWITTER_BOT_VAL_ACCESS_SECRET }}
+          TWITTER_BOT_LOL_APP_TOKEN: ${{ secrets.TWITTER_BOT_LOL_APP_TOKEN }}
+          TWITTER_BOT_LOL_APP_SECRET: ${{ secrets.TWITTER_BOT_LOL_APP_SECRET }}
+          TWITTER_BOT_LOL_ACCESS_TOKEN: ${{ secrets.TWITTER_BOT_LOL_ACCESS_TOKEN }}
+          TWITTER_BOT_LOL_ACCESS_SECRET: ${{ secrets.TWITTER_BOT_LOL_ACCESS_SECRET }}
+          NEATQUEUE_API_KEY: ${{ secrets.NEATQUEUE_API_KEY }}
         run: npm run deploy:staging
