@@ -10,6 +10,7 @@ const getHubQueue = async (hubName, hubId) => {
         Authorization: `Bearer ${faceitConfig.userToken}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        'Accept-Encoding': '*',
       },
     })
     return { name: hubName, queue: R.prop('payload')(data) }

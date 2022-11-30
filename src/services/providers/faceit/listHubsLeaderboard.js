@@ -10,6 +10,7 @@ const getOngoingHubLeaderboard = async (hubId) => {
         Authorization: `Bearer ${faceitConfig.apiKey}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        'Accept-Encoding': '*',
       },
     })
     return R.pipe(
@@ -52,6 +53,7 @@ const getHubGeneralLeaderboard = async (hubName, hubId) => {
         Authorization: `Bearer ${faceitConfig.apiKey}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        'Accept-Encoding': '*',
       },
     })
     return { name: hubName, ...R.pick(['items'])(data) }
@@ -82,6 +84,7 @@ const getHubSeasonLeaderboard = async (hubName, hubId, season) => {
         Authorization: `Bearer ${faceitConfig.apiKey}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        'Accept-Encoding': '*',
       },
     })
     return { name: hubName, ...R.pick(['items'])(data) }

@@ -10,6 +10,7 @@ const getChannelQueue = async (channelName, channelId) => {
         Authorization: neatQueueConfig.apiKey,
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        'Accept-Encoding': '*',
       },
     })
 
