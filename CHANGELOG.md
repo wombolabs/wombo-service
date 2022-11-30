@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/wombolabs/wombo-service/compare/v1.18.0...v1.18.1) (2022-11-30)
+
+
+### Bug Fixes
+
+* resolve issue with axios data ([b2c5be5](https://github.com/wombolabs/wombo-service/commit/b2c5be5dfce99cc85a7c10e404479e04cfc4ed7a))
+
 # [1.18.0](https://github.com/wombolabs/wombo-service/compare/v1.17.0...v1.18.0) (2022-11-29)
 
 
