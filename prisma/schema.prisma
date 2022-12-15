@@ -106,23 +106,24 @@ model Coach {
 }
 
 model Student {
-  id              String    @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email           String    @unique
-  username        String?   @unique
+  id              String        @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email           String        @unique
+  username        String?       @unique
   displayName     String?
   password        String?
-  discord         Json      @default("{}")
+  discord         Json          @default("{}")
   discordJoinDate DateTime?
   locale          Language?
   timeZone        String?
   orders          Order[]
-  stripe          Json      @default("{}")
-  metadata        Json      @default("{}")
-  isActive        Boolean   @default(true)
+  stripe          Json          @default("{}")
+  metadata        Json          @default("{}")
+  isActive        Boolean       @default(true)
   lastLogin       DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   deletedAt       DateTime?
+  competitions    Competition[]
 }
 
 model Order {
@@ -196,4 +197,41 @@ model Payment {
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
   deletedAt DateTime?
+}
+
+enum CompetitionType {
+  tournament
+  league
+  hub
+  in_house
+}
+
+enum CompetitionStatus {
+  open
+  in_progress
+  finished
+  coming_soon
+}
+
+enum CompetitionRegistrationStatus {
+  open
+  closed
+  coming_soon
+}
+
+model Competition {
+  id                 String                        @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  codename           String                        @unique
+  type               CompetitionType
+  start              DateTime?
+  end                DateTime?
+  videoGame          String?                       @db.Uuid
+  status             CompetitionStatus
+  registrationStatus CompetitionRegistrationStatus
+  participants       Student[]
+  metadata           Json                          @default("{}")
+  isActive           Boolean                       @default(true)
+  createdAt          DateTime                      @default(now())
+  updatedAt          DateTime                      @updatedAt
+  deletedAt          DateTime?
 }

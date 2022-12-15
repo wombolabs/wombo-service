@@ -64,6 +64,10 @@ custom:
     lambdaPort: ${env:SERVERLESS_OFFLINE_LAMBDA_PORT, 3001}
   webpack:
     includeModules: true
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 0
   domainEnabled:
     local: false
     test: true
@@ -76,20 +80,11 @@ custom:
     basePath: ''
     stage: ${self:provider.stage}
     createRoute53Record: true
-  faceItBotEnabled:
+  competitionBotQueueEnabled:
     local: false
     test: false
     staging: false
-    production: true
-  neatQueueBotEnabled:
-    local: false
-    test: false
-    staging: false
-    production: true
-  prune:
-    automatic: true
-    includeLayers: true
-    number: 0
+    production: false
 
 functions:
   # Coaches
@@ -188,13 +183,6 @@ functions:
           path: /coupons/{name}
           method: get
           private: true
-  createCoupon:
-    handler: src/index.createCouponHandler
-    events:
-      - http:
-          path: /coupons
-          method: post
-          private: true
   # Stripe
   stripeWebhook:
     handler: src/index.stripeWebhookHandler
@@ -226,90 +214,18 @@ functions:
           path: /discord/connect
           method: post
           private: true
-  # League Hub Valorant
-  leagueHubEnrollment:
-    handler: src/index.leagueHubEnrollmentHandler
+  # Competition
+  listCompetitions:
+    handler: src/index.listCompetitionsHandler
     events:
       - http:
-          path: /league/hub/enrollment
-          method: post
-          private: true
-  leagueHubEnrolled:
-    handler: src/index.leagueHubEnrolledHandler
-    events:
-      - http:
-          path: /league/hub/enrollment
+          path: /competitions
           method: get
           private: true
-  # League Hub League of Legends
-  leagueHubLoLEnrollment:
-    handler: src/index.leagueHubLoLEnrollmentHandler
+  getCompetition:
+    handler: src/index.getCompetitionHandler
     events:
       - http:
-          path: /league/hub/lol/enrollment
-          method: post
-          private: true
-  leagueHubLoLEnrolled:
-    handler: src/index.leagueHubLoLEnrolledHandler
-    events:
-      - http:
-          path: /league/hub/lol/enrollment
+          path: /competitions/{codename}
           method: get
           private: true
-  # League High School
-  leagueHighSchoolEnrollment:
-    handler: src/index.leagueHighSchoolEnrollmentHandler
-    events:
-      - http:
-          path: /league/highschool/enrollment
-          method: post
-          private: true
-  leagueHighSchoolEnrolled:
-    handler: src/index.leagueHighSchoolEnrolledHandler
-    events:
-      - http:
-          path: /league/highschool/enrollment
-          method: get
-          private: true
-  # Provider: Face It
-  faceItHubsLeaderboard:
-    handler: src/index.faceItHubsLeaderboardHandler
-    events:
-      - http:
-          path: /providers/faceit/hubsleaderboard
-          method: get
-          private: true
-  faceItHubsQueue:
-    handler: src/index.faceItHubsQueueHandler
-    events:
-      - http:
-          path: /providers/faceit/hubsqueue
-          method: get
-          private: true
-  faceItBotHubsQueue:
-    handler: src/index.faceItBotHubsQueueHandler
-    events:
-      - schedule:
-          rate: rate(15 minutes)
-          enabled: ${self:custom.faceItBotEnabled.${self:provider.stage}}
-  # Provider: Neat Queue
-  neatQueueChannelsLeaderboard:
-    handler: src/index.neatQueueChannelsLeaderboardHandler
-    events:
-      - http:
-          path: /providers/neatqueue/channelsleaderboard
-          method: get
-          private: true
-  neatQueueChannelsQueue:
-    handler: src/index.neatQueueChannelsQueueHandler
-    events:
-      - http:
-          path: /providers/neatqueue/channelsqueue
-          method: get
-          private: true
-  neatQueueBotChannelsQueue:
-    handler: src/index.neatQueueBotChannelsQueueHandler
-    events:
-      - schedule:
-          rate: rate(15 minutes)
-          enabled: ${self:custom.neatQueueBotEnabled.${self:provider.stage}}
