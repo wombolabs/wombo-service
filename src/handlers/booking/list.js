@@ -1,11 +1,17 @@
 import R from 'ramda'
+import * as Sentry from '@sentry/serverless'
 import { listPrivateSessions } from '~/services/booking'
 import { buildHandler } from '~/utils'
 import { serializePrivateSessions } from '~/serializers'
 import { listCoaches } from '~/services/coaches'
 
 const handler = async (_, res) => {
-  let sessions = await listPrivateSessions(true)
+  let sessions = []
+  try {
+    sessions = await listPrivateSessions(true)
+  } catch (error) {
+    Sentry.captureException(error)
+  }
 
   const coaches = await listCoaches({ isActive: true })
 
