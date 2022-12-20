@@ -1,4 +1,5 @@
 import R from 'ramda'
+import * as Sentry from '@sentry/serverless'
 import { getCoachByUsername } from '~/services/coaches'
 import { buildHandler } from '~/utils'
 import { serializeCoach } from '~/serializers'
@@ -12,8 +13,13 @@ const handler = async ({ params: { username }, query }, res) => {
 
   const bookingUserId = result?.metadata?.bookingUserId
   if (typeof withPrivateSessions === 'boolean' && withPrivateSessions && bookingUserId) {
-    const privateSessions = await listPrivateSessionsByUserId(bookingUserId)
-    coach = R.assoc('privateSessions', privateSessions)(coach)
+    try {
+      const privateSessions = await listPrivateSessionsByUserId(bookingUserId)
+      coach = R.assoc('privateSessions', privateSessions)(coach)
+    } catch (error) {
+      Sentry.captureException(error)
+      coach.privateSessions = []
+    }
   }
 
   return res.json(coach)
