@@ -1,13 +1,12 @@
 import axios from 'axios'
 import R from 'ramda'
-import { neatQueue as neatQueueConfig, discord as discordConfig } from '~/config'
 
-const getChannelLeaderboard = async (channelName, channelId) => {
-  const url = `https://host.neatqueue.com:2000/api/channelstats/${discordConfig.guildWombo}/${channelId}`
+const getChannelLeaderboard = async (discordGuild, neatQueueApiKey, channelName, channelId) => {
+  const url = `https://host.neatqueue.com:2000/api/channelstats/${discordGuild}/${channelId}`
   try {
     const { data = [] } = await axios.get(url, {
       headers: {
-        Authorization: neatQueueConfig.apiKey,
+        Authorization: neatQueueApiKey,
         'Content-Type': 'application/json',
         Accept: 'application/json',
         'Accept-Encoding': '*',
@@ -20,8 +19,7 @@ const getChannelLeaderboard = async (channelName, channelId) => {
 
     const items = R.map(
       R.applySpec({
-        id: R.prop('id'),
-        num: R.prop('num'),
+        index: R.prop('num'),
         username: R.prop('name'),
         mmr: R.path(['data', 'mmr']),
         wins: R.path(['data', 'wins']),
@@ -51,9 +49,11 @@ const getChannelLeaderboard = async (channelName, channelId) => {
   }
 }
 
-export const listChannelsLeaderboard = async () => {
+export const listChannelsLeaderboard = async (discordGuild, neatQueueApiKey, channels) => {
   const result = await Promise.all(
-    R.map(async ({ name, channelId }) => getChannelLeaderboard(name, channelId))(neatQueueConfig.channels)
+    R.map(async ({ name, channelId }) => getChannelLeaderboard(discordGuild, neatQueueApiKey, name, channelId))(
+      channels
+    )
   )
   return R.filter(R.complement(R.isEmpty))(result)
 }

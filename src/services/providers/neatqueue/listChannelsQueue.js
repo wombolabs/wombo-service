@@ -1,13 +1,12 @@
 import axios from 'axios'
 import R from 'ramda'
-import { neatQueue as neatQueueConfig } from '~/config'
 
-const getChannelQueue = async (channelName, channelId) => {
+const getChannelQueue = async (neatQueueApiKey, channelName, channelId) => {
   const url = `https://host.neatqueue.com:2000/api/queue/${channelId}/players`
   try {
     const { data = {} } = await axios.get(url, {
       headers: {
-        Authorization: neatQueueConfig.apiKey,
+        Authorization: neatQueueApiKey,
         'Content-Type': 'application/json',
         Accept: 'application/json',
         'Accept-Encoding': '*',
@@ -44,9 +43,9 @@ const getChannelQueue = async (channelName, channelId) => {
   }
 }
 
-export const listChannelsQueue = async () => {
+export const listChannelsQueue = async (neatQueueApiKey, channels) => {
   const result = await Promise.all(
-    R.map(({ name, channelId }) => getChannelQueue(name, channelId))(neatQueueConfig.channels)
+    R.map(({ name, channelId }) => getChannelQueue(neatQueueApiKey, name, channelId))(channels)
   )
   return R.filter(R.complement(R.isEmpty))(result)
 }
