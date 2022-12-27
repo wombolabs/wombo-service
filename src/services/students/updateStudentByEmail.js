@@ -9,14 +9,15 @@ export const updateStudentByEmail = async (email, student) => {
   delete newStudent.email
   delete newStudent.password // TODO implement change password for WP users
 
-  let savedStudent
+  const savedStudent = await getStudentByEmail(email)
+
   if (notNilNorEmpty(newStudent.discord)) {
-    savedStudent = await getStudentByEmail(email)
-    newStudent.discord = R.mergeDeepLeft(newStudent.discord, savedStudent.discord)
+    newStudent.discord = R.mergeDeepLeft(newStudent.discord, savedStudent.discord ?? {})
   }
+
   if (notNilNorEmpty(newStudent.metadata)) {
-    if (!savedStudent) {
-      savedStudent = await getStudentByEmail(email)
+    if (notNilNorEmpty(newStudent.metadata?.profile)) {
+      newStudent.metadata.profile = R.mergeDeepLeft(newStudent.metadata.profile, savedStudent.metadata?.profile ?? {})
     }
 
     if (notNilNorEmpty(savedStudent.metadata?.videoGames) && notNilNorEmpty(newStudent.metadata?.videoGames)) {
@@ -26,7 +27,19 @@ export const updateStudentByEmail = async (email, student) => {
       )(savedStudent.metadata.videoGames)
     }
 
-    newStudent.metadata = R.mergeDeepLeft(newStudent.metadata, savedStudent.metadata)
+    if (notNilNorEmpty(newStudent.metadata?.valorant)) {
+      newStudent.metadata.valorant = R.mergeDeepLeft(
+        newStudent.metadata.valorant,
+        savedStudent.metadata?.valorant ?? {}
+      )
+    }
+
+    if (notNilNorEmpty(newStudent.metadata?.leagueOfLegends)) {
+      newStudent.metadata.leagueOfLegends = R.mergeDeepLeft(
+        newStudent.metadata.leagueOfLegends,
+        savedStudent.metadata?.leagueOfLegends ?? {}
+      )
+    }
   }
 
   const result = await prisma.student.update({

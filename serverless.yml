@@ -225,3 +225,10 @@ functions:
           path: /competitions/{codename}/leaderboards
           method: get
           private: true
+  enrollForCompetition:
+    handler: src/index.enrollForCompetitionHandler
+    events:
+      - http:
+          path: /competitions/{codename}/enroll
+          method: post
+          private: true

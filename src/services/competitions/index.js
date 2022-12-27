@@ -1,3 +1,4 @@
+export * from './constants'
 export * from './listCompetitions'
 export * from './getCompetitionByCodename'
-export * from './constants'
+export * from './enrollForCompetition'
