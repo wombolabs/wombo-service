@@ -8,21 +8,4 @@ export const discord = {
     '*Tu suscripción en Wombo ha sido cancelada correctamente.*\n\nAntes de despedirnos, queremos agradecerte por acompañarnos en este camino de ser mejores. Para nosotros es muy importante la experiencia de los subs y *nos sería de gran ayuda que nos cuentes cómo te ha ido entrenando en Wombo.*\n\nSi quieres darnos tu opinión, puedes enviar un mensaje privado a <@739617834577166436> quienes estarán encantados de tener una conversación contigo.\n\nTe invitamos a seguir participando de los eventos gratuitos de la comunidad y ojalá verte de nuevo en el servidor. :people_hugging:',
   messageSubscriptionTrialEnd:
     'Hola! Espero que estés teniendo una gran experiencia en Wombo, aprendiendo de los mejores entrenadores y divirtiéndote junto al resto de la comunidad :grin:\n\n:hourglass: Te recuerdo que tu prueba gratuita está a punto de finalizar. Para seguir accediendo a las clases de tu entrenador preferido procura tener el saldo suficiente para que el sistema realice el cobro con éxito y puedas seguir disfrutando de todos nuestros beneficios.\n\nPor cualquier duda o consulta, puedes contactar a <@739617834577166436>',
-  leagueHubRoleIds: {
-    free: '1025103065403105360',
-    high: '1025102985119940709',
-    radiant: '1025102759332171857',
-  },
-  leagueHighSchoolRoleId: '1034699612906344508',
-  lolInHouseRoleIds: {
-    free: '1042534521096122378',
-    high: '1042534447116980274',
-    promise: '1042533812384563311',
-  },
-  lolInHouseChannelIds: {
-    free: '1042590074463854632',
-    high: '1042893448514109510',
-    promise: '1042589468500164698',
-    pro: '1042889168793120828',
-  },
 }

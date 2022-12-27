@@ -5,6 +5,7 @@ export const DEFAULT_STUDENT_FIELDS = [
   'displayName',
   'discordJoinDate',
   'metadata',
+  'competitions',
   'lastLogin',
   'createdAt',
 ]
