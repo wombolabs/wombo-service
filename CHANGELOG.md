@@ -1,3 +1,13 @@
+# [1.19.0](https://github.com/wombolabs/wombo-service/compare/v1.18.1...v1.19.0) (2022-12-27)
+
+
+### Features
+
+* add competitions to me endpoint ([9a4a877](https://github.com/wombolabs/wombo-service/commit/9a4a877941ad51f9a2eadc8eb02bde9de41fedfc))
+* add endpoint for competition enrollment ([545b7bf](https://github.com/wombolabs/wombo-service/commit/545b7bfb07850b045176e0c7e7309509c85c9990))
+* add endpoint to list leadeboards from competition by codename ([b7441e4](https://github.com/wombolabs/wombo-service/commit/b7441e4f8a770f98702b316e9cecdd26f417c278))
+* add endpoint to listing competitions and get with codename ([66138fb](https://github.com/wombolabs/wombo-service/commit/66138fb27c684a9b70b239c95ed7908180a5ca83))
+
 ## [1.18.1](https://github.com/wombolabs/wombo-service/compare/v1.18.0...v1.18.1) (2022-11-30)
 
 
