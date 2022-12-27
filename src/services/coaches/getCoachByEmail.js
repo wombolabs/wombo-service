@@ -1,6 +1,6 @@
-import R from 'ramda'
 import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
 import prisma from '~/services/prisma'
+import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
 
 export const getCoachByEmail = async (email, filters = {}) => {
   if (!email) {
@@ -23,7 +23,7 @@ export const getCoachByEmail = async (email, filters = {}) => {
       isActive: true,
     },
   }
-  if (!R.isEmpty(include)) {
+  if (notNilNorEmpty(include)) {
     query.include = include
   }
 
