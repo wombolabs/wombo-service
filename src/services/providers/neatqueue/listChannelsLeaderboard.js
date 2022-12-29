@@ -1,5 +1,6 @@
 import axios from 'axios'
 import R from 'ramda'
+import { axiosLoggerError } from '~/utils'
 
 const getChannelLeaderboard = async (discordGuild, neatQueueApiKey, channelName, channelId) => {
   const url = `https://host.neatqueue.com:2000/api/channelstats/${discordGuild}/${channelId}`
@@ -12,10 +13,6 @@ const getChannelLeaderboard = async (discordGuild, neatQueueApiKey, channelName,
         'Accept-Encoding': '*',
       },
     })
-
-    if (!R.isEmpty(data)) {
-      data.length = 10
-    }
 
     const items = R.map(
       R.applySpec({
@@ -31,20 +28,7 @@ const getChannelLeaderboard = async (discordGuild, neatQueueApiKey, channelName,
 
     return { name: channelName, items }
   } catch (error) {
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.log(error.response.data)
-      console.log(error.response.status)
-    } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      // http.ClientRequest in node.js
-      console.log(error.request)
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message)
-    }
+    axiosLoggerError(error)
     return {}
   }
 }
