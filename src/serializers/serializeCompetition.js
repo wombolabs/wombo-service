@@ -4,7 +4,18 @@ import { DEFAULT_STUDENT_FIELDS } from '~/services/students'
 
 const studentFields = [...DEFAULT_STUDENT_FIELDS, 'discord']
 
-const serializeParticipants = R.curry((participants) => R.map(R.pick([...studentFields]))(participants))
+const serializeParticipantDiscord = R.curry((discord) => R.pick(['username', 'discriminator'])(discord))
+
+const serializeParticipants = R.curry((participants) =>
+  R.map(
+    R.pipe(
+      R.pick([...studentFields]),
+      R.evolve({
+        discord: serializeParticipantDiscord,
+      })
+    )
+  )(participants)
+)
 
 export const serializeCompetition = R.curry((competition) =>
   R.pipe(
