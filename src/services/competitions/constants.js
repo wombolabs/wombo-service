@@ -7,5 +7,6 @@ export const DEFAULT_COMPETITION_FIELDS = [
   'videoGame',
   'status',
   'registrationStatus',
+  'participants',
   'isActive',
 ]
