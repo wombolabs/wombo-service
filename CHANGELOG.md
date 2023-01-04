@@ -1,3 +1,11 @@
+# [1.20.0](https://github.com/wombolabs/wombo-service/compare/v1.19.0...v1.20.0) (2023-01-04)
+
+
+### Features
+
+* get participants of competition ([27bbeb2](https://github.com/wombolabs/wombo-service/commit/27bbeb2a446bb14f0b0f7c3d675f840f47e22057))
+* improve serializer of competition ([c4a8320](https://github.com/wombolabs/wombo-service/commit/c4a83200a46bb435d0fb4fc4df736c418316aa13))
+
 # [1.19.0](https://github.com/wombolabs/wombo-service/compare/v1.18.1...v1.19.0) (2022-12-27)
 
 
