@@ -17,11 +17,22 @@ const serializeParticipants = R.curry((participants) =>
   )(participants)
 )
 
-export const serializeCompetition = R.curry((competition) =>
+const serializeMinimalDataParticipants = R.curry((participants) =>
+  R.map(
+    R.pipe(
+      R.pick(['id', 'discord']),
+      R.evolve({
+        discord: R.curry((discord) => R.pick(['username'])(discord)),
+      })
+    )
+  )(participants)
+)
+
+export const serializeCompetition = R.curry((withMinimalDataParticipants, competition) =>
   R.pipe(
     R.pick([...DEFAULT_COMPETITION_FIELDS]),
     R.evolve({
-      participants: serializeParticipants,
+      participants: withMinimalDataParticipants ? serializeMinimalDataParticipants : serializeParticipants,
     })
   )(competition)
 )
