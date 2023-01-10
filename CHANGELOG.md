@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/wombolabs/wombo-service/compare/v1.20.0...v1.21.0) (2023-01-10)
+
+
+### Features
+
+* add flag to get minimal data of participants from competition ([dc5df7d](https://github.com/wombolabs/wombo-service/commit/dc5df7dddf65a1f98e010ea5b000302f17e5ed42))
+
 # [1.20.0](https://github.com/wombolabs/wombo-service/compare/v1.19.0...v1.20.0) (2023-01-04)
 
 
