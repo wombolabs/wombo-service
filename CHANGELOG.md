@@ -1,3 +1,10 @@
+## [1.21.1](https://github.com/wombolabs/wombo-service/compare/v1.21.0...v1.21.1) (2023-01-12)
+
+
+### Bug Fixes
+
+* issue when get competition by codename ([9bb96a1](https://github.com/wombolabs/wombo-service/commit/9bb96a1b8589336183f8cf533aa2603b2afd81c4))
+
 # [1.21.0](https://github.com/wombolabs/wombo-service/compare/v1.20.0...v1.21.0) (2023-01-10)
 
 
