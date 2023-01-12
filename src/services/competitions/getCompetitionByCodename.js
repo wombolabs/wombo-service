@@ -9,7 +9,7 @@ export const getCompetitionByCodename = async (codename, filters = {}) => {
 
   const { withParcipants, isActive } = filters
 
-  const query = { where: { codename: { contains: codename, mode: 'insensitive'  }} }
+  const query = { where: { codename: { equals: codename, mode: 'insensitive' } } }
   if (typeof isActive === 'boolean') {
     query.where.isActive = isActive
   }
