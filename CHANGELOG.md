@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/wombolabs/wombo-service/compare/v1.21.1...v1.22.0) (2023-01-12)
+
+
+### Features
+
+* configure serverless-api-gateway-caching ([da718f6](https://github.com/wombolabs/wombo-service/commit/da718f669bd247d5db612776490687b36e3df376))
+
 ## [1.21.1](https://github.com/wombolabs/wombo-service/compare/v1.21.0...v1.21.1) (2023-01-12)
 
 

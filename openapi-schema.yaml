@@ -5,7 +5,7 @@ info:
   description: Wombo user service API. Provides endpoints to fetch and manage users from Wombo.
   contact:
     email: dev@wombo.gg
-  version: 1.21.1
+  version: 1.22.0
 tags:
   - name: private
     description: Secured with an api token
