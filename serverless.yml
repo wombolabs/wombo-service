@@ -7,6 +7,7 @@ plugins:
   - serverless-webpack-prisma
   - serverless-deployment-bucket
   - serverless-prune-plugin
+  - serverless-api-gateway-caching
   - serverless-offline
 
 package:
@@ -74,6 +75,11 @@ custom:
     test: false
     staging: false
     production: false
+  apiGatewayCachingEnabled:
+    local: false
+    test: false
+    staging: false
+    production: true
 
 functions:
   # Coaches
@@ -84,6 +90,8 @@ functions:
           path: /coaches
           method: get
           private: true
+          caching:
+            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
   getCoach:
     handler: src/index.getCoachHandler
     events:
@@ -156,6 +164,8 @@ functions:
           path: /tiers
           method: get
           private: true
+          caching:
+            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
   # VideoGames
   listVideoGames:
     handler: src/index.listVideoGamesHandler
@@ -164,6 +174,8 @@ functions:
           path: /videogames
           method: get
           private: true
+          caching:
+            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
   # Coupons
   getCoupon:
     handler: src/index.getCouponHandler
@@ -195,6 +207,8 @@ functions:
           path: /booking/sessions
           method: get
           private: true
+          caching:
+            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
   # Discord
   discordConnect:
     handler: src/index.discordConnectHandler
@@ -211,6 +225,8 @@ functions:
           path: /competitions
           method: get
           private: true
+          caching:
+            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
   getCompetition:
     handler: src/index.getCompetitionHandler
     events:
@@ -225,6 +241,9 @@ functions:
           path: /competitions/{codename}/leaderboards
           method: get
           private: true
+          caching:
+            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
+            ttlInSeconds: 1800
   enrollForCompetition:
     handler: src/index.enrollForCompetitionHandler
     events:
