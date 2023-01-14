@@ -20,9 +20,12 @@ const serializeParticipants = R.curry((participants) =>
 const serializeMinimalDataParticipants = R.curry((participants) =>
   R.map(
     R.pipe(
-      R.pick(['id', 'discord']),
+      R.pick(['id', 'discord', 'metadata']),
       R.evolve({
         discord: R.curry((discord) => R.pick(['username'])(discord)),
+      }),
+      R.evolve({
+        metadata: R.curry((metadata) => R.pick(['valorant', 'leagueOfLegends'])(metadata)),
       })
     )
   )(participants)
