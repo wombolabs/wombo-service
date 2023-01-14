@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/wombolabs/wombo-service/compare/v1.22.0...v1.23.0) (2023-01-14)
+
+
+### Features
+
+* return team data from compettition participants ([0a48e9f](https://github.com/wombolabs/wombo-service/commit/0a48e9f6279056104f527a7637be4fcb5a4047ef))
+
 # [1.22.0](https://github.com/wombolabs/wombo-service/compare/v1.21.1...v1.22.0) (2023-01-12)
 
 
