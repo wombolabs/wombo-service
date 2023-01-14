@@ -16,6 +16,7 @@ import { enrollForCompetition } from '~/services/competitions'
  *   }
  *   videoGames: [string]
  *   valorant {
+ *     teamName: string
  *     teamRole: PLAYER | CAPTAIN
  *     role:
  *     trackerUrl: string
@@ -23,6 +24,7 @@ import { enrollForCompetition } from '~/services/competitions'
  *     league: string
  *   }
  *   leagueOfLegends {
+ *     teamName: string
  *     teamRole: PLAYER | CAPTAIN
  *     role: TOP | JUNGLE | MID | ADC | SUPPORT
  *     trackerUrl: string
