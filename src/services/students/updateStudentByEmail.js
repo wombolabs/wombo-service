@@ -3,6 +3,37 @@ import prisma from '~/services/prisma'
 import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
 import { getStudentByEmail } from './getStudentByEmail'
 
+/**
+ * body {
+ *   profile {
+ *     picture: string
+ *     username: string
+ *     birthdate: string yyyy/mm/dd
+ *     displayName: string
+ *     cellphone: string
+ *     country: string
+ *     state: string
+ *     city: string
+ *   }
+ *   videoGames: [string]
+ *   valorant {
+ *     teamName: string
+ *     teamRole: PLAYER | CAPTAIN
+ *     role:
+ *     trackerUrl: string
+ *     elo: string
+ *     league: string
+ *   }
+ *   leagueOfLegends {
+ *     teamName: string
+ *     teamRole: PLAYER | CAPTAIN
+ *     role: TOP | JUNGLE | MID | ADC | SUPPORT
+ *     trackerUrl: string
+ *     elo: string
+ *     league: string
+ *   }
+ * }
+ */
 export const updateStudentByEmail = async (email, student) => {
   const newStudent = student
 
