@@ -114,6 +114,13 @@ functions:
           path: /students/signup
           method: post
           private: true
+  getStudent:
+    handler: src/index.getStudentHandler
+    events:
+      - http:
+          path: /students/{username}
+          method: get
+          private: true
   getStudentMe:
     handler: src/index.getStudentMeHandler
     events:
