@@ -1,39 +1,9 @@
 import R from 'ramda'
 import prisma from '~/services/prisma'
-import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
 import { getStudentByEmail } from './getStudentByEmail'
 
-/**
- * body {
- *   profile {
- *     picture: string
- *     username: string
- *     birthdate: string yyyy/mm/dd
- *     displayName: string
- *     cellphone: string
- *     country: string
- *     state: string
- *     city: string
- *   }
- *   videoGames: [string]
- *   valorant {
- *     teamName: string
- *     teamRole: PLAYER | CAPTAIN
- *     role:
- *     trackerUrl: string
- *     elo: string
- *     league: string
- *   }
- *   leagueOfLegends {
- *     teamName: string
- *     teamRole: PLAYER | CAPTAIN
- *     role: TOP | JUNGLE | MID | ADC | SUPPORT
- *     trackerUrl: string
- *     elo: string
- *     league: string
- *   }
- * }
- */
+const metadataProperties = ['profile', 'valorant', 'leagueOfLegends', 'mokensLeague']
+
 export const updateStudentByEmail = async (email, student) => {
   const newStudent = student
 
@@ -42,34 +12,22 @@ export const updateStudentByEmail = async (email, student) => {
 
   const savedStudent = await getStudentByEmail(email)
 
-  if (notNilNorEmpty(newStudent.discord)) {
+  if (newStudent.discord != null) {
     newStudent.discord = R.mergeDeepLeft(newStudent.discord, savedStudent.discord ?? {})
   }
 
-  if (notNilNorEmpty(newStudent.metadata)) {
-    if (notNilNorEmpty(newStudent.metadata?.profile)) {
-      newStudent.metadata.profile = R.mergeDeepLeft(newStudent.metadata.profile, savedStudent.metadata?.profile ?? {})
-    }
+  if (newStudent.metadata != null) {
+    R.forEach((prop) => {
+      if (newStudent.metadata[prop] != null) {
+        newStudent.metadata[prop] = R.mergeDeepLeft(newStudent.metadata[prop], savedStudent.metadata[prop] ?? {})
+      }
+    })(metadataProperties)
 
-    if (notNilNorEmpty(savedStudent.metadata?.videoGames) && notNilNorEmpty(newStudent.metadata?.videoGames)) {
+    if (newStudent.metadata?.videoGames != null) {
       newStudent.metadata.videoGames = R.pipe(
         R.concat(newStudent.metadata.videoGames ?? []),
         R.uniq
-      )(savedStudent.metadata.videoGames)
-    }
-
-    if (notNilNorEmpty(newStudent.metadata?.valorant)) {
-      newStudent.metadata.valorant = R.mergeDeepLeft(
-        newStudent.metadata.valorant,
-        savedStudent.metadata?.valorant ?? {}
-      )
-    }
-
-    if (notNilNorEmpty(newStudent.metadata?.leagueOfLegends)) {
-      newStudent.metadata.leagueOfLegends = R.mergeDeepLeft(
-        newStudent.metadata.leagueOfLegends,
-        savedStudent.metadata?.leagueOfLegends ?? {}
-      )
+      )(savedStudent.metadata.videoGames ?? [])
     }
   }
 

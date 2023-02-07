@@ -17,7 +17,13 @@ export const listCompetitions = async (filters = {}) => {
     where.codename = { in: codename }
   }
 
-  const query = {}
+  const query = {
+    orderBy: [
+      {
+        createdAt: 'desc',
+      },
+    ],
+  }
   if (notNilNorEmpty(where)) {
     query.where = where
   }

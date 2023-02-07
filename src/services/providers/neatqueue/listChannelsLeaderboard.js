@@ -3,7 +3,7 @@ import R from 'ramda'
 import { axiosLoggerError } from '~/utils'
 
 const getChannelLeaderboard = async (discordGuild, neatQueueApiKey, channelName, channelId) => {
-  const url = `https://host.neatqueue.com:2000/api/channelstats/${discordGuild}/${channelId}`
+  const url = `https://host.neatqueue.com:443/api/channelstats/${discordGuild}/${channelId}`
   try {
     const { data = [] } = await axios.get(url, {
       headers: {
