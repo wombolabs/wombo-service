@@ -5,7 +5,8 @@ import prisma from '~/services/prisma'
 
 const handler = async ({ user, body }, res) => {
   const { videoGames, user: { birthdate, displayName, country } = {} } = body
-  const payload = { displayName, metadata: { videoGames, birthdate, country, freeWomboPass: true } }
+
+  const payload = { displayName, metadata: { videoGames, profile: { birthdate, country }, freeWomboPass: true } }
   await updateStudentByEmail(user.email?.toLowerCase(), payload)
 
   const validFrom = new Date()
