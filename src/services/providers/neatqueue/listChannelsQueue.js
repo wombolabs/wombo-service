@@ -3,7 +3,7 @@ import R from 'ramda'
 import { axiosLoggerError } from '~/utils'
 
 const getChannelQueue = async (neatQueueApiKey, channelName, channelId) => {
-  const url = `https://host.neatqueue.com:2000/api/queue/${channelId}/players`
+  const url = `https://host.neatqueue.com:443/api/queue/${channelId}/players`
   try {
     const { data = {} } = await axios.get(url, {
       headers: {

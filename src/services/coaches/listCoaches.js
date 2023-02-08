@@ -23,7 +23,16 @@ export const listCoaches = async (filters = {}) => {
     where.category = { in: category }
   }
 
-  const query = {}
+  const query = {
+    orderBy: [
+      {
+        category: 'desc',
+      },
+      {
+        username: 'asc',
+      },
+    ],
+  }
   if (notNilNorEmpty(where)) {
     query.where = where
   }
