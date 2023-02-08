@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/wombolabs/wombo-service/compare/v1.23.0...v1.24.0) (2023-02-08)
+
+
+### Features
+
+* add student by username endpoint ([e8661ef](https://github.com/wombolabs/wombo-service/commit/e8661effded7aa0fc5cd38c5a98361ce50502db0))
+
 # [1.23.0](https://github.com/wombolabs/wombo-service/compare/v1.22.0...v1.23.0) (2023-01-14)
 
 
