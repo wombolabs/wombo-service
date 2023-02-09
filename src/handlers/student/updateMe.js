@@ -8,6 +8,6 @@ const handler = async ({ user, body }, res) => {
   return res.json(serializeStudent(result))
 }
 
-export const updateStudentMeHandler = buildHandler('/students/me', 'put', handler, {
+export const updateStudentMeHandler = buildHandler('/students/me', 'patch', handler, {
   middlewares: [authenticationMiddleware],
 })
