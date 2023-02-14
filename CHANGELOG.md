@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/wombolabs/wombo-service/compare/v1.24.0...v1.25.0) (2023-02-14)
+
+
+### Features
+
+* add discord roles on competition enrollment ([fc96c95](https://github.com/wombolabs/wombo-service/commit/fc96c9581c7aebc9496c90a67a91af2690242e00))
+
 # [1.24.0](https://github.com/wombolabs/wombo-service/compare/v1.23.0...v1.24.0) (2023-02-08)
 
 
