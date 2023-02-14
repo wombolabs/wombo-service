@@ -140,7 +140,7 @@ functions:
     events:
       - http:
           path: /students/me
-          method: put
+          method: patch
           private: true
   setStudentFreePass:
     handler: src/index.setStudentMeFreePassHandler
