@@ -5,10 +5,10 @@ import { enrollForCompetition } from '~/services/competitions'
 
 const handler = async ({ params: { codename }, user, body }, res) => {
   if (notNilNorEmpty(body)) {
-    const { profile = {}, videoGames = [], valorant = {}, leagueOfLegends = {} } = body
+    const { displayName, profile = {}, videoGames = [], valorant = {}, leagueOfLegends = {} } = body
 
     await updateStudentByEmail(user.email, {
-      displayName: profile.displayName,
+      displayName,
       metadata: {
         profile,
         videoGames,
