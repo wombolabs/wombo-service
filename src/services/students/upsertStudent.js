@@ -17,6 +17,10 @@ export const upsertStudent = async (student) => {
   if (!savedStudent) {
     savedStudent = await createStudent(student)
   } else {
+    if (savedStudent.username != null) {
+      // eslint-disable-next-line no-param-reassign
+      delete student.username
+    }
     savedStudent = await updateStudentByEmail(student.email, student)
   }
 
