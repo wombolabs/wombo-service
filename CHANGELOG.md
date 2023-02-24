@@ -1,3 +1,15 @@
+# [1.26.0](https://github.com/wombolabs/wombo-service/compare/v1.25.0...v1.26.0) (2023-02-24)
+
+
+### Bug Fixes
+
+* remove jest config from eslintrc ([3cd0d5a](https://github.com/wombolabs/wombo-service/commit/3cd0d5a4c8187e2675c64f95e8f6b692c3064f18))
+
+
+### Features
+
+* handler error if username of student already exists ([7b85421](https://github.com/wombolabs/wombo-service/commit/7b854213d112501eafc2837ea72eabdec5be644b))
+
 # [1.25.0](https://github.com/wombolabs/wombo-service/compare/v1.24.0...v1.25.0) (2023-02-14)
 
 
