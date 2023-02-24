@@ -1,5 +1,7 @@
 import R from 'ramda'
+import { Prisma } from '@prisma/client'
 import prisma from '~/services/prisma'
+import { DuplicateResourceError } from '~/errors'
 import { getStudentByEmail } from './getStudentByEmail'
 
 const metadataProperties = ['profile', 'valorant', 'leagueOfLegends', 'mokensLeague']
@@ -31,12 +33,22 @@ export const updateStudentByEmail = async (email, student) => {
     }
   }
 
-  const result = await prisma.student.update({
-    where: {
-      email,
-    },
-    data: newStudent,
-  })
+  let result
+  try {
+    result = await prisma.student.update({
+      where: {
+        email,
+      },
+      data: newStudent,
+    })
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002' && error.meta?.target?.includes('username')) {
+        throw new DuplicateResourceError('The username already exists.', null, error)
+      }
+    }
+    throw error
+  }
 
   return result
 }

@@ -10,7 +10,6 @@ module.exports = {
     browser: false,
     node: true,
     es2021: true,
-    'jest/globals': true,
   },
   extends: ['airbnb-base', 'prettier'],
   parserOptions: {
@@ -30,7 +29,6 @@ module.exports = {
       webpack: {},
     },
   },
-  plugins: ['jest'],
   rules: {
     // Possible Errors
     'no-console': RULES.OFF,

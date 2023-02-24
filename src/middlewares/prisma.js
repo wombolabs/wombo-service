@@ -16,13 +16,13 @@ export function prismaErrorMiddleware(error, req, res, next) {
   // eslint-disable-line no-unused-vars
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     if (error.code === 'P2002') {
-      throw new DuplicateResourceError(error.message)
+      throw new DuplicateResourceError(null, null, error)
     }
-    throw new PrismaError(error.message, 500, error)
+    throw new PrismaError(null, null, error)
   } else if (error instanceof Prisma.PrismaClientValidationError) {
-    throw new PrismaValidationError(error.message, 412, error)
+    throw new PrismaValidationError(null, null, error)
   } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
-    throw new PrismaError(error.message, 500, error)
+    throw new PrismaError(null, null, error)
   }
 
   next(error)
