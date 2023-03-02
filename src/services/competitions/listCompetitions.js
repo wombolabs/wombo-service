@@ -20,6 +20,9 @@ export const listCompetitions = async (filters = {}) => {
   const query = {
     orderBy: [
       {
+        status: 'asc',
+      },
+      {
         createdAt: 'desc',
       },
     ],

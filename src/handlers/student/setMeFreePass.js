@@ -4,9 +4,9 @@ import { authenticationMiddleware } from '~/middlewares'
 import prisma from '~/services/prisma'
 
 const handler = async ({ user, body }, res) => {
-  const { videoGames, user: { birthdate, displayName, country } = {} } = body
+  const { displayName, videoGames = [], profile = {} } = body
 
-  const payload = { displayName, metadata: { videoGames, profile: { birthdate, country }, freeWomboPass: true } }
+  const payload = { displayName, metadata: { videoGames, profile, freeWomboPass: true } }
   await updateStudentByEmail(user.email?.toLowerCase(), payload)
 
   const validFrom = new Date()
