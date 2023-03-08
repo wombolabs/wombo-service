@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/wombolabs/wombo-service/compare/v1.26.0...v1.27.0) (2023-03-08)
+
+
+### Features
+
+* add student data to leaderboard players ([e22affe](https://github.com/wombolabs/wombo-service/commit/e22affeac24c11e6beda4abb14db22df3583592d))
+
 # [1.26.0](https://github.com/wombolabs/wombo-service/compare/v1.25.0...v1.26.0) (2023-02-24)
 
 
