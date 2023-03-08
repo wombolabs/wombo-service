@@ -6,7 +6,7 @@ module.exports = [
   },
   {
     id: 'b03a1553-07ce-4ffa-b5e6-515a8eafd4ae',
-    codename: 'league_of_legends',
+    codename: 'leagueOfLegends',
     category: 'is_featured',
   },
   {
@@ -28,7 +28,7 @@ module.exports = [
   },
   {
     id: '340317e0-2662-4fda-88ce-cdb61a6a3b11',
-    codename: 'rocket_league',
+    codename: 'rocketLeague',
   },
   {
     id: 'c05a903f-f0b9-41d9-ba82-34824d6af99c',
@@ -38,4 +38,8 @@ module.exports = [
     id: '9f736dc1-a602-4874-b223-cea28b6f36e4',
     codename: 'tft',
   },
-];
+  {
+    id: '1917fdde-6211-4a95-bd88-e6d2d044bd6d',
+    codename: 'mokensLeague',
+  },
+]

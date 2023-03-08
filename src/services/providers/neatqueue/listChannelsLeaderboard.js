@@ -16,6 +16,7 @@ const getChannelLeaderboard = async (discordGuild, neatQueueApiKey, channelName,
 
     const items = R.map(
       R.applySpec({
+        id: R.prop('id'),
         index: R.prop('num'),
         username: R.prop('name'),
         mmr: R.path(['data', 'mmr']),
