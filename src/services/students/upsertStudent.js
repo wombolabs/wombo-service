@@ -1,3 +1,4 @@
+import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
 import { ResourceNotFoundError } from '~/errors'
 import { createStudent } from './createStudent'
 import { getStudentByEmail } from './getStudentByEmail'
@@ -17,11 +18,11 @@ export const upsertStudent = async (student) => {
   if (!savedStudent) {
     savedStudent = await createStudent(student)
   } else {
-    if (savedStudent.username != null) {
+    if (notNilNorEmpty(savedStudent?.username)) {
       // eslint-disable-next-line no-param-reassign
-      delete student.username
+      delete student?.username
     }
-    savedStudent = await updateStudentByEmail(student.email, student)
+    savedStudent = await updateStudentByEmail(student?.email, student)
   }
 
   return savedStudent
