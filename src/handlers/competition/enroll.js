@@ -6,7 +6,7 @@ import { addGuildMemberRole } from '~/services/discord'
 
 const handler = async ({ params: { codename }, user, body }, res) => {
   if (notNilNorEmpty(body)) {
-    const { displayName, profile = {}, videoGames = [], valorant = {}, leagueOfLegends = {} } = body
+    const { displayName, profile = {}, videoGames = [], valorant = {}, leagueOfLegends = {}, mokensLeague = {} } = body
 
     await updateStudentByEmail(user.email, {
       displayName,
@@ -15,6 +15,7 @@ const handler = async ({ params: { codename }, user, body }, res) => {
         videoGames,
         valorant,
         leagueOfLegends,
+        mokensLeague,
       },
     })
   }

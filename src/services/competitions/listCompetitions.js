@@ -1,5 +1,11 @@
+import R from 'ramda'
 import prisma from '~/services/prisma'
 import { notNilNorEmpty } from '~/utils'
+
+const STATUSES_ORDER = { coming_soon: 4, open: 3, in_progress: 2, finished: 1 }
+const statusesComparator = R.comparator((a, b) =>
+  R.gt(STATUSES_ORDER[R.prop('status', a)], STATUSES_ORDER[R.prop('status', b)])
+)
 
 export const listCompetitions = async (filters = {}) => {
   const { codename, withParcipants, isActive } = filters
@@ -20,9 +26,6 @@ export const listCompetitions = async (filters = {}) => {
   const query = {
     orderBy: [
       {
-        status: 'asc',
-      },
-      {
         createdAt: 'desc',
       },
     ],
@@ -35,5 +38,6 @@ export const listCompetitions = async (filters = {}) => {
   }
 
   const result = await prisma.competition.findMany(query)
-  return result
+
+  return R.sort(statusesComparator)(result ?? [])
 }
