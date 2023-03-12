@@ -6,25 +6,14 @@ import { addGuildMemberRole } from '~/services/discord'
 
 const handler = async ({ params: { codename }, user, body }, res) => {
   if (notNilNorEmpty(body)) {
-    const { displayName, profile = {}, videoGames = [], valorant = {}, leagueOfLegends = {}, mokensLeague = {} } = body
-
-    await updateStudentByEmail(user.email, {
-      displayName,
-      metadata: {
-        profile,
-        videoGames,
-        valorant,
-        leagueOfLegends,
-        mokensLeague,
-      },
-    })
+    await updateStudentByEmail(user.email, body)
   }
 
   await enrollForCompetition(codename, user.id)
 
   const { metadata } = await getCompetitionByCodename(codename)
   if (notNilNorEmpty(metadata?.discordRoles)) {
-    await Promise.all(metadata.discordRoles.map((roleId) => addGuildMemberRole(user?.discord?.id, roleId)))
+    await Promise.all(metadata.discordRoles.map((roleId) => addGuildMemberRole(user.discord?.id, roleId)))
   }
 
   res.json({ enrolled: true })
