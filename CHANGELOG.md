@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/wombolabs/wombo-service/compare/v1.27.0...v1.28.0) (2023-03-12)
+
+
+### Features
+
+* add videogames serializer ([c8d4799](https://github.com/wombolabs/wombo-service/commit/c8d47995de0466c220112ea39dcb18e0c81e7336))
+
 # [1.27.0](https://github.com/wombolabs/wombo-service/compare/v1.26.0...v1.27.0) (2023-03-08)
 
 
