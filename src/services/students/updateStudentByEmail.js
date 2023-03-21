@@ -3,8 +3,9 @@ import { Prisma } from '@prisma/client'
 import prisma from '~/services/prisma'
 import { DuplicateResourceError, ResourceNotFoundError } from '~/errors'
 import { getStudentByEmail } from './getStudentByEmail'
+import { listVideoGames } from '../videoGames'
 
-const studentMetadataProperties = ['profile', 'valorant', 'leagueOfLegends', 'mokensLeague']
+const studentMetadataProperties = ['profile']
 const studentProperties = ['discord', 'stripe']
 
 export const updateStudentByEmail = async (email, student = {}) => {
@@ -29,12 +30,14 @@ export const updateStudentByEmail = async (email, student = {}) => {
     updatedStudent[prop] = R.mergeDeepLeft(newStudent[prop] ?? {}, savedStudent[prop] ?? {})
   })(studentProperties)
 
+  const videoGames = await listVideoGames({ isActive: true })
+
   R.forEach((prop) => {
     updatedStudent.metadata[prop] = R.mergeDeepLeft(
       (newStudent.metadata && newStudent.metadata[prop]) ?? {},
       (savedStudent.metadata && savedStudent.metadata[prop]) ?? {}
     )
-  })(studentMetadataProperties)
+  })([...studentMetadataProperties, ...R.pluck('codename')(videoGames)])
 
   updatedStudent.metadata.videoGames = R.pipe(
     R.concat(newStudent.metadata?.videoGames ?? []),

@@ -1,5 +1,5 @@
 import prisma from '~/services/prisma'
-import { notNilNorEmpty } from '~/utils'
+import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
 
 export const listVideoGames = async (filters = {}) => {
   const { isActive, category } = filters
