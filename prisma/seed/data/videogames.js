@@ -42,4 +42,8 @@ module.exports = [
     id: '1917fdde-6211-4a95-bd88-e6d2d044bd6d',
     codename: 'mokensLeague',
   },
+  {
+    id: 'a19af119-1665-4f3b-92c9-ce1dce8f33f9',
+    codename: 'freeFire',
+  },
 ]
