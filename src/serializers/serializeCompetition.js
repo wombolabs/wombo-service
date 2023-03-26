@@ -26,7 +26,7 @@ const serializeMinimalDataParticipants = R.curry((participants) =>
           R.pipe(
             R.pick(R.keys(metadata)),
             R.evolve({
-              profile: R.curry((profile) => R.pick(['picture'])(profile)),
+              profile: R.curry((profile) => R.pick(['picture', 'country'])(profile)),
             })
           )(metadata)
         ),
