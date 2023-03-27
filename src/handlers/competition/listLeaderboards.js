@@ -7,6 +7,7 @@ import { buildHandler, notNilNorEmpty } from '~/utils'
 
 const handler = async ({ params: { codename } }, res) => {
   let result = []
+  let videoGame = null
 
   const competition = await getCompetitionByCodename(codename, { isActive: true })
 
@@ -15,9 +16,13 @@ const handler = async ({ params: { codename } }, res) => {
 
     if (notNilNorEmpty(leaderboard)) {
       const { discordGuild, apiKey, channels } = leaderboard
-      result = await listChannelsLeaderboard(discordGuild, apiKey, channels)
+      try {
+        result = await listChannelsLeaderboard(discordGuild, apiKey, channels)
 
-      const videoGame = await getVideoGameById(competition.videoGame)
+        videoGame = await getVideoGameById(competition.videoGame)
+      } catch (err) {
+        result = []
+      }
 
       if (notNilNorEmpty(videoGame)) {
         const resultPromises = R.map(async (lb) => {
