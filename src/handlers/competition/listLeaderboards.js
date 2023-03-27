@@ -25,8 +25,8 @@ const handler = async ({ params: { codename } }, res) => {
             const student = await getStudentByDiscordId(player.id)
 
             return {
-              country: student?.metadata?.profile?.country,
-              teamName: student?.metadata[videoGame?.codename]?.teamName,
+              country: student?.metadata?.profile?.country || '',
+              teamName: student?.metadata[videoGame?.codename]?.teamName || '',
               ...player,
             }
           })(lb.items)
