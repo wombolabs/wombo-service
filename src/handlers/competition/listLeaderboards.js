@@ -28,6 +28,7 @@ const handler = async ({ params: { codename } }, res) => {
               country: student?.metadata?.profile?.country || '',
               teamName: student?.metadata[videoGame?.codename]?.teamName || '',
               ...player,
+              username: student?.username || player.username,
             }
           })(lb.items)
 
