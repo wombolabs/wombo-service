@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/wombolabs/wombo-service/compare/v1.28.0...v1.29.0) (2023-03-27)
+
+
+### Features
+
+* improve signup ([2eabec3](https://github.com/wombolabs/wombo-service/commit/2eabec39d6eaa1c453c7c61f852c10cb0e39506a))
+
 # [1.28.0](https://github.com/wombolabs/wombo-service/compare/v1.27.0...v1.28.0) (2023-03-12)
 
 
