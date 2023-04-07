@@ -1,3 +1,10 @@
+# [1.30.0](https://github.com/wombolabs/wombo-service/compare/v1.29.0...v1.30.0) (2023-04-07)
+
+
+### Features
+
+* add stripe payment for competition ([f380f0f](https://github.com/wombolabs/wombo-service/commit/f380f0f7cd8c991b5e282e8b40bde9e84ac5ca18))
+
 # [1.29.0](https://github.com/wombolabs/wombo-service/compare/v1.28.0...v1.29.0) (2023-03-27)
 
 
