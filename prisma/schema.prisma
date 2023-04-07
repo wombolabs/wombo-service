@@ -57,6 +57,7 @@ enum PaymentType {
   one_time
   subscription
   donation
+  competition
 }
 
 enum Currency {
@@ -136,6 +137,7 @@ model Order {
   coachId            String?
   tierId             String?
   videoGameId        String?
+  competitionId      String?
   validFrom          DateTime?
   validTill          DateTime?
   billingInterval    Frequency?

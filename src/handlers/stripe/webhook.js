@@ -29,10 +29,10 @@ const handleChargeSucceeded = async ({ data }) => {
     livemode,
   } = stripePayload
 
-  const { studentId, coachId, paymentType } = metadata
+  const { paymentType, studentId, coachId, competitionId } = metadata
 
-  if (paymentType !== 'donation') {
-    const error = new Error('Handler charge.succeeded only for order type donation.')
+  if (!['donation', 'competition'].includes(paymentType)) {
+    const error = new Error('Handler charge.succeeded only for order type donation or competition.')
     error.statusCode = 202
     throw error
   }
@@ -64,6 +64,7 @@ const handleChargeSucceeded = async ({ data }) => {
       paymentIntentId,
     },
     coachId,
+    competitionId,
     billingAmount: amountDecimal,
     billingCurrency: currency,
     livemode,
