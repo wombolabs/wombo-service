@@ -310,7 +310,7 @@ const webhookHandler = async (req, res) => {
     }
     Sentry.captureException(error)
 
-    return res.status(error.statusCode ?? 500).json({ message: 'Internal Error' })
+    return res.status(error.statusCode ?? 500).json({ message: error?.message ?? 'Internal Error' })
   }
 }
 
