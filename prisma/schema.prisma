@@ -252,11 +252,12 @@ model Challenge {
   id           String        @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   videoGame    String
   type         ChallengeType
+  ranking      String?
+  server       String?
   description  String?
   metadata     Json          @default("{}")
   betAmount    Float?
-  prizeWon     Float?
-  profit       Float? // Wombo TODO change to fee
+  fee          Float? // Wombo fee
   ownerId      String        @db.Uuid
   owner        Student       @relation("ChallengeOwner", fields: [ownerId], references: [id])
   challengerId String?       @db.Uuid
