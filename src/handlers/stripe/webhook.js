@@ -1,6 +1,6 @@
 import stripe, { getStripeSubscriptionById } from '~/services/stripe'
 import { buildHandler } from '~/utils'
-import { stripe as stripeConfig, discord as discordConfig } from '~/config'
+import { stripe as stripeConfig, discord as discordConfig, isOffline } from '~/config'
 import prisma from '~/services/prisma'
 import * as Sentry from '@sentry/serverless'
 import { addGuildMemberRole, removeGuildMemberRole } from '~/services/discord'
@@ -261,7 +261,9 @@ const webhookHandler = async (req, res) => {
       throw new RequestError('Stripe webhook signature verification failed.', 400, error)
     }
 
-    console.log('stripe | type=', event?.type, 'payload=', JSON.stringify(event?.data?.object))
+    if (isOffline) {
+      console.log('stripe | type=', event?.type, 'payload=', JSON.stringify(event?.data?.object))
+    }
 
     const handler = webhookHandlers[event?.type]
     if (handler) {
@@ -274,10 +276,12 @@ const webhookHandler = async (req, res) => {
     // Return a response to acknowledge receipt of the event
     return res.json({ received: true })
   } catch (error) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (isOffline) {
       console.error(error)
     }
-    Sentry.captureException(error)
+    if (error.statusCode !== 202) {
+      Sentry.captureException(error)
+    }
 
     return res.status(error.statusCode ?? 500).json({ message: error.message })
   }
