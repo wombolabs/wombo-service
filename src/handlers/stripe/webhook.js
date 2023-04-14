@@ -1,4 +1,4 @@
-import stripe, { getStripeSubscriptionById } from '~/services/stripe'
+import stripe, { getStripeCustomerById, getStripeSubscriptionById } from '~/services/stripe'
 import { buildHandler } from '~/utils'
 import { stripe as stripeConfig, discord as discordConfig, isOffline } from '~/config'
 import prisma from '~/services/prisma'
@@ -21,6 +21,7 @@ const handleChargeSucceeded = async ({ data }) => {
   const {
     id: chargeId,
     payment_intent: paymentIntentId,
+    customer: customerId,
     amount,
     currency,
     metadata,
@@ -29,12 +30,24 @@ const handleChargeSucceeded = async ({ data }) => {
     livemode,
   } = stripePayload
 
-  const { paymentType, studentId, coachId, competitionId } = metadata
+  let { studentId } = metadata
+  const { paymentType, coachId, competitionId, challengeId } = metadata
 
-  if (!['donation', 'competition'].includes(paymentType)) {
-    const error = new Error('Handler charge.succeeded only for order type donation or competition.')
+  if (!['donation', 'competition', 'challenge'].includes(paymentType)) {
+    const error = new Error('Handler charge.succeeded only for order type donation, competition or challenge.')
     error.statusCode = 202
     throw error
+  }
+
+  if (studentId == null) {
+    const customer = await getStripeCustomerById(customerId)
+    if (customer?.metadata?.userId) {
+      studentId = customer?.metadata?.userId
+    } else {
+      const error = new Error(`Student with email ${customer?.email} not found.`)
+      error.statusCode = 202
+      throw error
+    }
   }
 
   const amountDecimal = amount / 100
@@ -65,6 +78,7 @@ const handleChargeSucceeded = async ({ data }) => {
     },
     coachId,
     competitionId,
+    challengeId,
     billingAmount: amountDecimal,
     billingCurrency: currency,
     livemode,
@@ -86,6 +100,7 @@ const handleInvoicePaymentSucceeded = async ({ data }) => {
     customer: customerId,
     subscription: subscriptionId,
     amount_paid: amount,
+    billing_reason: billingReason,
     currency,
     hosted_invoice_url: invoiceUrl,
     livemode,
@@ -94,11 +109,23 @@ const handleInvoicePaymentSucceeded = async ({ data }) => {
   const subscription = await getStripeSubscriptionById(subscriptionId)
 
   const { current_period_start: validFrom, current_period_end: validTill, status } = subscription
-  const { studentId, coachId, tierId, paymentType } = subscription.metadata
+  let { studentId } = subscription.metadata
+  const { coachId, tierId, paymentType } = subscription.metadata
+
+  if (studentId == null) {
+    const customer = await getStripeCustomerById(customerId)
+    if (customer?.metadata?.userId) {
+      studentId = customer?.metadata?.userId
+    } else {
+      const error = new Error(`Student with stripe customer email ${customer?.email} not found.`)
+      error.statusCode = 202
+      throw error
+    }
+  }
 
   const amountDecimal = amount / 100
-  let tier = {}
 
+  let tier = {}
   if (tierId) {
     tier = await getTierById(tierId, ['billingInterval', 'discordRoleIds'])
   }
@@ -118,6 +145,7 @@ const handleInvoicePaymentSucceeded = async ({ data }) => {
             subscriptionId,
             customerId,
             invoiceUrl,
+            billingReason,
           },
           amount: amountDecimal,
           currency,
@@ -128,12 +156,13 @@ const handleInvoicePaymentSucceeded = async ({ data }) => {
     stripe: {
       subscriptionId,
       paymentIntentId,
+      billingReason,
     },
     coachId,
     tierId,
     validFrom: new Date(validFrom * 1000),
     validTill: new Date(validTill * 1000),
-    billingInterval: tier.billingInterval,
+    billingInterval: tier?.billingInterval,
     billingAmount: amountDecimal,
     billingCurrency: currency,
     status,
@@ -144,7 +173,7 @@ const handleInvoicePaymentSucceeded = async ({ data }) => {
 
   // TODO update Stripe Subscription metadata with orderId
 
-  if (customerId && invoiceId) {
+  if (customerId && invoiceId && billingReason === 'subscription_create') {
     // SUBSCRIPTION
     const { discord = {} } = await getStudentById(studentId, ['discord'])
     if (discord?.id != null && discord?.accessToken != null && discord?.scope.includes('guilds.join')) {
@@ -231,7 +260,7 @@ const handleSubscriptionTrialEnd = async ({ data }) => {
 }
 
 const webhookHandlers = {
-  'charge.succeeded': handleChargeSucceeded, // donation
+  'charge.succeeded': handleChargeSucceeded, // donation | competition | challenge
   'invoice.payment_succeeded': handleInvoicePaymentSucceeded, // subscription created
   'customer.subscription.deleted': handleSubscriptionDeleted, // subscription cancelled
   'charge.failed': () => null,
@@ -283,7 +312,7 @@ const webhookHandler = async (req, res) => {
       Sentry.captureException(error)
     }
 
-    return res.status(error.statusCode ?? 500).json({ message: error.message })
+    return res.status(error.statusCode ?? 500).json({ message: error?.message ?? 'Internal Error' })
   }
 }
 
