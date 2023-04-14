@@ -268,3 +268,17 @@ functions:
           private: true
           caching:
             enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
+  createChallenge:
+    handler: src/index.createChallengeHandler
+    events:
+      - http:
+          path: /challenges
+          method: post
+          private: true
+  enrollForChallenge:
+    handler: src/index.enrollForChallengeHandler
+    events:
+      - http:
+          path: /challenges/{id}/enroll
+          method: patch
+          private: true
