@@ -1,11 +1,11 @@
 import { buildHandler } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
-import { enrollForChallenge } from '~/services/challenges'
+import { createChallengeOnDiscord, enrollForChallenge } from '~/services/challenges'
 
 const handler = async ({ params: { id }, user }, res) => {
   await enrollForChallenge(id, user?.id)
 
-  // TODO create Discord channel for challenge and join users
+  await createChallengeOnDiscord(id)
 
   res.json({ enrolled: true })
 }

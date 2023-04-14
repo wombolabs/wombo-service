@@ -11,8 +11,18 @@ export const listChallenges = async (filters = {}) => {
 
   const query = {
     include: {
-      owner: true,
-      challenger: true,
+      owner: {
+        select: {
+          username: true,
+          metadata: true,
+        },
+      },
+      challenger: {
+        select: {
+          username: true,
+          metadata: true,
+        },
+      },
     },
     orderBy: [
       {
