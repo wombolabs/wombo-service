@@ -13,6 +13,6 @@ export const discord = {
   },
   channelTypes: {
     // https://discord.com/developers/docs/resources/channel#channel-object-channel-types
-    guildVoice: 2,
+    guildText: 0,
   },
 }

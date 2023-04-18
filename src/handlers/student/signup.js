@@ -4,6 +4,7 @@ import { updateStudentByEmail, upsertStudent } from '~/services/students'
 import { buildHandler } from '~/utils'
 import { addGuildMember } from '~/services/discord'
 import { InsufficientDataError } from '~/errors'
+import { isProduction } from '~/config'
 
 const handler = async ({ body }, res) => {
   if (body.discord?.id == null || body.discord?.accessToken == null || !body.discord?.scope.includes('guilds.join')) {
@@ -22,7 +23,10 @@ const handler = async ({ body }, res) => {
 
   const { id, email, discord, discordJoinDate } = await upsertStudent(body)
 
-  console.log(`signup | student=${id}, isDiscordMember=${discordJoinDate != null}`)
+  if (!isProduction) {
+    console.log(`signup | student=${id}, isDiscordMember=${discordJoinDate != null}`)
+  }
+
   if (discordJoinDate == null) {
     await addGuildMember(discord.id, discord.accessToken)
 

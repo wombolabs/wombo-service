@@ -179,7 +179,7 @@ const handleInvoicePaymentSucceeded = async ({ data }) => {
     if (discord?.id != null && discord?.accessToken != null && discord?.scope.includes('guilds.join')) {
       // send DM to user
       const response = await createUserDM(discord.id)
-      await createChannelMessage(response.id, discordConfig.messageSubscriptionCreated)
+      await createChannelMessage(response.id, { content: discordConfig.messageSubscriptionCreated })
 
       const { discordRoleIds = [] } = tier
       if (!R.isEmpty(discordRoleIds)) {
@@ -220,7 +220,7 @@ const handleSubscriptionDeleted = async ({ data }) => {
 
   // send DM to user
   const response = await createUserDM(discord.id.id)
-  await createChannelMessage(response.id, discordConfig.messageSubscriptionCancelled)
+  await createChannelMessage(response.id, { content: discordConfig.messageSubscriptionCancelled })
 }
 
 const handleSubscriptionUpdated = async ({ data }) => {
@@ -256,7 +256,7 @@ const handleSubscriptionTrialEnd = async ({ data }) => {
 
   // send DM to user
   const response = await createUserDM(discord.id)
-  await createChannelMessage(response.id, discordConfig.messageSubscriptionCreated)
+  await createChannelMessage(response.id, { content: discordConfig.messageSubscriptionCreated })
 }
 
 const webhookHandlers = {
