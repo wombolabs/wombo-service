@@ -59,6 +59,7 @@ enum PaymentType {
   donation
   competition
   challenge
+  wallet
 }
 
 enum Currency {
@@ -154,6 +155,7 @@ model Student {
   competitions         Competition[]
   challengesOwner      Challenge[]   @relation("ChallengeOwner")
   challengesChallenger Challenge[]   @relation("ChallengeChallenger")
+  wallet               Wallet?
 }
 
 model Order {
@@ -266,4 +268,28 @@ model Challenge {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   deletedAt    DateTime?
+}
+
+model Wallet {
+  id           String              @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  balance      Float
+  transactions WalletTransaction[]
+  metadata     Json                @default("{}")
+  owner        Student             @relation(fields: [ownerId], references: [id])
+  ownerId      String              @unique @db.Uuid
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  deletedAt    DateTime?
+}
+
+model WalletTransaction {
+  id          String    @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  amount      Float
+  description String?
+  metadata    Json      @default("{}")
+  wallet      Wallet    @relation(fields: [walletId], references: [id])
+  walletId    String    @db.Uuid
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
 }

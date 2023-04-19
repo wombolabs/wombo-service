@@ -1,4 +1,9 @@
-import stripe, { getStripeCustomerById, getStripeSubscriptionById } from '~/services/stripe'
+import stripe, {
+  CHARGE_SUCCEEDED_TYPES,
+  PAYMENT_TYPE,
+  getStripeCustomerById,
+  getStripeSubscriptionById,
+} from '~/services/stripe'
 import { buildHandler } from '~/utils'
 import { stripe as stripeConfig, discord as discordConfig, isOffline } from '~/config'
 import prisma from '~/services/prisma'
@@ -7,10 +12,11 @@ import { addGuildMemberRole, removeGuildMemberRole } from '~/services/discord'
 import { getTierById } from '~/services/tiers'
 import { InsufficientDataError, MethodNotAllowedError, RequestError } from '~/errors'
 import R from 'ramda'
-import { getStudentById } from '~/services/students'
+import { createStudentWallet, getStudentById } from '~/services/students'
 import { getOrderIdBySubscriptionId } from '~/services/orders/getOrderIdBySubscriptionId'
 import { createUserDM } from '~/services/discord/createUserDM'
 import { createChannelMessage } from '~/services/discord/createChannelMessage'
+import { addTransactionToStudentWallet } from '~/services/students/addTransactionToStudentWallet'
 
 const handleChargeSucceeded = async ({ data }) => {
   const stripePayload = data?.object
@@ -33,8 +39,8 @@ const handleChargeSucceeded = async ({ data }) => {
   let { studentId } = metadata
   const { paymentType, coachId, competitionId, challengeId } = metadata
 
-  if (!['donation', 'competition', 'challenge'].includes(paymentType)) {
-    const error = new Error('Handler charge.succeeded only for order type donation, competition or challenge.')
+  if (!CHARGE_SUCCEEDED_TYPES.includes(paymentType)) {
+    const error = new Error('Handler charge.succeeded only for order type donation, competition, challenge or wallet.')
     error.statusCode = 202
     throw error
   }
@@ -51,6 +57,11 @@ const handleChargeSucceeded = async ({ data }) => {
   }
 
   const amountDecimal = amount / 100
+
+  if (paymentType === PAYMENT_TYPE.WALLET) {
+    const { id: walletId } = await createStudentWallet(studentId)
+    await addTransactionToStudentWallet(walletId, amountDecimal)
+  }
 
   const order = {
     student: {

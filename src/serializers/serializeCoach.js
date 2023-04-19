@@ -11,8 +11,6 @@ export const serializeCoach = R.curry((coach) =>
     R.pick([...DEFAULT_COACH_FIELDS]),
     R.evolve({
       tiers: serializeTiers,
-    }),
-    R.evolve({
       videoGames: serializeVideoGames,
     })
   )(coach)
