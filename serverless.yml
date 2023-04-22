@@ -136,6 +136,13 @@ functions:
           path: /students/me/orders
           method: get
           private: true
+  getStudentMeChallenges:
+    handler: src/index.getStudentMeChallengesHandler
+    events:
+      - http:
+          path: /students/me/challenges
+          method: get
+          private: true
   updateStudentMe:
     handler: src/index.updateStudentMeHandler
     events:
