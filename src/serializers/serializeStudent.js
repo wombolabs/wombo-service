@@ -11,7 +11,7 @@ export const serializeStudent = R.curry((student) =>
     R.evolve({
       discord: R.curry((discord) => R.pick(['id', 'username', 'discriminator'])(discord)),
       competitions: serializeCompetitions,
-      wallet: R.curry((wallet) => R.pick(['balance', 'updatedAt'])(wallet)),
+      wallet: R.curry((wallet) => R.unless(R.isNil, R.pick(['balance', 'updatedAt']))(wallet)),
     })
   )(student)
 )

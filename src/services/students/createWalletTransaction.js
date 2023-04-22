@@ -34,8 +34,8 @@ export const createWalletTransaction = async (walletId, amount, type, descriptio
   if (!uuidValidate(walletId) || amount == null || !type) {
     throw new InsufficientDataError('Wallet ID, amount and type fields are required.')
   }
-  if (!(amount > 0)) {
-    throw new InsufficientDataError('Amount field is invalid.')
+  if (amount <= 0) {
+    throw new InsufficientDataError('Amount value is invalid.')
   }
 
   let amountValue = amount
