@@ -1,3 +1,6 @@
+import R from 'ramda'
+import * as Sentry from '@sentry/serverless'
+import prisma from '~/services/prisma'
 import stripe, {
   CHARGE_SUCCEEDED_TYPES,
   PAYMENT_TYPE,
@@ -6,17 +9,16 @@ import stripe, {
 } from '~/services/stripe'
 import { buildHandler } from '~/utils'
 import { stripe as stripeConfig, discord as discordConfig, isOffline } from '~/config'
-import prisma from '~/services/prisma'
-import * as Sentry from '@sentry/serverless'
-import { addGuildMemberRole, removeGuildMemberRole } from '~/services/discord'
+import { addGuildMemberRole, removeGuildMemberRole, createUserDM, createChannelMessage } from '~/services/discord'
 import { getTierById } from '~/services/tiers'
+import {
+  STUDENT_WALLET_TRANSACTION_TYPES,
+  createStudentWallet,
+  getStudentById,
+  createWalletTransaction,
+} from '~/services/students'
+import { getOrderIdBySubscriptionId } from '~/services/orders'
 import { InsufficientDataError, MethodNotAllowedError, RequestError } from '~/errors'
-import R from 'ramda'
-import { createStudentWallet, getStudentById } from '~/services/students'
-import { getOrderIdBySubscriptionId } from '~/services/orders/getOrderIdBySubscriptionId'
-import { createUserDM } from '~/services/discord/createUserDM'
-import { createChannelMessage } from '~/services/discord/createChannelMessage'
-import { addTransactionToStudentWallet } from '~/services/students/addTransactionToStudentWallet'
 
 const handleChargeSucceeded = async ({ data }) => {
   const stripePayload = data?.object
@@ -60,7 +62,8 @@ const handleChargeSucceeded = async ({ data }) => {
 
   if (paymentType === PAYMENT_TYPE.WALLET) {
     const { id: walletId } = await createStudentWallet(studentId)
-    await addTransactionToStudentWallet(walletId, amountDecimal)
+
+    await createWalletTransaction(walletId, amountDecimal, STUDENT_WALLET_TRANSACTION_TYPES.DEPOSIT)
   }
 
   const order = {

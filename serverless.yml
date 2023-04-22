@@ -157,6 +157,14 @@ functions:
           path: /students/freepass
           method: get
           private: true
+  # Me Wallet
+  createWalletTransaction:
+    handler: src/index.createWalletTransactionHandler
+    events:
+      - http:
+          path: /students/me/transactions
+          method: post
+          private: true
   # Tiers
   getTier:
     handler: src/index.getTierHandler

@@ -1,5 +1,7 @@
+import { validate as uuidValidate } from 'uuid'
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
+import { STUDENT_WALLET_TRANSACTION_TYPES } from './constants'
 
 prisma.$use(async (params, next) => {
   if (params.model === 'WalletTransaction' && params.action === 'create') {
@@ -28,14 +30,30 @@ prisma.$use(async (params, next) => {
   return next(params)
 })
 
-export const addTransactionToStudentWallet = async (walletId, amount, description) => {
-  if (!walletId || !amount) {
-    throw new InsufficientDataError('Wallet ID  and amount field are required.')
+export const createWalletTransaction = async (walletId, amount, type, description) => {
+  if (!uuidValidate(walletId) || amount == null || !type) {
+    throw new InsufficientDataError('Wallet ID, amount and type fields are required.')
+  }
+  if (!(amount >= 0)) {
+    throw new InsufficientDataError('Amount field is invalid.')
+  }
+
+  let amountValue = amount
+
+  if (
+    [
+      STUDENT_WALLET_TRANSACTION_TYPES.PURCHASE,
+      STUDENT_WALLET_TRANSACTION_TYPES.WITHDRAWAL,
+      STUDENT_WALLET_TRANSACTION_TYPES.FEE,
+    ].includes(type)
+  ) {
+    amountValue = -amount
   }
 
   const result = await prisma.walletTransaction.create({
     data: {
-      amount,
+      amount: amountValue,
+      type,
       description,
       wallet: {
         connect: {

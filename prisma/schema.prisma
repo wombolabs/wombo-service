@@ -103,6 +103,14 @@ enum ChallengeType {
   team_vs_team
 }
 
+enum WalletTransactionType {
+  t_deposit_
+  t_withdrawal_
+  t_purchase_
+  t_refund_
+  t_fee_
+}
+
 model VideoGame {
   id        String            @id(map: "primary") @db.Uuid
   codename  String
@@ -272,7 +280,7 @@ model Challenge {
 
 model Wallet {
   id           String              @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  balance      Float
+  balance      Float               @default(0)
   transactions WalletTransaction[]
   metadata     Json                @default("{}")
   owner        Student             @relation(fields: [ownerId], references: [id])
@@ -283,13 +291,14 @@ model Wallet {
 }
 
 model WalletTransaction {
-  id          String    @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id          String                @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   amount      Float
+  type        WalletTransactionType
   description String?
-  metadata    Json      @default("{}")
-  wallet      Wallet    @relation(fields: [walletId], references: [id])
-  walletId    String    @db.Uuid
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  metadata    Json                  @default("{}")
+  wallet      Wallet                @relation(fields: [walletId], references: [id])
+  walletId    String                @db.Uuid
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
   deletedAt   DateTime?
 }
