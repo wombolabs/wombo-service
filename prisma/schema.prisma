@@ -103,6 +103,14 @@ enum ChallengeType {
   team_vs_team
 }
 
+enum ChallengeStatus {
+  published // the challenge has been published and is open for submissions.
+  in_progress
+  finished // the challenge has been completed.
+  cancelled // the challenge was cancelled before completion.
+  reviewing // moderators are currently reviewing submissions.
+}
+
 enum WalletTransactionType {
   t_deposit_
   t_withdrawal_
@@ -259,22 +267,23 @@ model Competition {
 }
 
 model Challenge {
-  id           String        @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id           String          @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   videoGame    String
   type         ChallengeType
+  status       ChallengeStatus @default(published)
   ranking      String?
   server       String?
   description  String?
-  metadata     Json          @default("{}")
+  metadata     Json            @default("{}")
   betAmount    Float?
   fee          Float? // Wombo fee
-  ownerId      String        @db.Uuid
-  owner        Student       @relation("ChallengeOwner", fields: [ownerId], references: [id])
-  challengerId String?       @db.Uuid
-  challenger   Student?      @relation("ChallengeChallenger", fields: [challengerId], references: [id])
-  isActive     Boolean       @default(true)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  ownerId      String          @db.Uuid
+  owner        Student         @relation("ChallengeOwner", fields: [ownerId], references: [id])
+  challengerId String?         @db.Uuid
+  challenger   Student?        @relation("ChallengeChallenger", fields: [challengerId], references: [id])
+  isActive     Boolean         @default(true)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
   deletedAt    DateTime?
 }
 

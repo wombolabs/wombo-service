@@ -2,6 +2,7 @@ export const DEFAULT_CHALLENGE_FIELDS = [
   'id',
   'videoGame',
   'type',
+  'status',
   'ranking',
   'server',
   'description',
@@ -12,3 +13,11 @@ export const DEFAULT_CHALLENGE_FIELDS = [
   'challenger',
   'createdAt',
 ]
+
+export const CHALLENGE_STATUSES = {
+  PUBLISEHD: 'published',
+  IN_PROGRESS: 'in_progress',
+  FINISHED: 'finished',
+  CANCELLED: 'cancelled',
+  REVIEWING: 'reviewing',
+}

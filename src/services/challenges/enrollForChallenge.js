@@ -1,5 +1,6 @@
 import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
 import prisma from '~/services/prisma'
+import { CHALLENGE_STATUSES } from './constants'
 
 export const enrollForChallenge = async (challengeId, studentId) => {
   if (!challengeId || !studentId) {
@@ -11,6 +12,7 @@ export const enrollForChallenge = async (challengeId, studentId) => {
       id: challengeId,
     },
     data: {
+      status: CHALLENGE_STATUSES.IN_PROGRESS,
       challenger: {
         connect: { id: studentId },
       },
