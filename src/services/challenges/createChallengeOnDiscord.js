@@ -55,7 +55,7 @@ export const createChallengeOnDiscord = async (challengeId) => {
 
     const messageContent = {
       // eslint-disable-next-line max-len
-      content: `DesafioID: ${challengePublicId}\nJuego: ${videoGame}\nParticipantes: <@${ownerId}> vs <@${challengerId}>`,
+      content: `ID: ${challengeId}\nJuego: ${videoGame}\nParticipantes: <@${ownerId}> vs <@${challengerId}>`,
       embeds: [
         {
           title: owner.username,

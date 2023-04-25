@@ -1,16 +1,13 @@
+import R from 'ramda'
 import prisma from '~/services/prisma'
 import { InsufficientDataError } from '~/errors'
+import { DEFAULT_CHALLENGE_FIELDS } from '../challenges/constants'
 
-const SELECTED_FIELDS = {
-  id: true,
-  videoGame: true,
-  type: true,
-  ranking: true,
-  server: true,
-  betAmount: true,
-  fee: true,
-  createdAt: true,
-}
+const SELECTED_FIELDS = R.pipe(
+  R.map((f) => [f, true]),
+  R.fromPairs,
+  R.omit(['owner', 'challenger'])
+)(DEFAULT_CHALLENGE_FIELDS)
 
 export const getStudentChallenges = async (email) => {
   if (!email) {
@@ -32,7 +29,7 @@ export const getStudentChallenges = async (email) => {
       challengesChallenger: {
         select: {
           ...SELECTED_FIELDS,
-          owner: { select: { username: true, metadata: true, } },
+          owner: { select: { username: true, metadata: true } },
         },
       },
     },
