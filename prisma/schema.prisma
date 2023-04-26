@@ -275,8 +275,8 @@ model Challenge {
   server       String?
   description  String?
   metadata     Json            @default("{}")
-  betAmount    Float?
-  fee          Float? // Wombo fee
+  betAmount    Float           @default(0)
+  fee          Float           @default(0) // Wombo fee
   ownerId      String          @db.Uuid
   owner        Student         @relation("ChallengeOwner", fields: [ownerId], references: [id])
   challengerId String?         @db.Uuid
