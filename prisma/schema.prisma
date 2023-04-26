@@ -58,6 +58,8 @@ enum PaymentType {
   subscription
   donation
   competition
+  challenge
+  wallet
 }
 
 enum Currency {
@@ -73,6 +75,48 @@ enum OrderStatus {
   canceled
   unpaid
   paid
+}
+
+enum CompetitionType {
+  tournament
+  league
+  hub
+  in_house
+}
+
+enum CompetitionStatus {
+  open
+  in_progress
+  finished
+  coming_soon
+}
+
+enum CompetitionRegistrationStatus {
+  open
+  closed
+  coming_soon
+}
+
+enum ChallengeType {
+  player_vs_player
+  two_vs_two
+  team_vs_team
+}
+
+enum ChallengeStatus {
+  published // the challenge has been published and is open for submissions.
+  in_progress
+  finished // the challenge has been completed.
+  cancelled // the challenge was cancelled before completion.
+  reviewing // moderators are currently reviewing submissions.
+}
+
+enum WalletTransactionType {
+  t_deposit_
+  t_withdrawal_
+  t_purchase_
+  t_refund_
+  t_fee_
 }
 
 model VideoGame {
@@ -107,24 +151,27 @@ model Coach {
 }
 
 model Student {
-  id              String        @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email           String        @unique
-  username        String?       @unique
-  displayName     String?
-  password        String?
-  discord         Json          @default("{}")
-  discordJoinDate DateTime?
-  locale          Language?
-  timeZone        String?
-  orders          Order[]
-  stripe          Json          @default("{}")
-  metadata        Json          @default("{}")
-  isActive        Boolean       @default(true)
-  lastLogin       DateTime?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  deletedAt       DateTime?
-  competitions    Competition[]
+  id                   String        @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                String        @unique
+  username             String?       @unique
+  displayName          String?
+  password             String?
+  discord              Json          @default("{}")
+  discordJoinDate      DateTime?
+  locale               Language?
+  timeZone             String?
+  orders               Order[]
+  stripe               Json          @default("{}")
+  metadata             Json          @default("{}")
+  isActive             Boolean       @default(true)
+  lastLogin            DateTime?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+  deletedAt            DateTime?
+  competitions         Competition[]
+  challengesOwner      Challenge[]   @relation("ChallengeOwner")
+  challengesChallenger Challenge[]   @relation("ChallengeChallenger")
+  wallet               Wallet?
 }
 
 model Order {
@@ -138,6 +185,7 @@ model Order {
   tierId             String?
   videoGameId        String?
   competitionId      String?
+  challengeId        String?
   validFrom          DateTime?
   validTill          DateTime?
   billingInterval    Frequency?
@@ -201,26 +249,6 @@ model Payment {
   deletedAt DateTime?
 }
 
-enum CompetitionType {
-  tournament
-  league
-  hub
-  in_house
-}
-
-enum CompetitionStatus {
-  open
-  in_progress
-  finished
-  coming_soon
-}
-
-enum CompetitionRegistrationStatus {
-  open
-  closed
-  coming_soon
-}
-
 model Competition {
   id                 String                        @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   codename           String                        @unique
@@ -236,4 +264,50 @@ model Competition {
   createdAt          DateTime                      @default(now())
   updatedAt          DateTime                      @updatedAt
   deletedAt          DateTime?
+}
+
+model Challenge {
+  id           String          @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  videoGame    String
+  type         ChallengeType
+  status       ChallengeStatus @default(published)
+  ranking      String?
+  server       String?
+  description  String?
+  metadata     Json            @default("{}")
+  betAmount    Float           @default(0)
+  fee          Float           @default(0) // Wombo fee
+  ownerId      String          @db.Uuid
+  owner        Student         @relation("ChallengeOwner", fields: [ownerId], references: [id])
+  challengerId String?         @db.Uuid
+  challenger   Student?        @relation("ChallengeChallenger", fields: [challengerId], references: [id])
+  isActive     Boolean         @default(true)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  deletedAt    DateTime?
+}
+
+model Wallet {
+  id           String              @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  balance      Float               @default(0)
+  transactions WalletTransaction[]
+  metadata     Json                @default("{}")
+  owner        Student             @relation(fields: [ownerId], references: [id])
+  ownerId      String              @unique @db.Uuid
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  deletedAt    DateTime?
+}
+
+model WalletTransaction {
+  id          String                @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  amount      Float
+  type        WalletTransactionType
+  description String?
+  metadata    Json                  @default("{}")
+  wallet      Wallet                @relation(fields: [walletId], references: [id])
+  walletId    String                @db.Uuid
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  deletedAt   DateTime?
 }

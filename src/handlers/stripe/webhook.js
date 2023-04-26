@@ -1,16 +1,24 @@
-import stripe, { getStripeCustomerById, getStripeSubscriptionById } from '~/services/stripe'
-import { buildHandler } from '~/utils'
-import { stripe as stripeConfig, discord as discordConfig } from '~/config'
-import prisma from '~/services/prisma'
-import * as Sentry from '@sentry/serverless'
-import { addGuildMemberRole, removeGuildMemberRole } from '~/services/discord'
-import { getTierById } from '~/services/tiers'
-import { InsufficientDataError, MethodNotAllowedError, RequestError } from '~/errors'
 import R from 'ramda'
-import { getStudentById } from '~/services/students'
-import { getOrderIdBySubscriptionId } from '~/services/orders/getOrderIdBySubscriptionId'
-import { createUserDM } from '~/services/discord/createUserDM'
-import { createChannelMessage } from '~/services/discord/createChannelMessage'
+import * as Sentry from '@sentry/serverless'
+import prisma from '~/services/prisma'
+import stripe, {
+  CHARGE_SUCCEEDED_TYPES,
+  PAYMENT_TYPE,
+  getStripeCustomerById,
+  getStripeSubscriptionById,
+} from '~/services/stripe'
+import { buildHandler } from '~/utils'
+import { stripe as stripeConfig, discord as discordConfig, isOffline } from '~/config'
+import { addGuildMemberRole, removeGuildMemberRole, createUserDM, createChannelMessage } from '~/services/discord'
+import { getTierById } from '~/services/tiers'
+import {
+  STUDENT_WALLET_TRANSACTION_TYPES,
+  createStudentWallet,
+  getStudentById,
+  createWalletTransaction,
+} from '~/services/students'
+import { getOrderIdBySubscriptionId } from '~/services/orders'
+import { InsufficientDataError, MethodNotAllowedError, RequestError } from '~/errors'
 
 const handleChargeSucceeded = async ({ data }) => {
   const stripePayload = data?.object
@@ -33,8 +41,8 @@ const handleChargeSucceeded = async ({ data }) => {
   let { studentId } = metadata
   const { paymentType, coachId, competitionId, challengeId } = metadata
 
-  if (!['donation', 'competition', 'challenge'].includes(paymentType)) {
-    const error = new Error('Handler charge.succeeded only for order type donation, competition or challenge.')
+  if (!CHARGE_SUCCEEDED_TYPES.includes(paymentType)) {
+    const error = new Error('Handler charge.succeeded only for order type donation, competition, challenge or wallet.')
     error.statusCode = 202
     throw error
   }
@@ -51,6 +59,12 @@ const handleChargeSucceeded = async ({ data }) => {
   }
 
   const amountDecimal = amount / 100
+
+  if (paymentType === PAYMENT_TYPE.WALLET) {
+    const { id: walletId } = await createStudentWallet(studentId)
+
+    await createWalletTransaction(walletId, amountDecimal, STUDENT_WALLET_TRANSACTION_TYPES.DEPOSIT)
+  }
 
   const order = {
     student: {
@@ -179,7 +193,7 @@ const handleInvoicePaymentSucceeded = async ({ data }) => {
     if (discord?.id != null && discord?.accessToken != null && discord?.scope.includes('guilds.join')) {
       // send DM to user
       const response = await createUserDM(discord.id)
-      await createChannelMessage(response.id, discordConfig.messageSubscriptionCreated)
+      await createChannelMessage(response.id, { content: discordConfig.messageSubscriptionCreated })
 
       const { discordRoleIds = [] } = tier
       if (!R.isEmpty(discordRoleIds)) {
@@ -220,7 +234,7 @@ const handleSubscriptionDeleted = async ({ data }) => {
 
   // send DM to user
   const response = await createUserDM(discord.id.id)
-  await createChannelMessage(response.id, discordConfig.messageSubscriptionCancelled)
+  await createChannelMessage(response.id, { content: discordConfig.messageSubscriptionCancelled })
 }
 
 const handleSubscriptionUpdated = async ({ data }) => {
@@ -256,7 +270,7 @@ const handleSubscriptionTrialEnd = async ({ data }) => {
 
   // send DM to user
   const response = await createUserDM(discord.id)
-  await createChannelMessage(response.id, discordConfig.messageSubscriptionCreated)
+  await createChannelMessage(response.id, { content: discordConfig.messageSubscriptionCreated })
 }
 
 const webhookHandlers = {
@@ -290,7 +304,7 @@ const webhookHandler = async (req, res) => {
       throw new RequestError('Stripe webhook signature verification failed.', 400, error)
     }
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (isOffline) {
       console.log('stripe | type=', event?.type, 'payload=', JSON.stringify(event?.data?.object))
     }
 
@@ -305,10 +319,12 @@ const webhookHandler = async (req, res) => {
     // Return a response to acknowledge receipt of the event
     return res.json({ received: true })
   } catch (error) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (isOffline) {
       console.error(error)
     }
-    Sentry.captureException(error)
+    if (error.statusCode !== 202) {
+      Sentry.captureException(error)
+    }
 
     return res.status(error.statusCode ?? 500).json({ message: error?.message ?? 'Internal Error' })
   }

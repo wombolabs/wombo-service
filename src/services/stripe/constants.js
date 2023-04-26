@@ -1,0 +1,13 @@
+export const PAYMENT_TYPE = {
+  DONATION: 'donation',
+  COMPETITION: 'competition',
+  CHALLENGE: 'challenge',
+  WALLET: 'wallet',
+}
+
+export const CHARGE_SUCCEEDED_TYPES = [
+  PAYMENT_TYPE.DONATION,
+  PAYMENT_TYPE.COMPETITION,
+  PAYMENT_TYPE.CHALLENGE,
+  PAYMENT_TYPE.WALLET,
+]

@@ -5,6 +5,7 @@ import { getStudentByEmail } from '~/services/students'
 import { getCoachByEmail } from '~/services/coaches'
 import moment from 'moment-timezone'
 import { createOrder, getOrderIdByBookingId, updateOrderById } from '~/services/orders'
+import { isOffline } from '~/config'
 
 const handleBookingCreated = async ({
   organizer,
@@ -94,7 +95,7 @@ const webhookHandler = async ({ body }, res) => {
     // Return a response to acknowledge receipt of the event
     return res.json({ received: true })
   } catch (error) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (isOffline) {
       console.error(error)
     }
     Sentry.captureException(error)
