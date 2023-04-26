@@ -12,7 +12,7 @@ const CHANNEL_USER_LIMIT = {
 }
 const PROFILE_URL = 'https://wombo.gg/p/'
 
-export const createChallengeOnDiscord = async (challengeId) => {
+const getChallengeById = async (challengeId) => {
   const {
     videoGame,
     type,
@@ -29,6 +29,21 @@ export const createChallengeOnDiscord = async (challengeId) => {
       challenger: { select: { username: true, discord: true } },
     },
   })
+  return { videoGame, type, owner, challenger }
+}
+
+const updateChallengeDiscordChannelById = (challengeId, guildChannelId) =>
+  prisma.challenge.update({
+    where: {
+      id: challengeId,
+    },
+    data: {
+      metadata: { discord: { guildChannelId } },
+    },
+  })
+
+export const createChallengeOnDiscord = async (challengeId) => {
+  const { videoGame, type, owner, challenger } = await getChallengeById(challengeId)
 
   if (R.isEmpty(owner) || R.isEmpty(challenger)) {
     throw new InsufficientDataError('Challenge owner and challenger data are required.')
@@ -70,5 +85,7 @@ export const createChallengeOnDiscord = async (challengeId) => {
       ],
     }
     await createChannelMessage(guildChannelId, messageContent)
+
+    await updateChallengeDiscordChannelById(challengeId, guildChannelId)
   }
 }
