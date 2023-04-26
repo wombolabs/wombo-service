@@ -1,3 +1,20 @@
+# [1.31.0](https://github.com/wombolabs/wombo-service/compare/v1.30.0...v1.31.0) (2023-04-26)
+
+
+### Features
+
+* add challenge schema and migration ([c86b83b](https://github.com/wombolabs/wombo-service/commit/c86b83ba1cfb891bdd2f5c049dc785f4cdf17651))
+* add create and enroll challenge endpoints ([8fd1a54](https://github.com/wombolabs/wombo-service/commit/8fd1a54c6006c54f72b73269641733b6b4f69e06))
+* add create discord channel and join users on challenge enrollment ([431a64f](https://github.com/wombolabs/wombo-service/commit/431a64fec05baca7e7ac7a11635008faf4a0e4fa))
+* add get me challenges endpoint ([2f38590](https://github.com/wombolabs/wombo-service/commit/2f38590c9cb9c187029758cb9a761f4f04930b06))
+* add list challenges endpoint and serializers ([a66f0c6](https://github.com/wombolabs/wombo-service/commit/a66f0c678591452394d97302eb2b4ae6463736db))
+* add more fields on challenge schema and serializer ([a129ab8](https://github.com/wombolabs/wombo-service/commit/a129ab8e4c3b5104341765755b9bbc8d1a542fc1))
+* add status field on challenge model ([3121e9d](https://github.com/wombolabs/wombo-service/commit/3121e9d89f425904561e5dee130c202c473b6bec))
+* add student wallet ([d6cc1ce](https://github.com/wombolabs/wombo-service/commit/d6cc1ce24c903bd27421325a99e70d7010312ea3))
+* add transaction to student wallet endpoint - create wallet transactions types ([2d45e18](https://github.com/wombolabs/wombo-service/commit/2d45e18ae4ef63e705c3ffa37ad22c4ab0a7d41f))
+* challenge migration ([d06bedb](https://github.com/wombolabs/wombo-service/commit/d06bedb3b482244bee3923ce987935ea72de6322))
+* save discord channel id on challenge metadata ([24756df](https://github.com/wombolabs/wombo-service/commit/24756df5a5f237493b6fe35361d563ac857c47a1))
+
 # [1.30.0](https://github.com/wombolabs/wombo-service/compare/v1.29.0...v1.30.0) (2023-04-07)
 
 
