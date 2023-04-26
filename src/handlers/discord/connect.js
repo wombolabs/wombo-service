@@ -1,6 +1,7 @@
 import { buildHandler } from '~/utils'
 import * as Sentry from '@sentry/serverless'
 import { authenticationMiddleware } from '~/middlewares'
+import { isOffline } from '~/config'
 
 const handler = async ({ body }, res) => {
   try {
@@ -9,7 +10,7 @@ const handler = async ({ body }, res) => {
     // Return a response to acknowledge receipt of the event
     return res.json()
   } catch (error) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (isOffline) {
       console.error(error)
     }
     Sentry.captureException(error)

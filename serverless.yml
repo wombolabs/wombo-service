@@ -45,6 +45,7 @@ provider:
     STRIPE_WEBHOOK_SECRET: ${env:STRIPE_WEBHOOK_SECRET}
     DISCORD_BOT_TOKEN: ${env:DISCORD_BOT_TOKEN}
     DISCORD_GUILD_WOMBO: ${env:DISCORD_GUILD_WOMBO}
+    DISCORD_GUILD_CATEGORY_CHALLENGES: ${env:DISCORD_GUILD_CATEGORY_CHALLENGES}
     BOOKING_DATABASE_URL: ${env:BOOKING_DATABASE_URL}
 
 custom:
@@ -135,6 +136,13 @@ functions:
           path: /students/me/orders
           method: get
           private: true
+  getStudentMeChallenges:
+    handler: src/index.getStudentMeChallengesHandler
+    events:
+      - http:
+          path: /students/me/challenges
+          method: get
+          private: true
   updateStudentMe:
     handler: src/index.updateStudentMeHandler
     events:
@@ -155,6 +163,14 @@ functions:
       - http:
           path: /students/freepass
           method: get
+          private: true
+  # Me Wallet
+  createWalletTransaction:
+    handler: src/index.createWalletTransactionHandler
+    events:
+      - http:
+          path: /students/me/transactions
+          method: post
           private: true
   # Tiers
   getTier:
@@ -257,4 +273,28 @@ functions:
       - http:
           path: /competitions/{codename}/enroll
           method: post
+          private: true
+  # Challenge
+  listChallenges:
+    handler: src/index.listChallengesHandler
+    events:
+      - http:
+          path: /challenges
+          method: get
+          private: true
+          caching:
+            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
+  createChallenge:
+    handler: src/index.createChallengeHandler
+    events:
+      - http:
+          path: /challenges
+          method: post
+          private: true
+  enrollForChallenge:
+    handler: src/index.enrollForChallengeHandler
+    events:
+      - http:
+          path: /challenges/{id}/enroll
+          method: patch
           private: true

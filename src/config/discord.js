@@ -8,4 +8,11 @@ export const discord = {
     '*Tu suscripción en Wombo ha sido cancelada correctamente.*\n\nAntes de despedirnos, queremos agradecerte por acompañarnos en este camino de ser mejores. Para nosotros es muy importante la experiencia de los subs y *nos sería de gran ayuda que nos cuentes cómo te ha ido entrenando en Wombo.*\n\nSi quieres darnos tu opinión, puedes enviar un mensaje privado a <@739617834577166436> quienes estarán encantados de tener una conversación contigo.\n\nTe invitamos a seguir participando de los eventos gratuitos de la comunidad y ojalá verte de nuevo en el servidor. :people_hugging:',
   messageSubscriptionTrialEnd:
     'Hola! Espero que estés teniendo una gran experiencia en Wombo, aprendiendo de los mejores entrenadores y divirtiéndote junto al resto de la comunidad :grin:\n\n:hourglass: Te recuerdo que tu prueba gratuita está a punto de finalizar. Para seguir accediendo a las clases de tu entrenador preferido procura tener el saldo suficiente para que el sistema realice el cobro con éxito y puedas seguir disfrutando de todos nuestros beneficios.\n\nPor cualquier duda o consulta, puedes contactar a <@739617834577166436>',
+  guildCategories: {
+    challenges: process.env.DISCORD_GUILD_CATEGORY_CHALLENGES,
+  },
+  channelTypes: {
+    // https://discord.com/developers/docs/resources/channel#channel-object-channel-types
+    guildText: 0,
+  },
 }

@@ -10,9 +10,8 @@ export const serializeStudent = R.curry((student) =>
     R.pick([...DEFAULT_STUDENT_FIELDS]),
     R.evolve({
       discord: R.curry((discord) => R.pick(['id', 'username', 'discriminator'])(discord)),
-    }),
-    R.evolve({
       competitions: serializeCompetitions,
+      wallet: R.curry((wallet) => R.unless(R.isNil, R.pick(['balance', 'updatedAt']))(wallet)),
     })
   )(student)
 )

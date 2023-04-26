@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/serverless'
+import { isOffline, isProduction } from '~/config'
 import { ResourceNotFoundError, ValidationError } from '~/errors'
 
 /**
@@ -14,16 +15,16 @@ import { ResourceNotFoundError, ValidationError } from '~/errors'
  */
 // eslint-disable-next-line no-unused-vars
 export function errorMiddleware(error, req, res, next) {
-  if (!(error instanceof ValidationError) && !(error instanceof ResourceNotFoundError)) {
+  if (!(error instanceof ValidationError || error instanceof ResourceNotFoundError)) {
     Sentry.captureException(error)
   }
 
-  if (process.env.IS_OFFLINE === 'true') {
+  if (isOffline) {
     console.error(error)
   }
 
   res.status(error.statusCode ?? 500).json({
     message: error.message,
-    stack: process.env.NODE_ENV === 'production' ? undefined : error.stack,
+    stack: isProduction ? undefined : error.stack,
   })
 }

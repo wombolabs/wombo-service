@@ -1,4 +1,4 @@
-import { DuplicateResourceError, PrismaValidationError, PrismaError } from '~/errors'
+import { DuplicateResourceError, PrismaValidationError, PrismaError, ResourceNotFoundError } from '~/errors'
 import { Prisma } from '@prisma/client'
 
 /**
@@ -17,6 +17,8 @@ export function prismaErrorMiddleware(error, req, res, next) {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     if (error.code === 'P2002') {
       throw new DuplicateResourceError(null, null, error)
+    } else if (error.code === 'P2025') {
+      throw new ResourceNotFoundError(null, null, error)
     }
     throw new PrismaError(null, null, error)
   } else if (error instanceof Prisma.PrismaClientValidationError) {
