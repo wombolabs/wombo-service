@@ -1,5 +1,7 @@
 /* eslint-disable global-require */
 
+import { isOffline, isPrismaDataProxyEnabled } from '~/config'
+
 const options = {
   log: [
     {
@@ -25,14 +27,14 @@ const options = {
 let prisma
 
 if (prisma == null) {
-  if (process.env.PRISMA_DATAPROXY === 'true') {
+  if (isPrismaDataProxyEnabled) {
     const { PrismaClient } = require('@prisma/client/edge')
-    prisma = new PrismaClient(options)
+    prisma = new PrismaClient()
   } else {
     const { PrismaClient } = require('@prisma/client')
     prisma = new PrismaClient(options)
   }
-  if (process.env.PRISMA_DATAPROXY !== 'true') {
+  if (isOffline) {
     prisma.$on('query', ({ query, params, duration }) => {
       console.log(`Query: ${query}`)
       console.log(`Params: ${params}`)
