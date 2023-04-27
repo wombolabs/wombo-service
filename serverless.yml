@@ -150,20 +150,6 @@ functions:
           path: /students/me
           method: patch
           private: true
-  setStudentFreePass:
-    handler: src/index.setStudentMeFreePassHandler
-    events:
-      - http:
-          path: /students/me/freepass
-          method: post
-          private: true
-  listStudentsFreePassEnrolled:
-    handler: src/index.listStudentsFreePassEnrolledHandler
-    events:
-      - http:
-          path: /students/freepass
-          method: get
-          private: true
   # Me Wallet
   createWalletTransaction:
     handler: src/index.createWalletTransactionHandler
@@ -232,14 +218,6 @@ functions:
           private: true
           caching:
             enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
-  # Discord
-  discordConnect:
-    handler: src/index.discordConnectHandler
-    events:
-      - http:
-          path: /discord/connect
-          method: post
-          private: true
   # Competition
   listCompetitions:
     handler: src/index.listCompetitionsHandler
