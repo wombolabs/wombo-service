@@ -41,4 +41,7 @@ module.exports = {
       patterns: ['openapi-schema.yaml'],
     }),
   ],
+  experiments: {
+    topLevelAwait: true,
+  },
 }
