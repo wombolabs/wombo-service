@@ -19,12 +19,14 @@ export const listChallenges = async (filters = {}) => {
     include: {
       owner: {
         select: {
+          id: true,
           username: true,
           metadata: true,
         },
       },
       challenger: {
         select: {
+          id: true,
           username: true,
           metadata: true,
         },

@@ -276,3 +276,10 @@ functions:
           path: /challenges/{id}/enroll
           method: patch
           private: true
+  getChallenge:
+    handler: src/index.getChallengeHandler
+    events:
+      - http:
+          path: /challenges/{id}
+          method: get
+          private: true
