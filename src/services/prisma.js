@@ -32,7 +32,7 @@ if (prisma == null) {
     prisma = new PrismaClient()
   } else {
     const { PrismaClient } = require('@prisma/client')
-    prisma = new PrismaClient(options)
+    prisma = new PrismaClient(isOffline ? options : {})
   }
   if (isOffline) {
     prisma.$on('query', ({ query, params, duration }) => {
