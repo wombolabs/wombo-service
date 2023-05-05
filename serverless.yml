@@ -158,6 +158,21 @@ functions:
           path: /students/me/transactions
           method: post
           private: true
+  # Internals
+  getStudentInternal:
+    handler: src/index.getStudentInternalHandler
+    events:
+      - http:
+          path: /students/internals/{username}
+          method: get
+          private: true
+  createWalletTransactionInternal:
+    handler: src/index.createWalletTransactionInternalHandler
+    events:
+      - http:
+          path: /students/internals/{username}/transactions
+          method: post
+          private: true
   # Tiers
   getTier:
     handler: src/index.getTierHandler
