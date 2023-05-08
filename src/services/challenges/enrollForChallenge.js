@@ -4,7 +4,7 @@ import { CHALLENGE_STATUSES } from './constants'
 
 export const enrollForChallenge = async (challengeId, studentId) => {
   if (!challengeId || !studentId) {
-    throw new InsufficientDataError('Challenge ID, Student ID and Discord Channel ID fields are required.')
+    throw new InsufficientDataError('Challenge ID and Student ID fields are required.')
   }
 
   const result = await prisma.challenge.update({

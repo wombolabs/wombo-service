@@ -1,11 +1,7 @@
 import R from 'ramda'
 import prisma from '~/services/prisma'
 import { notNilNorEmpty } from '~/utils'
-
-const STATUSES_ORDER = { published: 5, in_progress: 4, reviewing: 3, finished: 2, cancelled: 1 }
-const statusesComparator = R.comparator((a, b) =>
-  R.gt(STATUSES_ORDER[R.prop('status', a)], STATUSES_ORDER[R.prop('status', b)])
-)
+import { statusesComparator } from './constants'
 
 export const listChallenges = async (filters = {}) => {
   const { isActive } = filters
@@ -19,12 +15,14 @@ export const listChallenges = async (filters = {}) => {
     include: {
       owner: {
         select: {
+          id: true,
           username: true,
           metadata: true,
         },
       },
       challenger: {
         select: {
+          id: true,
           username: true,
           metadata: true,
         },

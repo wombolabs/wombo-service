@@ -1,6 +1,6 @@
 import R from 'ramda'
 
-export const serializePublicStudent = R.curry((student) =>
+export const serializeStudentPublic = R.curry((student) =>
   R.pipe(
     R.pick(['id', 'email', 'username', 'displayName', 'discord', 'metadata']),
     R.evolve({

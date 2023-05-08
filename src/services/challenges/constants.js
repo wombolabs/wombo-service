@@ -1,3 +1,5 @@
+import R from 'ramda'
+
 export const DEFAULT_CHALLENGE_FIELDS = [
   'id',
   'videoGame',
@@ -21,3 +23,8 @@ export const CHALLENGE_STATUSES = {
   CANCELLED: 'cancelled',
   REVIEWING: 'reviewing',
 }
+
+const STATUSES_ORDER = { published: 5, in_progress: 4, reviewing: 3, finished: 2, cancelled: 1 }
+export const statusesComparator = R.comparator((a, b) =>
+  R.gt(STATUSES_ORDER[R.prop('status', a)], STATUSES_ORDER[R.prop('status', b)])
+)
