@@ -1,3 +1,12 @@
+# [1.32.0](https://github.com/wombolabs/wombo-service/compare/v1.31.0...v1.32.0) (2023-05-08)
+
+
+### Features
+
+* add get challenge by id endpoint ([c7d617f](https://github.com/wombolabs/wombo-service/commit/c7d617f2f10bfeefb90ae486617f38d8995e8514))
+* add order by challenge status ([17764c2](https://github.com/wombolabs/wombo-service/commit/17764c2f1f7570f4be8ceb0794cc05eb85d9988b))
+* **internals:** add get student endpoint with competitions, challenges and wallet ([3b17804](https://github.com/wombolabs/wombo-service/commit/3b1780409bced8b87a290698bd173e774557eaf4))
+
 # [1.31.0](https://github.com/wombolabs/wombo-service/compare/v1.30.0...v1.31.0) (2023-04-26)
 
 
