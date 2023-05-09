@@ -55,9 +55,11 @@ if (prisma == null) {
   }
   if (isProduction) {
     prisma.$on('warn', (warn) => {
+      console.log(warn)
       Sentry.captureException(warn)
     })
     prisma.$on('error', (error) => {
+      console.log(error)
       Sentry.captureException(error)
     })
   }

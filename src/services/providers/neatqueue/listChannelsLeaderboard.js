@@ -2,10 +2,12 @@ import axios from 'axios'
 import R from 'ramda'
 import { axiosLoggerError } from '~/utils'
 
+const mapIndexed = R.addIndex(R.map)
+
 const getChannelLeaderboard = async (discordGuild, neatQueueApiKey, channelName, channelId) => {
   const url = `https://host.neatqueue.com:443/api/channelstats/${discordGuild}/${channelId}`
   try {
-    const { data = [] } = await axios.get(url, {
+    const { data = {} } = await axios.get(url, {
       headers: {
         Authorization: neatQueueApiKey,
         'Content-Type': 'application/json',
@@ -14,18 +16,18 @@ const getChannelLeaderboard = async (discordGuild, neatQueueApiKey, channelName,
       },
     })
 
-    const items = R.map(
+    const items = mapIndexed((value, index) =>
       R.applySpec({
         id: R.prop('id'),
-        index: R.prop('num'),
+        index: R.always(index),
         username: R.prop('name'),
         mmr: R.path(['data', 'mmr']),
         wins: R.path(['data', 'wins']),
         losses: R.path(['data', 'losses']),
         streak: R.path(['data', 'streak']),
         totalGames: R.path(['data', 'totalgames']),
-      })
-    )(data)
+      })(value)
+    )(data?.alltime ?? [])
 
     return { name: channelName, items }
   } catch (error) {
