@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
-
-import { isOffline, isPrismaDataProxyEnabled } from '~/config'
+import * as Sentry from '@sentry/serverless'
+import { isOffline, isPrismaDataProxyEnabled, isProduction } from '~/config'
 
 const options = {
   testing: {
@@ -26,11 +26,11 @@ const options = {
   production: {
     log: [
       {
-        emit: 'stdout',
+        emit: 'event',
         level: 'error',
       },
       {
-        emit: 'stdout',
+        emit: 'event',
         level: 'warn',
       },
     ],
@@ -46,13 +46,19 @@ if (prisma == null) {
     prisma = new PrismaClient()
   } else {
     const { PrismaClient } = require('@prisma/client')
-    prisma = new PrismaClient(isOffline ? options.testing : options.production)
+    prisma = new PrismaClient(isProduction ? options.production : options.testing)
   }
   if (isOffline) {
     prisma.$on('query', ({ query, params, duration }) => {
-      console.log(`Query: ${query}`)
-      console.log(`Params: ${params}`)
-      console.log(`Duration: ${duration}ms`)
+      console.log(`Query: ${query}\nParams: ${params}\nDuration: ${duration}ms`)
+    })
+  }
+  if (isProduction) {
+    prisma.$on('warn', (warn) => {
+      Sentry.captureException(warn)
+    })
+    prisma.$on('error', (error) => {
+      Sentry.captureException(error)
     })
   }
 }
