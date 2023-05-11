@@ -7,7 +7,7 @@ const mapIndexed = R.addIndex(R.map)
 const getChannelLeaderboard = async (discordGuild, neatQueueApiKey, channelName, channelId) => {
   const url = `https://host.neatqueue.com:443/api/channelstats/${discordGuild}/${channelId}`
   try {
-    const { data = {} } = await axios.get(url, {
+    let { data = {} } = await axios.get(url, {
       headers: {
         Authorization: neatQueueApiKey,
         'Content-Type': 'application/json',
@@ -15,6 +15,11 @@ const getChannelLeaderboard = async (discordGuild, neatQueueApiKey, channelName,
         'Accept-Encoding': '*',
       },
     })
+
+    if (typeof data === 'string') {
+      const tmp = data.replaceAll('-Infinity', '0').replaceAll('Infinity', '0')
+      data = JSON.parse(tmp)
+    }
 
     const items = mapIndexed((value, index) =>
       R.applySpec({
