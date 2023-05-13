@@ -4,7 +4,7 @@ import {
   createWalletTransaction,
   getStudentByUsername,
 } from '~/services/students'
-import { buildHandler } from '~/utils'
+import { buildHandler, notNilNorEmpty } from '~/utils'
 import { authenticationInternalMiddleware } from '~/middlewares'
 import { InsufficientDataError } from '~/errors'
 
@@ -14,7 +14,7 @@ const handler = async ({ params: { username }, body }, res) => {
   if (amount == null || !type) {
     throw new InsufficientDataError('Amount and type fields are required.')
   }
-  if (!(amount >= 0)) {
+  if (amount <= 0) {
     throw new InsufficientDataError('Amount field is invalid.')
   }
 
@@ -26,9 +26,9 @@ const handler = async ({ params: { username }, body }, res) => {
     throw new InsufficientDataError('Insufficient funds.')
   }
 
-  await createWalletTransaction(walletId, amount, type, description)
+  const transaction = await createWalletTransaction(walletId, amount, type, description)
 
-  return res.json({ processed: true })
+  return res.json({ processed: notNilNorEmpty(transaction) })
 }
 
 export const createWalletTransactionInternalHandler = buildHandler(

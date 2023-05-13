@@ -1,19 +1,13 @@
 import prisma from '~/services/prisma'
 
 export const createStudentWallet = async (studentId) => {
-  let result
+  let result = await prisma.wallet.findFirst({ where: { ownerId: studentId } })
 
-  result = await prisma.wallet.findFirst({ where: { ownerId: studentId } })
-
-  if (!result) {
+  if (result == null) {
     result = await prisma.wallet.create({
       data: {
         balance: 0,
-        owner: {
-          connect: {
-            id: studentId,
-          },
-        },
+        owner: { connect: { id: studentId } },
       },
     })
   }

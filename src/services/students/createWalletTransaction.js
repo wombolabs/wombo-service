@@ -55,11 +55,7 @@ export const createWalletTransaction = async (walletId, amount, type, descriptio
       amount: amountValue,
       type,
       description,
-      wallet: {
-        connect: {
-          id: walletId,
-        },
-      },
+      wallet: { connect: { id: walletId } },
     },
   })
 

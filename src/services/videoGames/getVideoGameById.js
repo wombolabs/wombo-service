@@ -4,7 +4,7 @@ import { validate as uuidValidate } from 'uuid'
 
 export const getVideoGameById = async (id) => {
   if (!uuidValidate(id)) {
-    throw new InsufficientDataError('Invalid UUID.')
+    throw new InsufficientDataError('Invalid VideoGame identification.')
   }
 
   const result = await prisma.videoGame.findFirst({
