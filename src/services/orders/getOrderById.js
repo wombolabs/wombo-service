@@ -4,7 +4,7 @@ import { validate as uuidValidate } from 'uuid'
 
 export const getOrderById = async (id) => {
   if (!uuidValidate(id)) {
-    throw new InsufficientDataError('Invalid UUID.')
+    throw new InsufficientDataError('Invalid Order identification.')
   }
 
   const query = {

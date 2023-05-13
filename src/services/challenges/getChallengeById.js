@@ -4,7 +4,7 @@ import { validate as uuidValidate } from 'uuid'
 
 export const getChallengeById = async (id, filters) => {
   if (!uuidValidate(id)) {
-    throw new InsufficientDataError('Invalid UUID.')
+    throw new InsufficientDataError('Invalid Challenge identification.')
   }
 
   const { isActive } = filters
