@@ -298,3 +298,10 @@ functions:
           path: /challenges/{id}
           method: get
           private: true
+  updateChallenge:
+    handler: src/index.updateChallengeHandler
+    events:
+      - http:
+          path: /challenges/{id}
+          method: patch
+          private: true
