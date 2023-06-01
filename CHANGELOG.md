@@ -1,3 +1,10 @@
+# [1.33.0](https://github.com/wombolabs/wombo-service/compare/v1.32.0...v1.33.0) (2023-06-01)
+
+
+### Features
+
+* add sort by mmr on competition leaderboards ([f02a386](https://github.com/wombolabs/wombo-service/commit/f02a386048f0d8e3004aef389056e9553f8f5917))
+
 # [1.32.0](https://github.com/wombolabs/wombo-service/compare/v1.31.0...v1.32.0) (2023-05-08)
 
 
