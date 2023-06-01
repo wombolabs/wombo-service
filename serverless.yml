@@ -257,9 +257,6 @@ functions:
           path: /competitions/{codename}/leaderboards
           method: get
           private: true
-          caching:
-            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
-            ttlInSeconds: 1800
   enrollForCompetition:
     handler: src/index.enrollForCompetitionHandler
     events:
