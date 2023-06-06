@@ -4,7 +4,6 @@ import { enrollForChallenge } from '~/services/challenges'
 
 const handler = async ({ params: { id }, user }, res) => {
   await enrollForChallenge(id, user?.id)
-
   res.json({ enrolled: true })
 }
 

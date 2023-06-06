@@ -11,6 +11,8 @@ export const DEFAULT_CHALLENGE_FIELDS = [
   'metadata',
   'betAmount',
   'fee',
+  'ownerScore',
+  'challengerScore',
   'owner',
   'challenger',
   'createdAt',
