@@ -1,3 +1,10 @@
+# [1.34.0](https://github.com/wombolabs/wombo-service/compare/v1.33.0...v1.34.0) (2023-06-06)
+
+
+### Features
+
+* add challenge score and status update ([742e741](https://github.com/wombolabs/wombo-service/commit/742e74180aad43baf80fad225bddacddcff6c10c))
+
 # [1.33.0](https://github.com/wombolabs/wombo-service/compare/v1.32.0...v1.33.0) (2023-06-01)
 
 
