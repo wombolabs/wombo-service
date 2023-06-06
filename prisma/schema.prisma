@@ -267,24 +267,26 @@ model Competition {
 }
 
 model Challenge {
-  id           String          @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  videoGame    String
-  type         ChallengeType
-  status       ChallengeStatus @default(published)
-  ranking      String?
-  server       String?
-  description  String?
-  metadata     Json            @default("{}")
-  betAmount    Float           @default(0)
-  fee          Float           @default(0) // Wombo fee
-  ownerId      String          @db.Uuid
-  owner        Student         @relation("ChallengeOwner", fields: [ownerId], references: [id])
-  challengerId String?         @db.Uuid
-  challenger   Student?        @relation("ChallengeChallenger", fields: [challengerId], references: [id])
-  isActive     Boolean         @default(true)
-  createdAt    DateTime        @default(now())
-  updatedAt    DateTime        @updatedAt
-  deletedAt    DateTime?
+  id              String          @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  videoGame       String
+  type            ChallengeType
+  status          ChallengeStatus @default(published)
+  ranking         String?
+  server          String?
+  description     String?
+  metadata        Json            @default("{}")
+  betAmount       Float           @default(0)
+  fee             Float           @default(0) // Wombo fee
+  ownerScore      Int?
+  challengerScore Int?
+  ownerId         String          @db.Uuid
+  owner           Student         @relation("ChallengeOwner", fields: [ownerId], references: [id])
+  challengerId    String?         @db.Uuid
+  challenger      Student?        @relation("ChallengeChallenger", fields: [challengerId], references: [id])
+  isActive        Boolean         @default(true)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
 }
 
 model Wallet {
