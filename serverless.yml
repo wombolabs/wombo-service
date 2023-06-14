@@ -122,6 +122,13 @@ functions:
           path: /students/{username}
           method: get
           private: true
+  getStudentByDiscord:
+    handler: src/index.getStudentByDiscordHandler
+    events:
+      - http:
+          path: /students/discord/{id}
+          method: get
+          private: true
   getStudentMe:
     handler: src/index.getStudentMeHandler
     events:
@@ -257,6 +264,8 @@ functions:
           path: /competitions/{codename}/leaderboards
           method: get
           private: true
+          caching:
+            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
   enrollForCompetition:
     handler: src/index.enrollForCompetitionHandler
     events:
