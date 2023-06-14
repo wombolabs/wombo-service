@@ -1,3 +1,10 @@
+# [1.35.0](https://github.com/wombolabs/wombo-service/compare/v1.34.0...v1.35.0) (2023-06-14)
+
+
+### Features
+
+* add get user by discord id endpoint ([389bbf8](https://github.com/wombolabs/wombo-service/commit/389bbf8972b52dbe70d6ba5f01f6a0a83bc75186))
+
 # [1.34.0](https://github.com/wombolabs/wombo-service/compare/v1.33.0...v1.34.0) (2023-06-06)
 
 
