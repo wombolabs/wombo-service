@@ -158,6 +158,9 @@ model Student {
   password             String?
   discord              Json          @default("{}")
   discordJoinDate      DateTime?
+  google               Json          @default("{}")
+  facebook             Json          @default("{}")
+  twitter              Json          @default("{}")
   locale               Language?
   timeZone             String?
   orders               Order[]
