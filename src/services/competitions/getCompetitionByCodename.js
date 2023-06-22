@@ -7,7 +7,7 @@ export const getCompetitionByCodename = async (codename, filters = {}) => {
     throw new InsufficientDataError('Codename field is required.')
   }
 
-  const { withParcipants, isActive } = filters
+  const { withParcipants, withChallenges, isActive } = filters
 
   const query = { where: { codename: { equals: codename, mode: 'insensitive' } } }
   if (typeof isActive === 'boolean') {
@@ -17,6 +17,26 @@ export const getCompetitionByCodename = async (codename, filters = {}) => {
   const include = {}
   if (withParcipants) {
     include.participants = true
+  }
+  if (withChallenges) {
+    include.challenges = {
+      include: {
+        owner: {
+          select: {
+            id: true,
+            username: true,
+            metadata: true,
+          },
+        },
+        challenger: {
+          select: {
+            id: true,
+            username: true,
+            metadata: true,
+          },
+        },
+      },
+    }
   }
   if (notNilNorEmpty(include)) {
     query.include = include

@@ -273,6 +273,13 @@ functions:
           path: /competitions/{codename}/enroll
           method: post
           private: true
+  createChallengeCompetitionInternal:
+    handler: src/index.createChallengeCompetitionInternalHandler
+    events:
+      - http:
+          path: /competitions/internals/{codename}/challenge
+          method: post
+          private: true
   # Challenge
   listChallenges:
     handler: src/index.listChallengesHandler
