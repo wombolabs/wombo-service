@@ -1,6 +1,7 @@
 import R from 'ramda'
 import { DEFAULT_COMPETITION_FIELDS } from '~/services/competitions'
 import { DEFAULT_STUDENT_FIELDS } from '~/services/students'
+import { serializeChallenges } from './serializeChallenges'
 
 const studentFields = [...DEFAULT_STUDENT_FIELDS, 'discord']
 
@@ -40,6 +41,7 @@ export const serializeCompetition = R.curry((withMinimalDataParticipants, compet
     R.pick([...DEFAULT_COMPETITION_FIELDS]),
     R.evolve({
       participants: withMinimalDataParticipants ? serializeMinimalDataParticipants : serializeParticipants,
+      challenges: serializeChallenges,
     })
   )(competition)
 )

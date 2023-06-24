@@ -8,11 +8,14 @@ const statusesComparator = R.comparator((a, b) =>
 )
 
 export const listCompetitions = async (filters = {}) => {
-  const { codename, withParcipants, isActive } = filters
+  const { codename, withParcipants, withChallenges, isActive } = filters
 
   const include = {}
   if (withParcipants) {
     include.participants = true
+  }
+  if (withChallenges) {
+    include.challenges = true
   }
 
   const where = {}
