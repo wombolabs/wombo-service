@@ -24,6 +24,7 @@ export const getStudentChallenges = async (email) => {
         select: {
           ...SELECTED_FIELDS,
           challenger: { select: { username: true, metadata: true } },
+          competition: { select: { id: true } },
         },
         orderBy: [
           {
@@ -35,6 +36,7 @@ export const getStudentChallenges = async (email) => {
         select: {
           ...SELECTED_FIELDS,
           owner: { select: { username: true, metadata: true } },
+          competition: { select: { id: true } },
         },
         orderBy: [
           {
@@ -44,6 +46,8 @@ export const getStudentChallenges = async (email) => {
       },
     },
   })
+
+  console.log(JSON.stringify(result))
 
   return R.evolve({
     challengesOwner: R.sort(statusesComparator),
