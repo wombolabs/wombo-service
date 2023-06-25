@@ -1,3 +1,13 @@
+# [1.36.0](https://github.com/wombolabs/wombo-service/compare/v1.35.0...v1.36.0) (2023-06-25)
+
+
+### Features
+
+* add challenges to competition ([7544eae](https://github.com/wombolabs/wombo-service/commit/7544eae1b1254b5b6476102b50a2417d54e6fa9a))
+* add competition field on challenge serializer ([e990a8d](https://github.com/wombolabs/wombo-service/commit/e990a8d00733ec3c51aa03b2418591143a71459f))
+* add competition field on get student challenges ([75761fa](https://github.com/wombolabs/wombo-service/commit/75761fa9578f829581a8b65277ed42625ee32a1a))
+* add support to more oauth providers on student signup ([dcef9c2](https://github.com/wombolabs/wombo-service/commit/dcef9c287166e151107fc2f1f770aa8290d0e0c8))
+
 # [1.35.0](https://github.com/wombolabs/wombo-service/compare/v1.34.0...v1.35.0) (2023-06-14)
 
 
