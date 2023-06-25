@@ -158,6 +158,9 @@ model Student {
   password             String?
   discord              Json          @default("{}")
   discordJoinDate      DateTime?
+  google               Json          @default("{}")
+  facebook             Json          @default("{}")
+  twitter              Json          @default("{}")
   locale               Language?
   timeZone             String?
   orders               Order[]
@@ -260,6 +263,7 @@ model Competition {
   registrationStatus CompetitionRegistrationStatus
   participants       Student[]
   metadata           Json                          @default("{}")
+  challenges         Challenge[]
   isActive           Boolean                       @default(true)
   createdAt          DateTime                      @default(now())
   updatedAt          DateTime                      @updatedAt
@@ -287,6 +291,8 @@ model Challenge {
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
   deletedAt       DateTime?
+  competition     Competition?    @relation(fields: [competitionId], references: [id])
+  competitionId   String?         @db.Uuid
 }
 
 model Wallet {
