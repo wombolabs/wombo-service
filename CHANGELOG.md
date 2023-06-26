@@ -1,3 +1,10 @@
+# [1.37.0](https://github.com/wombolabs/wombo-service/compare/v1.36.0...v1.37.0) (2023-06-26)
+
+
+### Features
+
+* add competition field on challenges list ([635fa52](https://github.com/wombolabs/wombo-service/commit/635fa521e769eec6f55108c2ec606be5901062cc))
+
 # [1.36.0](https://github.com/wombolabs/wombo-service/compare/v1.35.0...v1.36.0) (2023-06-25)
 
 
