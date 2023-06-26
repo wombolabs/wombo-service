@@ -272,8 +272,8 @@ model Competition {
 
 model Challenge {
   id              String          @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  videoGame       String
-  type            ChallengeType
+  videoGame       String?
+  type            ChallengeType?
   status          ChallengeStatus @default(published)
   ranking         String?
   server          String?
