@@ -34,7 +34,6 @@ const getChannelLeaderboard = async (discordGuild, neatQueueApiKey, channelName,
         })(value)
       )(items)
     }
-    console.log('>>>>>>>>>>>>>>', items)
 
     return { name: channelName, items }
   } catch (error) {

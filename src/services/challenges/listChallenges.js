@@ -27,6 +27,7 @@ export const listChallenges = async (filters = {}) => {
           metadata: true,
         },
       },
+      competition: { select: { id: true } },
     },
     orderBy: [
       {
