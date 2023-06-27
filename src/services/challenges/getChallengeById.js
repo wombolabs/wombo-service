@@ -26,6 +26,7 @@ export const getChallengeById = async (id, filters) => {
           metadata: true,
         },
       },
+      competition: { select: { id: true } },
     },
   }
 
