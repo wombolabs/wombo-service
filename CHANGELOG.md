@@ -1,3 +1,10 @@
+## [1.38.1](https://github.com/wombolabs/wombo-service/compare/v1.38.0...v1.38.1) (2023-06-27)
+
+
+### Bug Fixes
+
+* typo query param ([8005a4d](https://github.com/wombolabs/wombo-service/commit/8005a4d0790db420dd0291b63cfa568d80d8b90d))
+
 # [1.38.0](https://github.com/wombolabs/wombo-service/compare/v1.37.0...v1.38.0) (2023-06-27)
 
 
