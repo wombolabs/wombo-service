@@ -10,7 +10,7 @@ const processFields = R.reduce((acc, value) => {
 
 export const getTierById = async (id, selectFields = []) => {
   if (!uuidValidate(id)) {
-    throw new InsufficientDataError('Invali Tier identification.')
+    throw new InsufficientDataError('Invalid Tier identification.')
   }
 
   const query = {
