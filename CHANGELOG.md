@@ -1,3 +1,10 @@
+# [1.39.0](https://github.com/wombolabs/wombo-service/compare/v1.38.1...v1.39.0) (2023-07-01)
+
+
+### Features
+
+* add create competition tournament (swiss-system) endpoint ([c7ff162](https://github.com/wombolabs/wombo-service/commit/c7ff1629e0dff45a6825824a94978fbdb7c4f8d7))
+
 ## [1.38.1](https://github.com/wombolabs/wombo-service/compare/v1.38.0...v1.38.1) (2023-06-27)
 
 
