@@ -5,24 +5,23 @@ import { notNilNorEmpty } from '~/utils'
 import { getChallengeById } from './getChallengeById'
 import { CHALLENGE_STATUSES } from './constants'
 
-export const updateChallengeById = async (id, challenge = {}) => {
-  if (!uuidValidate(id)) {
-    throw new InsufficientDataError('Invalid Challenge identification.')
+export const cancelChallengeById = async (id, ownerId) => {
+  if (!uuidValidate(id) || !uuidValidate(ownerId)) {
+    throw new InsufficientDataError('Invalid Challenge or Owner identification.')
   }
-  if (!notNilNorEmpty(challenge)) {
-    throw new InsufficientDataError('Required fields are missing for update challenge.')
-  }
-
-  const { ownerScore, challengerScore } = challenge
 
   const savedChallenge = await getChallengeById(id, { isActive: true })
 
+  if (savedChallenge.owner?.id !== ownerId) {
+    throw new InsufficientDataError('Owner error on cancel challenge.')
+  }
+
   const data = {}
 
-  if (ownerScore >= 0 && challengerScore >= 0 && CHALLENGE_STATUSES.IN_PROGRESS === savedChallenge.status) {
-    data.ownerScore = ownerScore
-    data.challengerScore = challengerScore
-    data.status = CHALLENGE_STATUSES.FINISHED
+  if (CHALLENGE_STATUSES.PUBLISEHD === savedChallenge.status) {
+    data.status = CHALLENGE_STATUSES.CANCELLED
+  } else {
+    throw new InsufficientDataError('Status error on cancel challenge.')
   }
 
   let result = {}

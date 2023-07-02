@@ -326,3 +326,10 @@ functions:
           path: /challenges/{id}
           method: patch
           private: true
+  cancelChallenge:
+    handler: src/index.cancelChallengeHandler
+    events:
+      - http:
+          path: /challenges/{id}/cancel
+          method: post
+          private: true
