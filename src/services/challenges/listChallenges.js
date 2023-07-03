@@ -4,11 +4,14 @@ import { notNilNorEmpty } from '~/utils'
 import { statusesComparator } from './constants'
 
 export const listChallenges = async (filters = {}) => {
-  const { isActive } = filters
+  const { isActive, status } = filters
 
   const where = {}
   if (typeof isActive === 'boolean') {
     where.isActive = isActive
+  }
+  if (notNilNorEmpty(status)) {
+    where.status = { in: status }
   }
 
   const query = {
