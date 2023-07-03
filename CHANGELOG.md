@@ -1,3 +1,10 @@
+# [1.40.0](https://github.com/wombolabs/wombo-service/compare/v1.39.0...v1.40.0) (2023-07-03)
+
+
+### Features
+
+* add cancel challenge endpoint ([2316410](https://github.com/wombolabs/wombo-service/commit/2316410d1f4887aa1dceda0eb2c8f84657efb6fa))
+
 # [1.39.0](https://github.com/wombolabs/wombo-service/compare/v1.38.1...v1.39.0) (2023-07-01)
 
 
