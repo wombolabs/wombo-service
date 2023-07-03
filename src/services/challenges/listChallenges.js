@@ -4,7 +4,7 @@ import { notNilNorEmpty } from '~/utils'
 import { statusesComparator } from './constants'
 
 export const listChallenges = async (filters = {}) => {
-  const { isActive, status } = filters
+  const { isActive, status, limit } = filters
 
   const where = {}
   if (typeof isActive === 'boolean') {
@@ -40,6 +40,9 @@ export const listChallenges = async (filters = {}) => {
   }
   if (notNilNorEmpty(where)) {
     query.where = where
+  }
+  if (notNilNorEmpty(limit)) {
+    query.take = +limit
   }
 
   const result = await prisma.challenge.findMany(query)
