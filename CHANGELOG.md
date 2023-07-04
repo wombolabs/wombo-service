@@ -1,3 +1,17 @@
+# [1.41.0](https://github.com/wombolabs/wombo-service/compare/v1.40.0...v1.41.0) (2023-07-04)
+
+
+### Bug Fixes
+
+* **internals:** add owner field to challenges of student ([218666b](https://github.com/wombolabs/wombo-service/commit/218666bc356f48239d2d29f20af42d77466a46e3))
+
+
+### Features
+
+* add query filter limit on list challenges endpoint ([946b8f3](https://github.com/wombolabs/wombo-service/commit/946b8f36154fc86e74eed7eaf949abf1ca821bd8))
+* add query filter status and limit on list competitions endpoint ([3b81e31](https://github.com/wombolabs/wombo-service/commit/3b81e314c9eebee35a8af2b64acbbc74d8da1941))
+* add query filter status on list challenges endpoint ([cf7ac66](https://github.com/wombolabs/wombo-service/commit/cf7ac66a5989fb3cb0554c22329e76a8171fd0ee))
+
 # [1.40.0](https://github.com/wombolabs/wombo-service/compare/v1.39.0...v1.40.0) (2023-07-03)
 
 
