@@ -4,7 +4,7 @@ import { notNilNorEmpty } from '~/utils'
 import { statusesComparator } from './constants'
 
 export const listChallenges = async (filters = {}) => {
-  const { isActive, isBelongCompetition, status, limit } = filters
+  const { isActive, isBelongCompetition, status, dateStart, dateEnd, limit } = filters
 
   const where = {}
   if (typeof isActive === 'boolean') {
@@ -13,8 +13,14 @@ export const listChallenges = async (filters = {}) => {
   if (notNilNorEmpty(status)) {
     where.status = { in: status }
   }
-  if (typeof isBelongCompetition === 'boolean' && !isBelongCompetition) {
-    where.competitionId = null
+  if (typeof isBelongCompetition === 'boolean') {
+    where.competitionId = isBelongCompetition ? { not: null } : null
+  }
+  if (notNilNorEmpty(dateStart) && notNilNorEmpty(dateEnd)) {
+    where.updatedAt = {
+      lte: new Date(dateEnd).toISOString(),
+      gte: new Date(dateStart).toISOString(),
+    }
   }
 
   const query = {
