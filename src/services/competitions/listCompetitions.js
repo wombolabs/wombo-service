@@ -8,7 +8,7 @@ const statusesComparator = R.comparator((a, b) =>
 )
 
 export const listCompetitions = async (filters = {}) => {
-  const { codename, withParticipants, withChallenges, isActive } = filters
+  const { codename, withParticipants, withChallenges, status, limit, isActive } = filters
 
   const include = {}
   if (withParticipants) {
@@ -25,6 +25,9 @@ export const listCompetitions = async (filters = {}) => {
   if (notNilNorEmpty(codename)) {
     where.codename = { in: codename }
   }
+  if (notNilNorEmpty(status)) {
+    where.status = { in: status }
+  }
 
   const query = {
     orderBy: [
@@ -38,6 +41,9 @@ export const listCompetitions = async (filters = {}) => {
   }
   if (notNilNorEmpty(include)) {
     query.include = include
+  }
+  if (notNilNorEmpty(limit)) {
+    query.take = +limit
   }
 
   const result = await prisma.competition.findMany(query)

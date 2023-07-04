@@ -12,7 +12,8 @@ const SELECTED_CHALLENGE_FIELDS = R.pipe(
 const INCLUDED_CHALLENGE_FIELDS = {
   select: {
     ...SELECTED_CHALLENGE_FIELDS,
-    challenger: { select: { username: true, metadata: true } },
+    owner: { select: { username: true } },
+    challenger: { select: { username: true } },
   },
   orderBy: [
     {
