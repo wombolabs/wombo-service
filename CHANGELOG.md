@@ -1,3 +1,10 @@
+# [1.42.0](https://github.com/wombolabs/wombo-service/compare/v1.41.0...v1.42.0) (2023-07-04)
+
+
+### Features
+
+* add query filter isbelongcompetition on list challenges endpoint ([d0dd2cb](https://github.com/wombolabs/wombo-service/commit/d0dd2cbd7e06169058d2340ad7887b178f714321))
+
 # [1.41.0](https://github.com/wombolabs/wombo-service/compare/v1.40.0...v1.41.0) (2023-07-04)
 
 
