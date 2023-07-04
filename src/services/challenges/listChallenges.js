@@ -4,7 +4,7 @@ import { notNilNorEmpty } from '~/utils'
 import { statusesComparator } from './constants'
 
 export const listChallenges = async (filters = {}) => {
-  const { isActive, isBelongCompetition, status, dateStart, dateEnd, limit } = filters
+  const { isActive, isBelongCompetition, status, dateStart, dateEnd, isPaid, limit } = filters
 
   const where = {}
   if (typeof isActive === 'boolean') {
@@ -21,6 +21,9 @@ export const listChallenges = async (filters = {}) => {
       lte: new Date(dateEnd).toISOString(),
       gte: new Date(dateStart).toISOString(),
     }
+  }
+  if (typeof isPaid === 'boolean') {
+    where.betAmount = isPaid ? { gt: 0 } : { equals: 0 }
   }
 
   const query = {
