@@ -47,8 +47,6 @@ export const getStudentChallenges = async (email) => {
     },
   })
 
-  console.log(JSON.stringify(result))
-
   return R.evolve({
     challengesOwner: R.sort(statusesComparator),
     challengesChallenger: R.sort(statusesComparator),
