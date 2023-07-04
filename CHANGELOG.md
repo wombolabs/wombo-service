@@ -1,3 +1,11 @@
+# [1.43.0](https://github.com/wombolabs/wombo-service/compare/v1.42.0...v1.43.0) (2023-07-04)
+
+
+### Features
+
+* add query filter datestart and dateend (updatedat field) on list challenges endpoint ([64f214f](https://github.com/wombolabs/wombo-service/commit/64f214f5f4a30098902e7fc6965e9d931032a86d))
+* add query filter ispaid on list challenges endpoint ([7b91577](https://github.com/wombolabs/wombo-service/commit/7b915771bde2d15fe78dd9d64d7910bda8aa8263))
+
 # [1.42.0](https://github.com/wombolabs/wombo-service/compare/v1.41.0...v1.42.0) (2023-07-04)
 
 
