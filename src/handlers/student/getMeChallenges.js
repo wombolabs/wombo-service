@@ -1,15 +1,11 @@
-import { getStudentChallenges } from '~/services/students'
 import { buildHandler } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
 import { serializeChallenges } from '~/serializers'
+import { listChallenges } from '~/services/challenges'
 
 const handler = async ({ user, query }, res) => {
-  const { challengesOwner, challengesChallenger } = await getStudentChallenges(user.email?.toLowerCase(), query)
-
-  return res.json({
-    owner: serializeChallenges(challengesOwner),
-    challenger: serializeChallenges(challengesChallenger),
-  })
+  const result = await listChallenges({ ...query, studentId: user?.id })
+  return res.json(serializeChallenges(result))
 }
 
 export const getStudentMeChallengesHandler = buildHandler('/students/me/challenges', 'get', handler, {
