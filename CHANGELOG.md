@@ -1,3 +1,10 @@
+# [1.44.0](https://github.com/wombolabs/wombo-service/compare/v1.43.0...v1.44.0) (2023-07-05)
+
+
+### Features
+
+* **internals:** add create competition endpoint ([e9f42ca](https://github.com/wombolabs/wombo-service/commit/e9f42ca659ef6b2fc871e1384f222dae91d44b9f))
+
 # [1.43.0](https://github.com/wombolabs/wombo-service/compare/v1.42.0...v1.43.0) (2023-07-04)
 
 
