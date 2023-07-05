@@ -10,6 +10,7 @@ export const DEFAULT_STUDENT_FIELDS = [
   'wallet',
   'lastLogin',
   'createdAt',
+  'updatedAt',
 ]
 
 export const STUDENT_WALLET_TRANSACTION_TYPES = {

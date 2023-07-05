@@ -17,6 +17,7 @@ export const DEFAULT_CHALLENGE_FIELDS = [
   'challenger',
   'competition',
   'createdAt',
+  'updatedAt',
 ]
 
 export const CHALLENGE_STATUSES = {

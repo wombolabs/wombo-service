@@ -10,4 +10,6 @@ export const DEFAULT_COMPETITION_FIELDS = [
   'participants',
   'challenges',
   'isActive',
+  'createdAt',
+  'updatedAt',
 ]
