@@ -1,10 +1,11 @@
 import R from 'ramda'
+import { validate as uuidValidate } from 'uuid'
 import prisma from '~/services/prisma'
 import { notNilNorEmpty } from '~/utils'
 import { statusesComparator } from './constants'
 
 export const listChallenges = async (filters = {}) => {
-  const { isActive, isBelongCompetition, status, dateStart, dateEnd, isPaid, limit } = filters
+  const { isActive, isBelongCompetition, status, dateStart, dateEnd, isPaid, studentId, limit } = filters
 
   const where = {}
   if (typeof isActive === 'boolean') {
@@ -24,6 +25,9 @@ export const listChallenges = async (filters = {}) => {
   }
   if (typeof isPaid === 'boolean') {
     where.betAmount = isPaid ? { gt: 0 } : { equals: 0 }
+  }
+  if (uuidValidate(studentId)) {
+    where.OR = [{ ownerId: { equals: studentId } }, { challengerId: { equals: studentId } }]
   }
 
   const query = {
