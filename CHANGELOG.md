@@ -1,3 +1,10 @@
+# [1.45.0](https://github.com/wombolabs/wombo-service/compare/v1.44.0...v1.45.0) (2023-07-06)
+
+
+### Features
+
+* add get student stats by username endpoint ([0a9beb2](https://github.com/wombolabs/wombo-service/commit/0a9beb244dd5ccfaad8ce5c6b8af3c31c6943ddd))
+
 # [1.44.0](https://github.com/wombolabs/wombo-service/compare/v1.43.0...v1.44.0) (2023-07-05)
 
 
