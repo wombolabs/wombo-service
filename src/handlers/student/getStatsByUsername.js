@@ -9,9 +9,7 @@ const handler = async ({ params: { username } }, res) => {
   const challenges = await listChallenges({
     studentId,
     isActive: true,
-    isBelongCompetition: false,
     status: CHALLENGE_STATUSES.FINISHED,
-    isPaid: true,
   })
 
   const matches = {
