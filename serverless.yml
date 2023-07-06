@@ -83,23 +83,6 @@ custom:
     production: true
 
 functions:
-  # Coaches
-  listCoaches:
-    handler: src/index.listCoachesHandler
-    events:
-      - http:
-          path: /coaches
-          method: get
-          private: true
-          caching:
-            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
-  getCoach:
-    handler: src/index.getCoachHandler
-    events:
-      - http:
-          path: /coaches/{username}
-          method: get
-          private: true
   # Students
   signinStudent:
     handler: src/index.signinStudentHandler
@@ -157,7 +140,7 @@ functions:
           path: /students/me
           method: patch
           private: true
-  # Me Wallet
+  # Student Me Wallet
   createWalletTransaction:
     handler: src/index.createWalletTransactionHandler
     events:
@@ -165,7 +148,7 @@ functions:
           path: /students/me/transactions
           method: post
           private: true
-  # Internals
+  # Student Internals
   getStudentInternal:
     handler: src/index.getStudentInternalHandler
     events:
@@ -180,23 +163,6 @@ functions:
           path: /students/internals/{username}/transactions
           method: post
           private: true
-  # Tiers
-  getTier:
-    handler: src/index.getTierHandler
-    events:
-      - http:
-          path: /tiers/{id}
-          method: get
-          private: true
-  listTiers:
-    handler: src/index.listTiersHandler
-    events:
-      - http:
-          path: /tiers
-          method: get
-          private: true
-          caching:
-            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
   # VideoGames
   listVideoGames:
     handler: src/index.listVideoGamesHandler
@@ -223,23 +189,6 @@ functions:
           path: /stripe/webhook
           method: post
           private: false
-  # Booking
-  bookingWebhook:
-    handler: src/index.bookingWebhookHandler
-    events:
-      - http:
-          path: /booking/webhook
-          method: post
-          private: true
-  listBookingSessions:
-    handler: src/index.listBookingSessionsHandler
-    events:
-      - http:
-          path: /booking/sessions
-          method: get
-          private: true
-          caching:
-            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
   # Competition
   listCompetitions:
     handler: src/index.listCompetitionsHandler
@@ -273,6 +222,7 @@ functions:
           path: /competitions/{codename}/enroll
           method: post
           private: true
+  # Competition Internals
   createChallengeCompetitionInternal:
     handler: src/index.createChallengeCompetitionInternalHandler
     events:
