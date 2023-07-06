@@ -140,6 +140,13 @@ functions:
           path: /students/me
           method: patch
           private: true
+  getStatsByUsername:
+    handler: src/index.getStatsByUsernameHandler
+    events:
+      - http:
+          path: /students/{username}/stats
+          method: get
+          private: true
   # Student Me Wallet
   createWalletTransaction:
     handler: src/index.createWalletTransactionHandler
