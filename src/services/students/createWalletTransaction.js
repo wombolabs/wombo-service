@@ -31,7 +31,7 @@ prisma.$use(async (params, next) => {
 })
 
 export const createWalletTransaction = async (walletId, amount, type, description) => {
-  if (!uuidValidate(walletId) || amount == null || !type) {
+  if (!uuidValidate(walletId) || typeof amount !== 'number' || amount < 0 || !type) {
     throw new InsufficientDataError('Wallet ID, amount and type fields are required.')
   }
   if (amount <= 0) {
