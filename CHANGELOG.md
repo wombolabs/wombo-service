@@ -1,3 +1,12 @@
+# [1.46.0](https://github.com/wombolabs/wombo-service/compare/v1.45.0...v1.46.0) (2023-07-09)
+
+
+### Features
+
+* add payment on update challenge with score ([b26b261](https://github.com/wombolabs/wombo-service/commit/b26b26103e2cfe149085c3a0e564d539d1671bf3))
+* add query filter competitionid on list challenges endpoint ([abbb9e6](https://github.com/wombolabs/wombo-service/commit/abbb9e6452120f7b126f4cb8a2cef8226709ba8e))
+* **internals:** add list wallet transactions endpoint ([64f438b](https://github.com/wombolabs/wombo-service/commit/64f438b80281303972511a08d1d94f06483b9429))
+
 # [1.45.0](https://github.com/wombolabs/wombo-service/compare/v1.44.0...v1.45.0) (2023-07-06)
 
 
