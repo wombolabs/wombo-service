@@ -142,6 +142,7 @@ functions:
           private: true
   getStatsByUsername:
     handler: src/index.getStatsByUsernameHandler
+    timeout: 400
     events:
       - http:
           path: /students/{username}/stats
@@ -169,6 +170,13 @@ functions:
       - http:
           path: /students/internals/{username}/transactions
           method: post
+          private: true
+  listWalletTransactionsInternal:
+    handler: src/index.listWalletTransactionsInternalHandler
+    events:
+      - http:
+          path: /students/internals/transactions
+          method: get
           private: true
   # VideoGames
   listVideoGames:
