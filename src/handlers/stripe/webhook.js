@@ -1,23 +1,9 @@
 import R from 'ramda'
 import * as Sentry from '@sentry/serverless'
-import prisma from '~/services/prisma'
-import stripe, {
-  CHARGE_SUCCEEDED_TYPES,
-  PAYMENT_TYPE,
-  getStripeCustomerById,
-  getStripeSubscriptionById,
-} from '~/services/stripe'
+import stripe, { CHARGE_SUCCEEDED_TYPES, getStripeCustomerById } from '~/services/stripe'
 import { buildHandler } from '~/utils'
-import { stripe as stripeConfig, discord as discordConfig, isOffline } from '~/config'
-import { addGuildMemberRole, removeGuildMemberRole, createUserDM, createChannelMessage } from '~/services/discord'
-import { getTierById } from '~/services/tiers'
-import {
-  STUDENT_WALLET_TRANSACTION_TYPES,
-  createStudentWallet,
-  getStudentById,
-  createWalletTransaction,
-} from '~/services/students'
-import { getOrderIdBySubscriptionId } from '~/services/orders'
+import { stripe as stripeConfig, isOffline } from '~/config'
+import { STUDENT_WALLET_TRANSACTION_TYPES, createStudentWallet, createWalletTransaction } from '~/services/students'
 import { InsufficientDataError, MethodNotAllowedError, RequestError } from '~/errors'
 
 const handleChargeSucceeded = async ({ data }) => {
@@ -26,261 +12,38 @@ const handleChargeSucceeded = async ({ data }) => {
     throw new InsufficientDataError('Stripe payload is missing.')
   }
 
-  const {
-    id: chargeId,
-    payment_intent: paymentIntentId,
-    customer: customerId,
-    amount,
-    currency,
-    metadata,
-    payment_method: paymentMethodId,
-    receipt_url: receiptUrl,
-    livemode,
-  } = stripePayload
-
+  const { payment_intent: paymentIntentId, customer: customerId, amount, metadata } = stripePayload
   let { studentId } = metadata
-  const { paymentType, coachId, competitionId, challengeId } = metadata
+  const { paymentType } = metadata
 
   if (!CHARGE_SUCCEEDED_TYPES.includes(paymentType)) {
-    const error = new Error('Handler charge.succeeded only for order type donation, competition, challenge or wallet.')
+    const error = new Error('Handler charge.succeeded only for order type wallet.')
     error.statusCode = 202
     throw error
   }
 
   if (studentId == null) {
     const customer = await getStripeCustomerById(customerId)
-    if (customer?.metadata?.userId) {
-      studentId = customer?.metadata?.userId
-    } else {
+    studentId = customer?.metadata?.userId
+    if (studentId == null) {
       const error = new Error(`Student with email ${customer?.email} not found.`)
       error.statusCode = 202
       throw error
     }
   }
 
-  const amountDecimal = amount / 100
+  const { id: walletId } = await createStudentWallet(studentId)
 
-  if (paymentType === PAYMENT_TYPE.WALLET) {
-    const { id: walletId } = await createStudentWallet(studentId)
-
-    await createWalletTransaction(walletId, amountDecimal, STUDENT_WALLET_TRANSACTION_TYPES.DEPOSIT)
-  }
-
-  const order = {
-    student: {
-      connect: { id: studentId },
-    },
-    type: paymentType,
-    payments: {
-      create: [
-        {
-          method: 'stripe',
-          stripe: {
-            paymentIntentId,
-            chargeId,
-            paymentMethodId,
-            receiptUrl,
-          },
-          amount: amountDecimal,
-          currency,
-          livemode,
-        },
-      ],
-    },
-    stripe: {
-      paymentIntentId,
-    },
-    coachId,
-    competitionId,
-    challengeId,
-    billingAmount: amountDecimal,
-    billingCurrency: currency,
-    livemode,
-    status: 'paid',
-  }
-
-  await prisma.order.create({ data: order })
-}
-
-const handleInvoicePaymentSucceeded = async ({ data }) => {
-  const stripePayload = data?.object
-  if (R.isEmpty(stripePayload)) {
-    throw new InsufficientDataError('Stripe payload is missing.')
-  }
-
-  const {
-    id: invoiceId,
-    payment_intent: paymentIntentId,
-    customer: customerId,
-    subscription: subscriptionId,
-    amount_paid: amount,
-    billing_reason: billingReason,
-    currency,
-    hosted_invoice_url: invoiceUrl,
-    livemode,
-  } = stripePayload
-
-  const subscription = await getStripeSubscriptionById(subscriptionId)
-
-  const { current_period_start: validFrom, current_period_end: validTill, status } = subscription
-  let { studentId } = subscription.metadata
-  const { coachId, tierId, paymentType } = subscription.metadata
-
-  if (studentId == null) {
-    const customer = await getStripeCustomerById(customerId)
-    if (customer?.metadata?.userId) {
-      studentId = customer?.metadata?.userId
-    } else {
-      const error = new Error(`Student with stripe customer email ${customer?.email} not found.`)
-      error.statusCode = 202
-      throw error
-    }
-  }
-
-  const amountDecimal = amount / 100
-
-  let tier = {}
-  if (tierId) {
-    tier = await getTierById(tierId, ['billingInterval', 'discordRoleIds'])
-  }
-
-  const order = {
-    student: {
-      connect: { id: studentId },
-    },
-    type: paymentType,
-    payments: {
-      create: [
-        {
-          method: 'stripe',
-          stripe: {
-            invoiceId,
-            paymentIntentId,
-            subscriptionId,
-            customerId,
-            invoiceUrl,
-            billingReason,
-          },
-          amount: amountDecimal,
-          currency,
-          livemode,
-        },
-      ],
-    },
-    stripe: {
-      subscriptionId,
-      paymentIntentId,
-      billingReason,
-    },
-    coachId,
-    tierId,
-    validFrom: new Date(validFrom * 1000),
-    validTill: new Date(validTill * 1000),
-    billingInterval: tier?.billingInterval,
-    billingAmount: amountDecimal,
-    billingCurrency: currency,
-    status,
-    livemode,
-  }
-
-  await prisma.order.create({ data: order })
-
-  // TODO update Stripe Subscription metadata with orderId
-
-  if (customerId && invoiceId && billingReason === 'subscription_create') {
-    // SUBSCRIPTION
-    const { discord = {} } = await getStudentById(studentId, ['discord'])
-    if (discord?.id != null && discord?.accessToken != null && discord?.scope.includes('guilds.join')) {
-      // send DM to user
-      const response = await createUserDM(discord.id)
-      await createChannelMessage(response.id, { content: discordConfig.messageSubscriptionCreated })
-
-      const { discordRoleIds = [] } = tier
-      if (!R.isEmpty(discordRoleIds)) {
-        // add roles on Discord server
-        await Promise.all(discordRoleIds.map((roleId) => addGuildMemberRole(discord.id, roleId)))
-      }
-    }
-  }
-}
-
-const handleSubscriptionDeleted = async ({ data }) => {
-  const stripePayload = data?.object
-  if (R.isEmpty(stripePayload)) {
-    throw new InsufficientDataError('Stripe payload is missing.')
-  }
-
-  const { id: subscriptionId, metadata } = stripePayload
-  const { tierId, studentId } = metadata
-
-  const [orderId, tier] = await Promise.all([
-    getOrderIdBySubscriptionId(subscriptionId),
-    getTierById(tierId, ['discordRoleIds']),
-  ])
-
-  await prisma.order.update({ where: { id: orderId }, data: { status: 'canceled' } })
-
-  const { discordRoleIds = [] } = tier
-  if (R.isEmpty(discordRoleIds)) {
-    throw new Error(`Tier discord role ids are missing for tier ${tierId}. Student ${studentId}.`)
-  }
-
-  const { discord = {} } = await getStudentById(studentId, ['discord'])
-  if (discord?.id == null || discord?.accessToken == null || !discord?.scope.includes('guilds.join')) {
-    throw new InsufficientDataError(`Discord required fields are missing for student ${studentId}.`)
-  }
-
-  await Promise.all(discordRoleIds.map((roleId) => removeGuildMemberRole(discord.id, roleId)))
-
-  // send DM to user
-  const response = await createUserDM(discord.id.id)
-  await createChannelMessage(response.id, { content: discordConfig.messageSubscriptionCancelled })
-}
-
-const handleSubscriptionUpdated = async ({ data }) => {
-  const stripePayload = data?.object
-  if (R.isEmpty(stripePayload)) {
-    throw new InsufficientDataError('Stripe payload is missing.')
-  }
-
-  const { id: subscriptionId, cancel_at_period_end: cancelAtPeriodEnd } = stripePayload
-
-  const orderId = await getOrderIdBySubscriptionId(subscriptionId)
-  if (!orderId) {
-    const error = new Error('Handler customer.subscription.updated only for subscription cancellation.')
-    error.statusCode = 202
-    throw error
-  }
-
-  await prisma.order.update({ where: { id: orderId }, data: { cancelAtPeriodEnd } })
-}
-
-const handleSubscriptionTrialEnd = async ({ data }) => {
-  const stripePayload = data?.object
-  if (R.isEmpty(stripePayload)) {
-    throw new InsufficientDataError('Stripe payload is missing.')
-  }
-
-  const { studentId } = stripePayload.metadata
-
-  const { discord = {} } = await getStudentById(studentId, ['discord'])
-  if (discord?.id == null || discord?.accessToken == null || !discord?.scope.includes('guilds.join')) {
-    throw new InsufficientDataError(`Discord required fields are missing for student ${studentId}.`)
-  }
-
-  // send DM to user
-  const response = await createUserDM(discord.id)
-  await createChannelMessage(response.id, { content: discordConfig.messageSubscriptionCreated })
+  await createWalletTransaction(
+    walletId,
+    amount / 100,
+    STUDENT_WALLET_TRANSACTION_TYPES.DEPOSIT,
+    `stripe paymentIntentId ${paymentIntentId}`
+  )
 }
 
 const webhookHandlers = {
-  'charge.succeeded': handleChargeSucceeded, // donation | competition | challenge
-  'invoice.payment_succeeded': handleInvoicePaymentSucceeded, // subscription created
-  'customer.subscription.deleted': handleSubscriptionDeleted, // subscription cancelled
-  'charge.failed': () => null,
-  'invoice.payment_failed': () => null,
-  'customer.subscription.updated': handleSubscriptionUpdated, // subscription updated
-  'customer.subscription.trial_will_end': handleSubscriptionTrialEnd, // subscription trial end
+  'charge.succeeded': handleChargeSucceeded, // wallet
 }
 
 const webhookHandler = async (req, res) => {
