@@ -9,11 +9,11 @@ export const updateChallengeById = async (id, challenge = {}) => {
   if (!uuidValidate(id)) {
     throw new InsufficientDataError('Invalid Challenge identification.')
   }
-  if (!notNilNorEmpty(challenge)) {
-    throw new InsufficientDataError('Required fields are missing for update challenge.')
-  }
 
   const { ownerScore, challengerScore } = challenge
+  if (typeof ownerScore !== 'number' || typeof challengerScore !== 'number' || ownerScore < 0 || challengerScore < 0) {
+    throw new InsufficientDataError('Required fields are missing or invalid values for update challenge.')
+  }
 
   const savedChallenge = await getChallengeById(id, { isActive: true })
 
