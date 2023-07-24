@@ -16,6 +16,7 @@ export const DEFAULT_CHALLENGE_FIELDS = [
   'owner',
   'challenger',
   'competition',
+  'isPublic',
   'createdAt',
   'updatedAt',
 ]
