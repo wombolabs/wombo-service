@@ -1,3 +1,10 @@
+# [1.47.0](https://github.com/wombolabs/wombo-service/compare/v1.46.0...v1.47.0) (2023-07-24)
+
+
+### Features
+
+* add ispublic field on challenge ([3b39bdd](https://github.com/wombolabs/wombo-service/commit/3b39bdd6a003b7844ea7e79c06925ff295a83ceb))
+
 # [1.46.0](https://github.com/wombolabs/wombo-service/compare/v1.45.0...v1.46.0) (2023-07-09)
 
 
