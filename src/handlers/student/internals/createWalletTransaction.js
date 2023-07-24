@@ -1,5 +1,5 @@
 import {
-  STUDENT_WALLET_TRANSACTION_TYPES,
+  DECREMENT_BALANCE_TRANSACTION_TYPES,
   createStudentWallet,
   createWalletTransaction,
   getStudentByUsername,
@@ -22,7 +22,7 @@ const handler = async ({ params: { username }, body }, res) => {
 
   const { id: walletId, balance } = await createStudentWallet(student?.id)
 
-  if (type === STUDENT_WALLET_TRANSACTION_TYPES.PURCHASE && balance < amount) {
+  if (DECREMENT_BALANCE_TRANSACTION_TYPES.includes(type) && balance < amount) {
     throw new InsufficientDataError('Insufficient funds.')
   }
 
