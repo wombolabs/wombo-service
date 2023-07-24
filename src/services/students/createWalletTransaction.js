@@ -1,7 +1,7 @@
 import { validate as uuidValidate } from 'uuid'
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
-import { STUDENT_WALLET_TRANSACTION_TYPES } from './constants'
+import { DECREMENT_BALANCE_TRANSACTION_TYPES } from './constants'
 
 prisma.$use(async (params, next) => {
   if (params.model === 'WalletTransaction' && params.action === 'create') {
@@ -40,13 +40,7 @@ export const createWalletTransaction = async (walletId, amount, type, descriptio
 
   let amountValue = amount
 
-  if (
-    [
-      STUDENT_WALLET_TRANSACTION_TYPES.PURCHASE,
-      STUDENT_WALLET_TRANSACTION_TYPES.WITHDRAWAL,
-      STUDENT_WALLET_TRANSACTION_TYPES.FEE,
-    ].includes(type)
-  ) {
+  if (DECREMENT_BALANCE_TRANSACTION_TYPES.includes(type)) {
     amountValue = -amount
   }
 

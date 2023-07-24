@@ -9,7 +9,7 @@ const pay = async (userId, prizePool, challengeId) => {
   await createWalletTransaction(
     wallet?.id,
     prizePool,
-    STUDENT_WALLET_TRANSACTION_TYPES.DEPOSIT,
+    STUDENT_WALLET_TRANSACTION_TYPES.WON_CHALLENGE,
     `won challenge ${challengeId}`
   )
 }

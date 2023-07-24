@@ -5,11 +5,25 @@ import { notNilNorEmpty } from '~/utils'
 import { statusesComparator } from './constants'
 
 export const listChallenges = async (filters = {}) => {
-  const { isActive, isBelongCompetition, status, dateStart, dateEnd, isPaid, studentId, competitionId, limit } = filters
+  const {
+    isPublic,
+    isActive,
+    isBelongCompetition,
+    status,
+    dateStart,
+    dateEnd,
+    isPaid,
+    studentId,
+    competitionId,
+    limit,
+  } = filters
 
   const where = {}
   if (typeof isActive === 'boolean') {
     where.isActive = isActive
+  }
+  if (typeof isPublic === 'boolean') {
+    where.isPublic = isPublic
   }
   if (notNilNorEmpty(status)) {
     where.status = { in: status }
