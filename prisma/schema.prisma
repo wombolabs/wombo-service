@@ -283,6 +283,7 @@ model Challenge {
   ranking         String?
   server          String?
   description     String?
+  isPublic        Boolean         @default(true)
   metadata        Json            @default("{}")
   betAmount       Float           @default(0)
   fee             Float           @default(0) // Wombo fee
