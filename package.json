@@ -1,6 +1,6 @@
 {
   "name": "@wombolabs/wombo-api-service",
-  "version": "1.47.0",
+  "version": "1.48.0",
   "description": "Wombo API Service",
   "author": "WomboLabs <dev@wombo.gg>",
   "private": true,
