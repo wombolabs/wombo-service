@@ -106,6 +106,8 @@ enum ChallengeType {
 enum ChallengeStatus {
   published // the challenge has been published and is open for submissions.
   in_progress
+  awaiting_owner_report
+  awaiting_challenger_report
   finished // the challenge has been completed.
   cancelled // the challenge was cancelled before completion.
   reviewing // moderators are currently reviewing submissions.

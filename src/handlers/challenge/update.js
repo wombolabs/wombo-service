@@ -14,8 +14,8 @@ const pay = async (userId, prizePool, challengeId) => {
   )
 }
 
-const handler = async ({ params: { id }, body }, res) => {
-  const updatedChallenge = await updateChallengeById(id, body)
+const handler = async ({ params: { id }, user, body }, res) => {
+  const updatedChallenge = await updateChallengeById(id, body, user?.id)
 
   const isUpdated = notNilNorEmpty(updatedChallenge)
   if (
