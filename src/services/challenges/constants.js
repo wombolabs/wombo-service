@@ -32,11 +32,11 @@ export const CHALLENGE_STATUSES = {
 }
 
 const STATUSES_ORDER = {
-  published: 7,
-  in_progress: 6,
-  awaiting_owner_report: 5,
-  awaiting_challenger_report: 4,
-  reviewing: 3,
+  in_progress: 7,
+  awaiting_owner_report: 6,
+  awaiting_challenger_report: 5,
+  reviewing: 4,
+  published: 3,
   finished: 2,
   cancelled: 1,
 }
