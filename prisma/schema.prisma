@@ -175,13 +175,14 @@ model Student {
   metadata             Json          @default("{}")
   isActive             Boolean       @default(true)
   lastLogin            DateTime?
-  createdAt            DateTime      @default(now())
-  updatedAt            DateTime      @updatedAt
-  deletedAt            DateTime?
   competitions         Competition[]
   challengesOwner      Challenge[]   @relation("ChallengeOwner")
   challengesChallenger Challenge[]   @relation("ChallengeChallenger")
   wallet               Wallet?
+  rating               Rating?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+  deletedAt            DateTime?
 }
 
 model Order {
@@ -326,4 +327,22 @@ model WalletTransaction {
   createdAt   DateTime              @default(now())
   updatedAt   DateTime              @updatedAt
   deletedAt   DateTime?
+}
+
+model Rating {
+  id                     String   @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  rating                 Int      @default(1000)
+  matchesWon             Int      @default(0)
+  matchesDraw            Int      @default(0)
+  matchesLost            Int      @default(0)
+  matchesGoalsFor        Int      @default(0)
+  matchesGoalsAgainst    Int      @default(0)
+  tournamentsFirstPlace  Int      @default(0)
+  tournamentsSecondPlace Int      @default(0)
+  tournamentsThirdPlace  Int      @default(0)
+  metadata               Json     @default("{}")
+  owner                  Student  @relation(fields: [ownerId], references: [id])
+  ownerId                String   @unique @db.Uuid
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 }

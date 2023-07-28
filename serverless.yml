@@ -142,7 +142,6 @@ functions:
           private: true
   getStatsByUsername:
     handler: src/index.getStatsByUsernameHandler
-    timeout: 400
     events:
       - http:
           path: /students/{username}/stats
@@ -305,3 +304,13 @@ functions:
           path: /challenges/{id}/cancel
           method: post
           private: true
+  # Rating
+  listRatings:
+    handler: src/index.listRatingsHandler
+    events:
+      - http:
+          path: /ratings
+          method: get
+          private: true
+          caching:
+            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
