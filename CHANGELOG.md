@@ -1,3 +1,10 @@
+# [1.49.0](https://github.com/wombolabs/wombo-service/compare/v1.48.0...v1.49.0) (2023-07-28)
+
+
+### Features
+
+* add list ratings endpoint and schema ([f77ec5e](https://github.com/wombolabs/wombo-service/commit/f77ec5e1e12496fc21dd98e2f235ccecda89a460))
+
 # [1.48.0](https://github.com/wombolabs/wombo-service/compare/v1.47.0...v1.48.0) (2023-07-26)
 
 
