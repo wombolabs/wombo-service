@@ -1,10 +1,24 @@
-import { buildHandler } from '~/utils'
+import { buildHandler, notNilNorEmpty } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
-import { enrollForChallenge } from '~/services/challenges'
+import { CHALLENGE_STATUSES, enrollForChallengeById, getChallengeById } from '~/services/challenges'
+import { RequestError } from '~/errors'
 
 const handler = async ({ params: { id }, user }, res) => {
-  await enrollForChallenge(id, user?.id)
-  res.json({ enrolled: true })
+  const savedChallenge = await getChallengeById(id, { isActive: true })
+
+  // user cannot enroll for his own challenge
+  if (savedChallenge?.owner?.id === user?.id) {
+    throw new RequestError('Owner error on enroll for challenge.')
+  }
+
+  // user can enroll only for published challenges
+  if (savedChallenge?.status !== CHALLENGE_STATUSES.PUBLISHED) {
+    throw new RequestError('Status error on enroll challenge.')
+  }
+
+  const result = await enrollForChallengeById(id, user?.id)
+
+  res.json({ enrolled: notNilNorEmpty(result) })
 }
 
 export const enrollForChallengeHandler = buildHandler('/challenges/:id/enroll', 'patch', handler, {
