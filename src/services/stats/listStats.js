@@ -1,6 +1,6 @@
 import prisma from '~/services/prisma'
 
-export const listRatings = async () => {
+export const listStats = async () => {
   const query = {
     include: {
       owner: {
@@ -16,7 +16,7 @@ export const listRatings = async () => {
     ],
   }
 
-  const result = await prisma.rating.findMany(query)
+  const result = await prisma.stat.findMany(query)
 
   return result ?? []
 }

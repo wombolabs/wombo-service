@@ -179,7 +179,7 @@ model Student {
   challengesOwner      Challenge[]   @relation("ChallengeOwner")
   challengesChallenger Challenge[]   @relation("ChallengeChallenger")
   wallet               Wallet?
-  rating               Rating?
+  stat                 Stat?
   createdAt            DateTime      @default(now())
   updatedAt            DateTime      @updatedAt
   deletedAt            DateTime?
@@ -329,20 +329,25 @@ model WalletTransaction {
   deletedAt   DateTime?
 }
 
-model Rating {
-  id                     String   @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  rating                 Int      @default(1000)
-  matchesWon             Int      @default(0)
-  matchesDraw            Int      @default(0)
-  matchesLost            Int      @default(0)
-  matchesGoalsFor        Int      @default(0)
-  matchesGoalsAgainst    Int      @default(0)
-  tournamentsFirstPlace  Int      @default(0)
-  tournamentsSecondPlace Int      @default(0)
-  tournamentsThirdPlace  Int      @default(0)
-  metadata               Json     @default("{}")
-  owner                  Student  @relation(fields: [ownerId], references: [id])
-  ownerId                String   @unique @db.Uuid
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+model Stat {
+  id                     String    @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  rating                 Int?      @default(1000)
+  highestRating          Int?      @default(1000)
+  highestRatingDate      DateTime?
+  ratingDelta            Int?      @default(0) // rating change in comparison to previous rating
+  accOpponentsRating     Int?      @default(0) // accumulator of opponents rating to calculate average opponent rating = acc / matchesPlayed
+  highestRatingOpponent  Int?      @default(0)
+  matchesWon             Int?      @default(0)
+  matchesDraw            Int?      @default(0)
+  matchesLost            Int?      @default(0)
+  matchesGoalsFor        Int?      @default(0)
+  matchesGoalsAgainst    Int?      @default(0)
+  tournamentsFirstPlace  Int?      @default(0)
+  tournamentsSecondPlace Int?      @default(0)
+  tournamentsThirdPlace  Int?      @default(0)
+  metadata               Json?     @default("{}")
+  owner                  Student   @relation(fields: [ownerId], references: [id])
+  ownerId                String    @unique @db.Uuid
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
 }

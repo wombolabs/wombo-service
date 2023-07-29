@@ -140,8 +140,10 @@ functions:
           path: /students/me
           method: patch
           private: true
+  # Student Stats
   getStatsByUsername:
     handler: src/index.getStatsByUsernameHandler
+    timeout: 400
     events:
       - http:
           path: /students/{username}/stats
@@ -304,12 +306,13 @@ functions:
           path: /challenges/{id}/cancel
           method: post
           private: true
-  # Rating
-  listRatings:
-    handler: src/index.listRatingsHandler
+  # Stat
+  listStats:
+    handler: src/index.listStatsHandler
+    timeout: 400
     events:
       - http:
-          path: /ratings
+          path: /stats
           method: get
           private: true
           caching:
