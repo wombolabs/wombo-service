@@ -22,7 +22,7 @@ export const DEFAULT_CHALLENGE_FIELDS = [
 ]
 
 export const CHALLENGE_STATUSES = {
-  PUBLISEHD: 'published',
+  PUBLISHED: 'published',
   IN_PROGRESS: 'in_progress',
   AWAITING_OWNER_REPORT: 'awaiting_owner_report',
   AWAITING_CHALLENGER_REPORT: 'awaiting_challenger_report',

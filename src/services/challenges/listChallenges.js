@@ -6,16 +6,17 @@ import { statusesComparator } from './constants'
 
 export const listChallenges = async (filters = {}) => {
   const {
-    isPublic,
-    isActive,
-    isBelongCompetition,
-    status,
-    dateStart,
-    dateEnd,
-    isPaid,
-    studentId,
-    competitionId,
-    limit,
+    isPublic, // list challenges that are public
+    isActive, // list challenges that are active
+    isBelongCompetition, // list challenges that belong to a competition
+    status, // list challenges that are in status[]
+    dateStart, // list challenges that are between dateStart and dateEnd
+    dateEnd, // list challenges that are between dateStart and dateEnd
+    isPaid, // list challenges that are paid
+    studentId, // list challenges from studentId
+    notStudentId, // avoid list challenges from studentId
+    competitionId, // list challenges from competitionId
+    limit, // limit of challenges
   } = filters
 
   const where = {}
@@ -42,6 +43,9 @@ export const listChallenges = async (filters = {}) => {
   }
   if (uuidValidate(studentId)) {
     where.OR = [{ ownerId: { equals: studentId } }, { challengerId: { equals: studentId } }]
+  }
+  if (uuidValidate(notStudentId)) {
+    where.ownerId = { not: notStudentId }
   }
   if (uuidValidate(competitionId)) {
     where.competitionId = { equals: competitionId }

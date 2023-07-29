@@ -1,7 +1,6 @@
 import { validate as uuidValidate } from 'uuid'
 import prisma from '~/services/prisma'
 import { ResourceNotFoundError, InsufficientDataError } from '~/errors'
-import { notNilNorEmpty } from '~/utils'
 import { getChallengeById } from './getChallengeById'
 import { CHALLENGE_STATUSES } from './constants'
 
@@ -16,22 +15,14 @@ export const cancelChallengeById = async (id, ownerId) => {
     throw new InsufficientDataError('Owner error on cancel challenge.')
   }
 
-  const data = {}
-
-  if (CHALLENGE_STATUSES.PUBLISEHD === savedChallenge.status) {
-    data.status = CHALLENGE_STATUSES.CANCELLED
-  } else {
+  if (CHALLENGE_STATUSES.PUBLISHED !== savedChallenge.status) {
     throw new InsufficientDataError('Status error on cancel challenge.')
   }
 
-  let result = {}
+  const result = await prisma.challenge.update({ where: { id }, data: { status: CHALLENGE_STATUSES.CANCELLED } })
 
-  if (notNilNorEmpty(data)) {
-    result = await prisma.challenge.update({ where: { id }, data })
-
-    if (!result) {
-      throw new ResourceNotFoundError(`Challenge not found with id ${id}.`)
-    }
+  if (!result) {
+    throw new ResourceNotFoundError(`Challenge not found with id ${id}.`)
   }
 
   return result
