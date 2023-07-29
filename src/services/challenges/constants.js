@@ -31,6 +31,12 @@ export const CHALLENGE_STATUSES = {
   REVIEWING: 'reviewing',
 }
 
+export const CHALLENGE_RESULTS = {
+  WON: 'won',
+  DRAW: 'draw',
+  LOST: 'lost',
+}
+
 const STATUSES_ORDER = {
   in_progress: 7,
   awaiting_owner_report: 6,

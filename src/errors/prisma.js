@@ -1,31 +1,27 @@
 /* eslint-disable max-classes-per-file */
-export class PrismaError extends Error {
-  constructor(message, statusCode, cause) {
+class PrismaError extends Error {
+  constructor(name, message, statusCode, stack) {
     super()
-    this.name = 'PrismaError'
-    this.message = message ?? 'Prisma internal error.'
+    this.name = name ?? 'PrismaError'
+    this.message = message ?? 'Internal database error.'
     this.statusCode = statusCode ?? 500
-    this.cause = cause
+    this.stack = stack
     Error.captureStackTrace(this, PrismaError)
   }
 }
 
-export class PrismaValidationError extends PrismaError {
-  constructor(message, statusCode, cause) {
-    super(message, statusCode, cause)
-    this.name = 'PrismaValidationError'
-    this.message = message ?? 'Missing field or incorrect field type.'
-    this.statusCode = statusCode ?? 412
+class PrismaValidationError extends PrismaError {
+  constructor(message, statusCode, stack) {
+    super('PrismaValidationError', message ?? 'Missing field or incorrect field type.', statusCode ?? 412, stack)
     Error.captureStackTrace(this, PrismaValidationError)
   }
 }
 
-export class PrismaUnknownError extends PrismaError {
-  constructor(message, statusCode, cause) {
-    super(message, statusCode, cause)
-    this.name = 'PrismaUnknownError'
-    this.message = message ?? 'Internal database error.'
-    this.statusCode = statusCode ?? 500
+class PrismaUnknownError extends PrismaError {
+  constructor(message, statusCode, stack) {
+    super('PrismaUnknownError', message, statusCode, stack)
     Error.captureStackTrace(this, PrismaUnknownError)
   }
 }
+
+exports = { PrismaError, PrismaValidationError, PrismaUnknownError }

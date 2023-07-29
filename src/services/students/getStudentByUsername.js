@@ -1,8 +1,9 @@
 import prisma from '~/services/prisma'
 import { ResourceNotFoundError, InsufficientDataError } from '~/errors'
+import { isNilOrEmpty } from '~/utils/isNilOrEmpty'
 
 export const getStudentByUsername = async (username) => {
-  if (!username) {
+  if (isNilOrEmpty(username)) {
     throw new InsufficientDataError('Username field is required.')
   }
 

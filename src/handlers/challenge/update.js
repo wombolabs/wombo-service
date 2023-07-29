@@ -1,16 +1,16 @@
-import { CHALLENGE_STATUSES, updateChallengeById } from '~/services/challenges'
+import { CHALLENGE_RESULTS, CHALLENGE_STATUSES, updateChallengeById } from '~/services/challenges'
 import { buildHandler, notNilNorEmpty } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
 import { STUDENT_WALLET_TRANSACTION_TYPES, createWalletTransaction, getWalletByStudentId } from '~/services/students'
 
-const pay = async (userId, prizePool, challengeId) => {
+const pay = async (userId, prizePool, challengeId, challengeResult) => {
   const wallet = await getWalletByStudentId(userId)
 
   await createWalletTransaction(
     wallet?.id,
     prizePool,
     STUDENT_WALLET_TRANSACTION_TYPES.WON_CHALLENGE,
-    `won challenge ${challengeId}`
+    `${challengeResult} challenge ${challengeId}`
   )
 }
 
@@ -25,19 +25,19 @@ const handler = async ({ params: { id }, user, body }, res) => {
     updatedChallenge?.betAmount > 0
   ) {
     const { id: challengeId, ownerId, ownerScore, challengerId, challengerScore } = updatedChallenge
-    const prizePool = updatedChallenge.betAmount * 2 - (updatedChallenge?.fee || 0)
+    const prizePool = updatedChallenge.betAmount * 2 - (updatedChallenge?.fee ?? 0)
 
     if (ownerScore > challengerScore) {
       // won owner
-      await pay(ownerId, prizePool, challengeId)
+      await pay(ownerId, prizePool, challengeId, CHALLENGE_RESULTS.WON)
     } else if (ownerScore < challengerScore) {
       // won challenger
-      await pay(challengerId, prizePool, challengeId)
+      await pay(challengerId, prizePool, challengeId, CHALLENGE_RESULTS.WON)
     } else {
       // draw
       await Promise.allSettled([
-        pay(ownerId, prizePool / 2, challengeId),
-        pay(challengerId, prizePool / 2, challengeId),
+        pay(ownerId, prizePool / 2, challengeId, CHALLENGE_RESULTS.DRAW),
+        pay(challengerId, prizePool / 2, challengeId, CHALLENGE_RESULTS.DRAW),
       ])
     }
   }
