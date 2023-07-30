@@ -6,9 +6,9 @@ import { serializeStat } from '~/serializers'
 const handler = async ({ params: { username } }, res) => {
   const { id: studentId } = await getStudentByUsername(username)
 
-  const stats = await getStatsByStudentId(studentId)
+  const result = await getStatsByStudentId(studentId)
 
-  return res.json(serializeStat(stats))
+  return res.json(serializeStat(result))
 }
 
 export const getStatsByUsernameHandler = buildHandler('/students/:username/stats', 'get', handler)

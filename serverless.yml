@@ -143,12 +143,23 @@ functions:
   # Student Stats
   getStatsByUsername:
     handler: src/index.getStatsByUsernameHandler
-    timeout: 400
     events:
       - http:
           path: /students/{username}/stats
           method: get
           private: true
+          caching:
+            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
+  # Student Challenges Finished
+  listChallengesByUsername:
+    handler: src/index.listStudentChallengesFinishedByUsernameHandler
+    events:
+      - http:
+          path: /students/{username}/challenges
+          method: get
+          private: true
+          caching:
+            enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
   # Student Me Wallet
   createWalletTransaction:
     handler: src/index.createWalletTransactionHandler
@@ -309,7 +320,6 @@ functions:
   # Stat
   listStats:
     handler: src/index.listStatsHandler
-    timeout: 400
     events:
       - http:
           path: /stats

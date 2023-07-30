@@ -5,7 +5,7 @@ const serializeStudent = R.curry((student) =>
   R.unless(
     R.isNil,
     R.pipe(
-      R.pick(['id', 'username', 'metadata']),
+      R.pick(['id', 'username', 'metadata', 'stat']),
       R.evolve({
         metadata: R.curry((metadata) =>
           R.pipe(
