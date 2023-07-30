@@ -1,10 +1,10 @@
-import R from 'ramda'
+import { validate as uuidValidate } from 'uuid'
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
-import { notNilNorEmpty } from '~/utils'
+import { isNilOrEmpty, notNilNorEmpty } from '~/utils'
 
-export const createChallenge = async (ownerId, challengeData = {}, challengerId = null) => {
-  if (!ownerId || R.isEmpty(challengeData)) {
+export const createChallenge = async (ownerId, challengeData, challengerId = null) => {
+  if (!uuidValidate(ownerId) || isNilOrEmpty(challengeData)) {
     throw new InsufficientDataError('Student ID and challenge data are required.')
   }
 
@@ -15,6 +15,7 @@ export const createChallenge = async (ownerId, challengeData = {}, challengerId 
     },
   }
 
+  // connect challenger if exists
   if (notNilNorEmpty(challengerId)) {
     data.challenger = {
       connect: { id: challengerId },

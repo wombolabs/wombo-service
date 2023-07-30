@@ -7,7 +7,7 @@ const handler = async ({ params: { id }, user }, res) => {
   const challenge = await cancelChallengeById(id, user?.id)
 
   if (challenge?.status === CHALLENGE_STATUSES.CANCELLED && challenge?.betAmount > 0) {
-    const wallet = await getWalletByStudentId(user.id)
+    const wallet = await getWalletByStudentId(user?.id)
 
     await createWalletTransaction(
       wallet?.id,

@@ -11,10 +11,12 @@ export const cancelChallengeById = async (id, ownerId) => {
 
   const savedChallenge = await getChallengeById(id, { isActive: true })
 
+  // the owner needs to be the same as the one who created the challenge
   if (savedChallenge.owner?.id !== ownerId) {
     throw new InsufficientDataError('Owner error on cancel challenge.')
   }
 
+  // the challenge needs to be published
   if (CHALLENGE_STATUSES.PUBLISHED !== savedChallenge.status) {
     throw new InsufficientDataError('Status error on cancel challenge.')
   }
