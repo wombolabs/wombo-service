@@ -1,3 +1,10 @@
+# [1.50.0](https://github.com/wombolabs/wombo-service/compare/v1.49.0...v1.50.0) (2023-07-30)
+
+
+### Features
+
+* add list stats and update stats by username endpoint - update stat schema model ([87d2905](https://github.com/wombolabs/wombo-service/commit/87d2905fcafaebf23a26c2f62e83054d5bd4383a))
+
 # [1.49.0](https://github.com/wombolabs/wombo-service/compare/v1.48.0...v1.49.0) (2023-07-28)
 
 
