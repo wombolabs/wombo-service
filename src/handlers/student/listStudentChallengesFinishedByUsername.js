@@ -11,7 +11,7 @@ const handler = async ({ params: { username } }, res) => {
 }
 
 export const listStudentChallengesFinishedByUsernameHandler = buildHandler(
-  '/students/:username/challenges',
+  '/students/:username/challenges/finished',
   'get',
-  handler
+  handler,
 )

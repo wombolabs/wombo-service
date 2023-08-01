@@ -141,7 +141,7 @@ functions:
           method: patch
           private: true
   # Student Stats
-  getStatsByUsername:
+  getStats:
     handler: src/index.getStatsByUsernameHandler
     events:
       - http:
@@ -151,11 +151,11 @@ functions:
           caching:
             enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
   # Student Challenges Finished
-  listChallengesByUsername:
+  listChallengesFinished:
     handler: src/index.listStudentChallengesFinishedByUsernameHandler
     events:
       - http:
-          path: /students/{username}/challenges
+          path: /students/{username}/challenges/finished
           method: get
           private: true
           caching:
