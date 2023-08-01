@@ -1,3 +1,16 @@
+# [1.51.0](https://github.com/wombolabs/wombo-service/compare/v1.50.0...v1.51.0) (2023-08-01)
+
+
+### Bug Fixes
+
+* resolve issue with array query params ([e0d0be4](https://github.com/wombolabs/wombo-service/commit/e0d0be43362346539803c1e6d27aa1d02ce73c8a))
+* resolve minor issue ([444e720](https://github.com/wombolabs/wombo-service/commit/444e720065927fd733541634cc77541945fd89b9))
+
+
+### Features
+
+* add list student challenges finished by username endpoint ([ab0704a](https://github.com/wombolabs/wombo-service/commit/ab0704ab25414b58647c704e124572ae9a3fca8f))
+
 # [1.50.0](https://github.com/wombolabs/wombo-service/compare/v1.49.0...v1.50.0) (2023-07-30)
 
 
