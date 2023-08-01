@@ -23,10 +23,10 @@ export const listCompetitions = async (filters = {}) => {
     where.isActive = isActive
   }
   if (notNilNorEmpty(codename)) {
-    where.codename = { in: codename }
+    where.codename = { equals: codename }
   }
   if (notNilNorEmpty(status)) {
-    where.status = { in: status }
+    where.status = { in: typeof status === 'string' ? [status] : status }
   }
 
   const query = {
