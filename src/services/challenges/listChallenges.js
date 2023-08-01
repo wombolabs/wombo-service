@@ -27,7 +27,7 @@ export const listChallenges = async (filters = {}) => {
     where.isPublic = isPublic
   }
   if (notNilNorEmpty(status)) {
-    where.status = { in: status }
+    where.status = { in: typeof status === 'string' ? [status] : status }
   }
   if (typeof isBelongCompetition === 'boolean') {
     where.competitionId = isBelongCompetition ? { not: null } : null
