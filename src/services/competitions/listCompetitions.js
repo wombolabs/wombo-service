@@ -4,7 +4,7 @@ import { notNilNorEmpty } from '~/utils'
 
 const STATUSES_ORDER = { coming_soon: 4, open: 3, in_progress: 2, finished: 1 }
 const statusesComparator = R.comparator((a, b) =>
-  R.gt(STATUSES_ORDER[R.prop('status', a)], STATUSES_ORDER[R.prop('status', b)])
+  R.gt(STATUSES_ORDER[R.prop('status', a)], STATUSES_ORDER[R.prop('status', b)]),
 )
 
 export const listCompetitions = async (filters = {}) => {
@@ -42,7 +42,7 @@ export const listCompetitions = async (filters = {}) => {
   if (notNilNorEmpty(include)) {
     query.include = include
   }
-  if (notNilNorEmpty(limit)) {
+  if (notNilNorEmpty(limit) && !Number.isNaN(parseInt(limit, 10))) {
     query.take = +limit
   }
 

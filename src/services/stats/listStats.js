@@ -6,6 +6,7 @@ export const listStats = async () => {
       owner: {
         select: {
           username: true,
+          metadata: true,
         },
       },
     },

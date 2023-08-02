@@ -1,6 +1,6 @@
 export const DEFAULT_STAT_FIELDS = [
   'id',
-  'username',
+  'student',
   'rating',
   'highestRating',
   'highestRatingDate',

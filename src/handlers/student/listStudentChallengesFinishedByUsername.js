@@ -2,10 +2,10 @@ import { buildHandler } from '~/utils'
 import { getStudentByUsername, listStudentChallengesFinishedById } from '~/services/students'
 import { serializeChallenges } from '~/serializers'
 
-const handler = async ({ params: { username } }, res) => {
+const handler = async ({ params: { username }, query }, res) => {
   const { id: studentId } = await getStudentByUsername(username)
 
-  const result = await listStudentChallengesFinishedById(studentId)
+  const result = await listStudentChallengesFinishedById(studentId, query)
 
   return res.json(serializeChallenges(result))
 }

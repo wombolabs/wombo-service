@@ -1,12 +1,17 @@
 import { validate as uuidValidate } from 'uuid'
 import prisma from '~/services/prisma'
 import { InsufficientDataError } from '~/errors'
+import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
 import { CHALLENGE_STATUSES } from '../challenges/constants'
 
-export const listStudentChallengesFinishedById = async (studentId) => {
+export const listStudentChallengesFinishedById = async (studentId, filters = {}) => {
   if (!uuidValidate(studentId)) {
     throw new InsufficientDataError('Invalid Student identification.')
   }
+
+  const {
+    limit, // limit of challenges
+  } = filters
 
   const query = {
     where: {
@@ -47,6 +52,9 @@ export const listStudentChallengesFinishedById = async (studentId) => {
         createdAt: 'desc',
       },
     ],
+  }
+  if (notNilNorEmpty(limit) && !Number.isNaN(parseInt(limit, 10))) {
+    query.take = +limit
   }
 
   const result = await prisma.challenge.findMany(query)

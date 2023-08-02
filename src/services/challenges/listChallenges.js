@@ -78,7 +78,7 @@ export const listChallenges = async (filters = {}) => {
   if (notNilNorEmpty(where)) {
     query.where = where
   }
-  if (notNilNorEmpty(limit)) {
+  if (notNilNorEmpty(limit) && !Number.isNaN(parseInt(limit, 10))) {
     query.take = +limit
   }
 
