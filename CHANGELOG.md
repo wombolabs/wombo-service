@@ -1,3 +1,10 @@
+# [1.52.0](https://github.com/wombolabs/wombo-service/compare/v1.51.0...v1.52.0) (2023-08-04)
+
+
+### Features
+
+* add prisma transaction api to handle payment and create/enroll challenge sequential ([16f56d9](https://github.com/wombolabs/wombo-service/commit/16f56d96b4b3fcbbdaf062fa2c49e48f82edae91))
+
 # [1.51.0](https://github.com/wombolabs/wombo-service/compare/v1.50.0...v1.51.0) (2023-08-01)
 
 
