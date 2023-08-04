@@ -1,6 +1,11 @@
 import { buildHandler, notNilNorEmpty } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
-import { CHALLENGE_STATUSES, enrollForChallengeById, getChallengeById } from '~/services/challenges'
+import {
+  CHALLENGE_STATUSES,
+  enrollForChallengeById,
+  getChallengeById,
+  txPayAndEnrollChallenge,
+} from '~/services/challenges'
 import { RequestError } from '~/errors'
 
 const handler = async ({ params: { id }, user }, res) => {
@@ -16,7 +21,12 @@ const handler = async ({ params: { id }, user }, res) => {
     throw new RequestError('Status error on enroll challenge.')
   }
 
-  const result = await enrollForChallengeById(id, user?.id)
+  let result
+  if (savedChallenge?.betAmount > 0) {
+    result = await txPayAndEnrollChallenge(user?.id, savedChallenge)
+  } else {
+    result = await enrollForChallengeById(id, user?.id)
+  }
 
   res.json({ enrolled: notNilNorEmpty(result) })
 }
