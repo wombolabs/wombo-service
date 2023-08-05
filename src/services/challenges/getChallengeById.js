@@ -17,6 +17,11 @@ export const getChallengeById = async (id, filters) => {
           id: true,
           username: true,
           metadata: true,
+          stat: {
+            select: {
+              rating: true,
+            },
+          },
         },
       },
       challenger: {
@@ -24,6 +29,11 @@ export const getChallengeById = async (id, filters) => {
           id: true,
           username: true,
           metadata: true,
+          stat: {
+            select: {
+              rating: true,
+            },
+          },
         },
       },
       competition: { select: { id: true } },
