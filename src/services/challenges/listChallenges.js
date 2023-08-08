@@ -58,6 +58,11 @@ export const listChallenges = async (filters = {}) => {
           id: true,
           username: true,
           metadata: true,
+          stat: {
+            select: {
+              rating: true,
+            },
+          },
         },
       },
       challenger: {
@@ -65,6 +70,11 @@ export const listChallenges = async (filters = {}) => {
           id: true,
           username: true,
           metadata: true,
+          stat: {
+            select: {
+              rating: true,
+            },
+          },
         },
       },
       competition: { select: { id: true } },

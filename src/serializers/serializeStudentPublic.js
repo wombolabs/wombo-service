@@ -2,10 +2,10 @@ import R from 'ramda'
 
 export const serializeStudentPublic = R.curry((student) =>
   R.pipe(
-    R.pick(['id', 'email', 'username', 'displayName', 'discord', 'metadata']),
+    R.pick(['id', 'email', 'username', 'displayName', 'metadata', 'stat']),
     R.evolve({
-      discord: R.curry((discord) => R.pick(['id', 'username', 'discriminator'])(discord)),
-      metadata: R.curry((metadata) => R.pick(['profile', 'videoGames', 'valorant', 'leagueOfLegends'])(metadata)),
-    })
-  )(student)
+      metadata: R.curry((metadata) => R.pick(['profile'])(metadata)),
+      stat: R.curry((stat) => R.pick(['rating'])(stat)),
+    }),
+  )(student),
 )

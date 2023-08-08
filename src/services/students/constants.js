@@ -3,8 +3,6 @@ export const DEFAULT_STUDENT_FIELDS = [
   'email',
   'username',
   'displayName',
-  'discord',
-  'discordJoinDate',
   'metadata',
   'competitions',
   'wallet',
