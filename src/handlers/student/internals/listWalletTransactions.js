@@ -2,8 +2,8 @@ import { buildHandler } from '~/utils'
 import { authenticationInternalMiddleware } from '~/middlewares'
 import { listWalletTransactions } from '~/services/students/listWalletTransactions'
 
-const handler = async (req, res) => {
-  const transactions = await listWalletTransactions()
+const handler = async ({ query }, res) => {
+  const transactions = await listWalletTransactions(query)
   return res.json(transactions)
 }
 

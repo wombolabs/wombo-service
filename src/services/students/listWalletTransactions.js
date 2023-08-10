@@ -1,7 +1,12 @@
 import prisma from '~/services/prisma'
+import { notNilNorEmpty } from '~/utils'
 
-export const listWalletTransactions = async () => {
-  const transactions = await prisma.walletTransaction.findMany({
+export const listWalletTransactions = async (filters = {}) => {
+  const {
+    limit, // limit of wallet transactions
+  } = filters
+
+  const query = {
     include: {
       wallet: {
         select: {
@@ -14,6 +19,11 @@ export const listWalletTransactions = async () => {
         createdAt: 'desc',
       },
     ],
-  })
+  }
+  if (notNilNorEmpty(limit) && !Number.isNaN(parseInt(limit, 10))) {
+    query.take = +limit
+  }
+
+  const transactions = await prisma.walletTransaction.findMany(query)
   return transactions
 }
