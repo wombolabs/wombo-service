@@ -1,22 +1,33 @@
 import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
 import prisma from '~/services/prisma'
-import { notNilNorEmpty } from '~/utils'
+import { isNilOrEmpty, notNilNorEmpty } from '~/utils'
 
 export const getCompetitionByCodename = async (codename, filters = {}) => {
-  if (!codename) {
+  if (isNilOrEmpty(codename)) {
     throw new InsufficientDataError('Codename field is required.')
   }
 
   const { withParticipants, withChallenges, isActive } = filters
 
-  const query = { where: { codename: { equals: codename, mode: 'insensitive' } } }
+  const query = { where: { codename: { equals: codename.trim(), mode: 'insensitive' } } }
   if (typeof isActive === 'boolean') {
     query.where.isActive = isActive
   }
 
   const include = {}
   if (withParticipants) {
-    include.participants = true
+    include.participants = {
+      select: {
+        id: true,
+        username: true,
+        metadata: true,
+        stat: {
+          select: {
+            rating: true,
+          },
+        },
+      },
+    }
   }
   if (withChallenges) {
     include.challenges = {

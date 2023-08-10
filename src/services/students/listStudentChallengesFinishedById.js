@@ -49,7 +49,7 @@ export const listStudentChallengesFinishedById = async (studentId, filters = {})
     },
     orderBy: [
       {
-        createdAt: 'desc',
+        updatedAt: 'desc',
       },
     ],
   }
