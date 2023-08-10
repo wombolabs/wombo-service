@@ -24,6 +24,7 @@ export const listWalletTransactions = async (filters = {}) => {
     query.take = +limit
   }
 
-  const transactions = await prisma.walletTransaction.findMany(query)
-  return transactions
+  const result = await prisma.walletTransaction.findMany(query)
+
+  return result ?? []
 }

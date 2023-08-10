@@ -10,7 +10,6 @@ export const serializeStudentInternal = R.curry((student) =>
   R.pipe(
     R.pick(['challengesOwner', 'challengesChallenger', 'isActive', ...DEFAULT_STUDENT_FIELDS]),
     R.evolve({
-      discord: R.curry((discord) => R.pick(['id', 'username', 'discriminator'])(discord)),
       wallet: R.curry((wallet) => R.unless(R.isNil, R.pick(['id', 'balance', 'transactions', 'updatedAt']))(wallet)),
       competitions: serializeCompetitions,
       challengesOwner: serializeChallenges,
