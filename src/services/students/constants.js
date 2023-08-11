@@ -22,6 +22,8 @@ export const STUDENT_WALLET_TRANSACTION_TYPES = {
   CREATE_CHALLENGE: 't_create_challenge_',
   ENROLL_CHALLENGE: 't_enroll_challenge_',
   WON_CHALLENGE: 't_won_challenge_',
+  REFERRAL: 't_referral_',
+  PRIZE: 't_prize_',
 }
 
 export const DECREMENT_BALANCE_TRANSACTION_TYPES = [

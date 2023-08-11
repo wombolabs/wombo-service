@@ -124,6 +124,8 @@ enum WalletTransactionType {
   t_create_challenge_
   t_enroll_challenge_
   t_won_challenge_
+  t_referral_
+  t_prize_
 }
 
 model VideoGame {
