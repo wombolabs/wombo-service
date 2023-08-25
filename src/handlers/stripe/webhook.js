@@ -38,7 +38,7 @@ const handleChargeSucceeded = async ({ data }) => {
     walletId,
     amount / 100,
     STUDENT_WALLET_TRANSACTION_TYPES.DEPOSIT,
-    `stripe paymentIntentId ${paymentIntentId}`
+    `stripe paymentIntentId ${paymentIntentId}`,
   )
 }
 
@@ -56,7 +56,7 @@ const webhookHandler = async (req, res) => {
       throw new InsufficientDataError('Missing stripe signature.')
     }
     if (!stripeConfig.webhookSecret) {
-      throw new RequestError('Missing Stripe webhook secret.')
+      throw new InsufficientDataError('Missing Stripe webhook secret.')
     }
 
     let event
@@ -64,7 +64,7 @@ const webhookHandler = async (req, res) => {
     try {
       event = stripe.webhooks.constructEvent(req.rawBody, req.headers['stripe-signature'], stripeConfig.webhookSecret)
     } catch (error) {
-      throw new RequestError('Stripe webhook signature verification failed.', 400, error)
+      throw new RequestError(null, 'Stripe webhook signature verification failed.', 400, error)
     }
 
     if (isOffline) {

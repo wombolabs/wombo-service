@@ -13,12 +13,12 @@ const handler = async ({ params: { id }, user }, res) => {
 
   // user cannot enroll for his own challenge
   if (savedChallenge?.owner?.id === user?.id) {
-    throw new RequestError('Owner error on enroll for challenge.')
+    throw new RequestError(null, 'Owner error on enroll for challenge.')
   }
 
   // user can enroll only for published challenges
   if (savedChallenge?.status !== CHALLENGE_STATUSES.PUBLISHED) {
-    throw new RequestError('Status error on enroll challenge.')
+    throw new RequestError(null, 'Status error on enroll challenge.')
   }
 
   let result
