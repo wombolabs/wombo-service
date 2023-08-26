@@ -1,3 +1,10 @@
+# [1.53.0](https://github.com/wombolabs/wombo-service/compare/v1.52.0...v1.53.0) (2023-08-26)
+
+
+### Features
+
+* add challenge fee ([066a8dc](https://github.com/wombolabs/wombo-service/commit/066a8dc809b286f3f13a8678809b6413dac157f5))
+
 # [1.52.0](https://github.com/wombolabs/wombo-service/compare/v1.51.0...v1.52.0) (2023-08-04)
 
 
