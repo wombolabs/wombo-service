@@ -25,10 +25,10 @@ export const txPayAndCreateChallenge = async (ownerId, challengeData) => {
     throw new InsufficientDataError('Student ID and challenge data are required.')
   }
 
-  const { betAmount } = challengeData
+  const { betAmount = 0 } = challengeData
 
   if (betAmount <= 0) {
-    throw new InsufficientDataError('Amount value is invalid.')
+    throw new InsufficientDataError('Amount or fee value is invalid.')
   }
 
   const { id: walletId, balance } = await createStudentWallet(ownerId)
