@@ -10,20 +10,27 @@ const pay = async (userId, betAmount, fee, challengeId, challengeResult) => {
   const feeAmount = fee > 0 ? betAmount * participants * (fee / 100) : 0
   const finalAmount = betAmount * participants - feeAmount
 
-  await Promise.all([
+  const promises = [
     createWalletTransaction(
       wallet?.id,
       finalAmount,
       STUDENT_WALLET_TRANSACTION_TYPES.WON_CHALLENGE,
       `${challengeResult} challenge ${challengeId}`,
     ),
-    createWalletTransaction(
-      wallet?.id,
-      feeAmount,
-      STUDENT_WALLET_TRANSACTION_TYPES.CHALLENGE_FEE,
-      `fee challenge ${challengeId}`,
-    ),
-  ])
+  ]
+
+  if (feeAmount > 0) {
+    promises.push(
+      createWalletTransaction(
+        wallet?.id,
+        feeAmount,
+        STUDENT_WALLET_TRANSACTION_TYPES.CHALLENGE_FEE,
+        `fee challenge ${challengeId}`,
+      ),
+    )
+  }
+
+  await Promise.all(promises)
 }
 
 const handler = async ({ params: { id }, user, body }, res) => {
