@@ -1,3 +1,10 @@
+# [1.54.0](https://github.com/wombolabs/wombo-service/compare/v1.53.0...v1.54.0) (2023-09-13)
+
+
+### Features
+
+* add list student wallet transactions endpoint ([9f890b7](https://github.com/wombolabs/wombo-service/commit/9f890b749a0471b6ff02329bae1d12a208366947))
+
 # [1.53.0](https://github.com/wombolabs/wombo-service/compare/v1.52.0...v1.53.0) (2023-08-26)
 
 
