@@ -160,13 +160,21 @@ functions:
           private: true
           caching:
             enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
-  # Student Me Wallet
+  # Student Me Wallet Transaction
   createWalletTransaction:
     handler: src/index.createWalletTransactionHandler
     events:
       - http:
           path: /students/me/transactions
           method: post
+          private: true
+  # Student Me Wallet Transactions
+  listStudentMeWalletTransactions:
+    handler: src/index.listStudentMeWalletTransactionsHandler
+    events:
+      - http:
+          path: /students/me/transactions
+          method: get
           private: true
   # Student Internals
   getStudentInternal:

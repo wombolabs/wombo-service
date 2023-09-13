@@ -11,6 +11,8 @@ export const DEFAULT_STUDENT_FIELDS = [
   'updatedAt',
 ]
 
+export const DEFAULT_STUDENT_WALLET_FIELDS = ['id', 'balance', 'transactions', 'updatedAt']
+
 export const STUDENT_WALLET_TRANSACTION_TYPES = {
   DEPOSIT: 't_deposit_',
   WITHDRAWAL: 't_withdrawal_',

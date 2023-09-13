@@ -9,6 +9,8 @@ export * from './createWalletTransaction'
 export * from './getMeChallenges'
 export * from './getStatsByUsername'
 export * from './listStudentChallengesFinishedByUsername'
+export * from './listMeWalletTransactions'
+
 export * from './internals/get'
 export * from './internals/createWalletTransaction'
 export * from './internals/listWalletTransactions'
