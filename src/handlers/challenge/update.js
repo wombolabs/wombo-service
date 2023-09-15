@@ -8,7 +8,7 @@ const pay = async (userId, betAmount, fee, challengeId, challengeResult) => {
 
   const participants = challengeResult === CHALLENGE_RESULTS.DRAW ? 1 : 2 // if draw, divide prize by 2
   const feeAmount = fee > 0 ? betAmount * participants * (fee / 100) : 0
-  const finalAmount = betAmount * participants - feeAmount
+  const finalAmount = betAmount * participants
 
   const promises = [
     createWalletTransaction(
