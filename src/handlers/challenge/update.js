@@ -1,37 +1,6 @@
-import { CHALLENGE_RESULTS, CHALLENGE_STATUSES, updateChallengeById } from '~/services/challenges'
+import { CHALLENGE_RESULTS, CHALLENGE_STATUSES, txPayPrizeChallenge, updateChallengeById } from '~/services/challenges'
 import { buildHandler, notNilNorEmpty } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
-import { STUDENT_WALLET_TRANSACTION_TYPES, createWalletTransaction, getWalletByStudentId } from '~/services/students'
-
-const pay = async (userId, betAmount, fee, challengeId, challengeResult) => {
-  const wallet = await getWalletByStudentId(userId)
-
-  const participants = challengeResult === CHALLENGE_RESULTS.DRAW ? 1 : 2 // if draw, divide prize by 2
-  const feeAmount = fee > 0 ? betAmount * participants * (fee / 100) : 0
-  const finalAmount = betAmount * participants
-
-  const promises = [
-    createWalletTransaction(
-      wallet?.id,
-      finalAmount,
-      STUDENT_WALLET_TRANSACTION_TYPES.WON_CHALLENGE,
-      `${challengeResult} challenge ${challengeId}`,
-    ),
-  ]
-
-  if (feeAmount > 0) {
-    promises.push(
-      createWalletTransaction(
-        wallet?.id,
-        feeAmount,
-        STUDENT_WALLET_TRANSACTION_TYPES.CHALLENGE_FEE,
-        `fee challenge ${challengeId}`,
-      ),
-    )
-  }
-
-  await Promise.all(promises)
-}
 
 const handler = async ({ params: { id }, user, body }, res) => {
   const updatedChallenge = await updateChallengeById(id, body, user?.id)
@@ -47,15 +16,15 @@ const handler = async ({ params: { id }, user, body }, res) => {
 
     if (ownerScore > challengerScore) {
       // won owner
-      await pay(ownerId, betAmount, fee, challengeId, CHALLENGE_RESULTS.WON)
+      await txPayPrizeChallenge(ownerId, challengeId, betAmount, fee, CHALLENGE_RESULTS.WON)
     } else if (ownerScore < challengerScore) {
       // won challenger
-      await pay(challengerId, betAmount, fee, challengeId, CHALLENGE_RESULTS.WON)
+      await txPayPrizeChallenge(challengerId, challengeId, betAmount, fee, CHALLENGE_RESULTS.WON)
     } else {
       // draw
       await Promise.allSettled([
-        pay(ownerId, betAmount, fee, challengeId, CHALLENGE_RESULTS.DRAW),
-        pay(challengerId, betAmount, fee, challengeId, CHALLENGE_RESULTS.DRAW),
+        txPayPrizeChallenge(ownerId, challengeId, betAmount, fee, CHALLENGE_RESULTS.DRAW),
+        txPayPrizeChallenge(challengerId, challengeId, betAmount, fee, CHALLENGE_RESULTS.DRAW),
       ])
     }
   }
