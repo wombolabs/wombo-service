@@ -1,3 +1,10 @@
+# [1.55.0](https://github.com/wombolabs/wombo-service/compare/v1.54.0...v1.55.0) (2023-09-19)
+
+
+### Features
+
+* add transaction pay prize of challenge ([41f8cd8](https://github.com/wombolabs/wombo-service/commit/41f8cd8119662fd68cbfc099fde8ad4ae3b2a2de))
+
 # [1.54.0](https://github.com/wombolabs/wombo-service/compare/v1.53.0...v1.54.0) (2023-09-13)
 
 
