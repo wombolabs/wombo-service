@@ -38,6 +38,7 @@ export const buildHandler = (
 
   app.use(queryParser({ parseBoolean: true }))
   app.use(helmet())
+  app.use(express.json())
   app.use(express.urlencoded({ extended: true })) // support encoded bodies
   app.use(router)
   app.use(prismaErrorMiddleware)
