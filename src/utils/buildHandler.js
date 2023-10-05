@@ -38,13 +38,6 @@ export const buildHandler = (
 
   app.use(queryParser({ parseBoolean: true }))
   app.use(helmet())
-  app.use(
-    express.json({
-      verify: (req, res, buf) => {
-        req.rawBody = buf
-      },
-    })
-  ) // support json encoded bodies - add raw body for support stripe webhook
   app.use(express.urlencoded({ extended: true })) // support encoded bodies
   app.use(router)
   app.use(prismaErrorMiddleware)
