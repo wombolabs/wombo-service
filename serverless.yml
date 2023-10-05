@@ -41,8 +41,6 @@ provider:
     COCKROACHDB_DATABASE_URL: ${env:COCKROACHDB_DATABASE_URL}
     PRISMA_GENERATE_DATAPROXY: ${strToBool(${env:PRISMA_GENERATE_DATAPROXY, false})}
     CHECKPOINT_DISABLE: ${env:CHECKPOINT_DISABLE}
-    STRIPE_SECRET_KEY: ${env:STRIPE_SECRET_KEY}
-    STRIPE_WEBHOOK_SECRET: ${env:STRIPE_WEBHOOK_SECRET}
     DISCORD_BOT_TOKEN: ${env:DISCORD_BOT_TOKEN}
     DISCORD_GUILD_WOMBO: ${env:DISCORD_GUILD_WOMBO}
     DISCORD_GUILD_CATEGORY_CHALLENGES: ${env:DISCORD_GUILD_CATEGORY_CHALLENGES}
@@ -216,14 +214,6 @@ functions:
           path: /coupons/{name}
           method: get
           private: true
-  # Stripe
-  stripeWebhook:
-    handler: src/index.stripeWebhookHandler
-    events:
-      - http:
-          path: /stripe/webhook
-          method: post
-          private: false
   # Competition
   listCompetitions:
     handler: src/index.listCompetitionsHandler

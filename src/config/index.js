@@ -1,7 +1,6 @@
 export { prisma } from './prisma'
 export { jwt } from './jwt'
 export { sentry } from './sentry'
-export { stripe } from './stripe'
 export { discord } from './discord'
 
 export const isOffline = process.env.IS_OFFLINE === 'true'

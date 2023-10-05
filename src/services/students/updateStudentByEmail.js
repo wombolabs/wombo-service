@@ -6,7 +6,7 @@ import { getStudentByEmail } from './getStudentByEmail'
 import { listVideoGames } from '../videoGames'
 
 const studentMetadataProperties = ['profile']
-const studentProperties = ['discord', 'stripe']
+const studentProperties = ['discord']
 
 export const updateStudentByEmail = async (email, student = {}) => {
   const savedStudent = await getStudentByEmail(email)
