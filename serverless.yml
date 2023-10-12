@@ -138,6 +138,20 @@ functions:
           path: /students/me
           method: patch
           private: true
+  createStudentMeChatRoom:
+    handler: src/index.createStudentMeChatRoomHandler
+    events:
+      - http:
+          path: /students/me/chatrooms
+          method: post
+          private: true
+  getStudentMeChatRooms:
+    handler: src/index.getStudentMeChatRoomsHandler
+    events:
+      - http:
+          path: /students/me/chatrooms
+          method: get
+          private: true
   # Student Stats
   getStats:
     handler: src/index.getStatsByUsernameHandler

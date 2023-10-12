@@ -10,6 +10,8 @@ export * from './getMeChallenges'
 export * from './getStatsByUsername'
 export * from './listStudentChallengesFinishedByUsername'
 export * from './listMeWalletTransactions'
+export * from './getMeChatRooms'
+export * from './createMeChatRoom'
 
 export * from './internals/get'
 export * from './internals/createWalletTransaction'

@@ -13,6 +13,8 @@ export const DEFAULT_STUDENT_FIELDS = [
 
 export const DEFAULT_STUDENT_WALLET_FIELDS = ['id', 'balance', 'transactions', 'updatedAt']
 
+export const DEFAULT_STUDENT_CHAT_ROOM_FIELDS = ['id', 'name', 'members', 'createdAt', 'updatedAt']
+
 export const STUDENT_WALLET_TRANSACTION_TYPES = {
   DEPOSIT: 't_deposit_',
   WITHDRAWAL: 't_withdrawal_',
