@@ -1,3 +1,10 @@
+# [1.56.0](https://github.com/wombolabs/wombo-service/compare/v1.55.0...v1.56.0) (2023-10-19)
+
+
+### Features
+
+* add student chatrooms endpoint ([17104e1](https://github.com/wombolabs/wombo-service/commit/17104e16391316b7b544dc913e9763b852aa298a))
+
 # [1.55.0](https://github.com/wombolabs/wombo-service/compare/v1.54.0...v1.55.0) (2023-09-19)
 
 
