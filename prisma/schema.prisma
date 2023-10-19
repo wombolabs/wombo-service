@@ -164,30 +164,31 @@ model Coach {
 }
 
 model Student {
-  id                   String        @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email                String        @unique
-  username             String?       @unique
+  id                   String                @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                String                @unique
+  username             String?               @unique
   displayName          String?
   password             String?
-  discord              Json          @default("{}")
+  discord              Json                  @default("{}")
   discordJoinDate      DateTime?
-  google               Json          @default("{}")
-  facebook             Json          @default("{}")
-  twitter              Json          @default("{}")
+  google               Json                  @default("{}")
+  facebook             Json                  @default("{}")
+  twitter              Json                  @default("{}")
   locale               Language?
   timeZone             String?
   orders               Order[]
-  stripe               Json          @default("{}")
-  metadata             Json          @default("{}")
-  isActive             Boolean       @default(true)
+  stripe               Json                  @default("{}")
+  metadata             Json                  @default("{}")
+  isActive             Boolean               @default(true)
   lastLogin            DateTime?
   competitions         Competition[]
-  challengesOwner      Challenge[]   @relation("ChallengeOwner")
-  challengesChallenger Challenge[]   @relation("ChallengeChallenger")
+  challengesOwner      Challenge[]           @relation("ChallengeOwner")
+  challengesChallenger Challenge[]           @relation("ChallengeChallenger")
   wallet               Wallet?
   stat                 Stat?
-  createdAt            DateTime      @default(now())
-  updatedAt            DateTime      @updatedAt
+  chatRooms            ChatRoomsOnStudents[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
   deletedAt            DateTime?
 }
 
@@ -356,4 +357,24 @@ model Stat {
   ownerId                String    @unique @db.Uuid
   createdAt              DateTime  @default(now())
   updatedAt              DateTime  @updatedAt
+}
+
+model ChatRoom {
+  id                  String                @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                String?
+  isActive            Boolean               @default(true)
+  members             ChatRoomsOnStudents[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  deletedAt           DateTime?
+}
+
+model ChatRoomsOnStudents {
+  chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
+  chatRoomId String   @db.Uuid
+  student    Student  @relation(fields: [studentId], references: [id])
+  studentId  String   @db.Uuid
+  createdAt  DateTime @default(now())
+
+  @@id([chatRoomId, studentId])
 }
