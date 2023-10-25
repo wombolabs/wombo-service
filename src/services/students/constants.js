@@ -6,6 +6,7 @@ export const DEFAULT_STUDENT_FIELDS = [
   'metadata',
   'competitions',
   'wallet',
+  'stat',
   'lastLogin',
   'createdAt',
   'updatedAt',
