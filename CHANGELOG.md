@@ -1,3 +1,10 @@
+# [1.57.0](https://github.com/wombolabs/wombo-service/compare/v1.56.0...v1.57.0) (2023-10-26)
+
+
+### Features
+
+* add withstat filter on studentme endpoint ([d0eaec9](https://github.com/wombolabs/wombo-service/commit/d0eaec93c434d63d72a0dfb4dcffe017a3054c01))
+
 # [1.56.0](https://github.com/wombolabs/wombo-service/compare/v1.55.0...v1.56.0) (2023-10-19)
 
 
