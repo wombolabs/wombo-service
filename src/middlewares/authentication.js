@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/serverless'
 import jwt from 'jsonwebtoken'
-import { jwt as jwtConfig } from '~/config'
 import {
   AuthenticationError,
   UnauthenticatedAccessError,
@@ -9,6 +8,8 @@ import {
   ResourceNotFoundError,
 } from '~/errors'
 import { getStudentById } from '~/services/students'
+import { isNilOrEmpty } from '~/utils/isNilOrEmpty'
+import { jwtVerify } from '~/utils/jwt'
 
 /**
  * Verifies an access token and returns the associated user's data
@@ -17,13 +18,13 @@ import { getStudentById } from '~/services/students'
  */
 const validate = async (token) => {
   try {
-    if (!token) {
+    if (isNilOrEmpty(token)) {
       throw new UnauthenticatedAccessError()
     }
 
-    const claims = jwt.verify(token, jwtConfig.secret, jwtConfig.options.verify)
+    const claims = await jwtVerify(token)
 
-    return await getStudentById(claims.id)
+    return getStudentById(claims.id)
   } catch (error) {
     if (error instanceof AuthenticationError) {
       throw error
@@ -31,20 +32,20 @@ const validate = async (token) => {
 
     // Token has expired
     if (error instanceof jwt.TokenExpiredError) {
-      throw new TokenExpiredError()
+      throw new TokenExpiredError(null, null, error)
     }
 
     // Token is malformed or otherwise invalid
     if (error instanceof jwt.JsonWebTokenError) {
-      throw new TokenCorruptedError()
+      throw new TokenCorruptedError(null, null, error)
     }
 
     // User doesn't exist
     if (error instanceof ResourceNotFoundError) {
-      throw new TokenCorruptedError()
+      throw new TokenCorruptedError(null, null, error)
     }
 
-    throw new AuthenticationError()
+    throw new AuthenticationError(null, null, error)
   }
 }
 

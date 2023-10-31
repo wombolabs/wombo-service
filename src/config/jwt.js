@@ -6,6 +6,7 @@ export const jwt = {
     sign: {
       algorithm: 'HS256',
       issuer,
+      expiresIn: '1y', // https://github.com/vercel/ms
     },
     verify: {
       algorithms: ['HS256'],
