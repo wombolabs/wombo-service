@@ -21,9 +21,9 @@ const handler = async ({ body }, res) => {
 
   await updateStudentByEmail(email, { lastLogin: new Date() })
 
-  return res.json({
-    accessToken: generateUserToken({ id, email }),
-  })
+  const accessToken = await generateUserToken({ id, email })
+
+  return res.json({ accessToken })
 }
 
 export const signinStudentHandler = buildHandler('/students/signin', 'post', handler)
