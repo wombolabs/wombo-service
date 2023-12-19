@@ -104,8 +104,9 @@ enum ChallengeType {
 }
 
 enum ChallengeStatus {
-  published // the challenge has been published and is open for submissions.
-  in_progress
+  published // the challenge has been published by the owner and is open for submissions from challengers.
+  awaiting_owner_approval // the challenge is awaiting approval from the owner.
+  in_progress // the challenge is in progress.
   awaiting_owner_report
   awaiting_challenger_report
   finished // the challenge has been completed.
@@ -297,18 +298,19 @@ model Challenge {
   metadata        Json            @default("{}")
   betAmount       Float           @default(0)
   fee             Float           @default(0) // Wombo fee
+  videoGameId     String?         @db.Uuid
   ownerScore      Int?
   challengerScore Int?
-  ownerId         String          @db.Uuid
   owner           Student         @relation("ChallengeOwner", fields: [ownerId], references: [id])
-  challengerId    String?         @db.Uuid
+  ownerId         String          @db.Uuid
   challenger      Student?        @relation("ChallengeChallenger", fields: [challengerId], references: [id])
+  challengerId    String?         @db.Uuid
+  competition     Competition?    @relation(fields: [competitionId], references: [id])
+  competitionId   String?         @db.Uuid
   isActive        Boolean         @default(true)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
   deletedAt       DateTime?
-  competition     Competition?    @relation(fields: [competitionId], references: [id])
-  competitionId   String?         @db.Uuid
 }
 
 model Wallet {
@@ -360,13 +362,13 @@ model Stat {
 }
 
 model ChatRoom {
-  id                  String                @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name                String?
-  isActive            Boolean               @default(true)
-  members             ChatRoomsOnStudents[]
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  deletedAt           DateTime?
+  id        String                @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String?
+  isActive  Boolean               @default(true)
+  members   ChatRoomsOnStudents[]
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+  deletedAt DateTime?
 }
 
 model ChatRoomsOnStudents {
