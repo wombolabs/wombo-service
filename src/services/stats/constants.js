@@ -14,6 +14,6 @@ export const DEFAULT_STAT_FIELDS = [
   'matchesGoalsDifference',
   'highestRatingOpponent',
   'avgOpponentsRating',
-  'winRate',
+  'cmsVideoGameHandleId',
   'updatedAt',
 ]

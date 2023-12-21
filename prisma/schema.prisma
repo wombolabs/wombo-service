@@ -269,48 +269,48 @@ model Payment {
 }
 
 model Competition {
-  id                 String                        @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  codename           String                        @unique
-  type               CompetitionType
-  start              DateTime?
-  end                DateTime?
-  videoGame          String?                       @db.Uuid
-  status             CompetitionStatus
-  registrationStatus CompetitionRegistrationStatus
-  participants       Student[]
-  metadata           Json                          @default("{}")
-  challenges         Challenge[]
-  isActive           Boolean                       @default(true)
-  createdAt          DateTime                      @default(now())
-  updatedAt          DateTime                      @updatedAt
-  deletedAt          DateTime?
+  id                   String                        @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  codename             String                        @unique
+  type                 CompetitionType
+  start                DateTime?
+  end                  DateTime?
+  videoGameId          String?                       @db.Uuid // Database ID of the Video Game model
+  cmsVideoGameHandleId String?                       @db.Uuid // CMS Handle ID of Video Game model
+  status               CompetitionStatus
+  registrationStatus   CompetitionRegistrationStatus
+  participants         Student[]
+  metadata             Json                          @default("{}")
+  challenges           Challenge[]
+  isActive             Boolean                       @default(true)
+  createdAt            DateTime                      @default(now())
+  updatedAt            DateTime                      @updatedAt
+  deletedAt            DateTime?
 }
 
 model Challenge {
-  id              String          @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  videoGame       String?
-  type            ChallengeType?
-  status          ChallengeStatus @default(published)
-  ranking         String?
-  server          String?
-  description     String?
-  isPublic        Boolean         @default(true)
-  metadata        Json            @default("{}")
-  betAmount       Float           @default(0)
-  fee             Float           @default(0) // Wombo fee
-  videoGameId     String?         @db.Uuid
-  ownerScore      Int?
-  challengerScore Int?
-  owner           Student         @relation("ChallengeOwner", fields: [ownerId], references: [id])
-  ownerId         String          @db.Uuid
-  challenger      Student?        @relation("ChallengeChallenger", fields: [challengerId], references: [id])
-  challengerId    String?         @db.Uuid
-  competition     Competition?    @relation(fields: [competitionId], references: [id])
-  competitionId   String?         @db.Uuid
-  isActive        Boolean         @default(true)
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  deletedAt       DateTime?
+  id                   String          @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  videoGame            String?
+  type                 ChallengeType?
+  status               ChallengeStatus @default(published)
+  server               String?
+  description          String?
+  isPublic             Boolean         @default(true)
+  metadata             Json            @default("{}")
+  betAmount            Float           @default(0)
+  fee                  Float           @default(0) // Wombo fee
+  cmsVideoGameHandleId String?         @db.Uuid // CMS Handle ID of Video Game model
+  ownerScore           Int?
+  challengerScore      Int?
+  owner                Student         @relation("ChallengeOwner", fields: [ownerId], references: [id])
+  ownerId              String          @db.Uuid
+  challenger           Student?        @relation("ChallengeChallenger", fields: [challengerId], references: [id])
+  challengerId         String?         @db.Uuid
+  competition          Competition?    @relation(fields: [competitionId], references: [id])
+  competitionId        String?         @db.Uuid
+  isActive             Boolean         @default(true)
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  deletedAt            DateTime?
 }
 
 model Wallet {
@@ -339,26 +339,24 @@ model WalletTransaction {
 }
 
 model Stat {
-  id                     String    @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  rating                 Int?      @default(1000)
-  highestRating          Int?      @default(1000)
-  highestRatingDate      DateTime?
-  ratingDelta            Int?      @default(0) // rating change in comparison to previous rating
-  accOpponentsRating     Int?      @default(0) // accumulator of opponents rating to calculate average opponent rating = acc / matchesPlayed
-  highestRatingOpponent  Int?      @default(0)
-  matchesWon             Int?      @default(0)
-  matchesDraw            Int?      @default(0)
-  matchesLost            Int?      @default(0)
-  matchesGoalsFor        Int?      @default(0)
-  matchesGoalsAgainst    Int?      @default(0)
-  tournamentsFirstPlace  Int?      @default(0)
-  tournamentsSecondPlace Int?      @default(0)
-  tournamentsThirdPlace  Int?      @default(0)
-  metadata               Json?     @default("{}")
-  owner                  Student   @relation(fields: [ownerId], references: [id])
-  ownerId                String    @unique @db.Uuid
-  createdAt              DateTime  @default(now())
-  updatedAt              DateTime  @updatedAt
+  id                    String    @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  rating                Int?      @default(1000)
+  highestRating         Int?      @default(1000)
+  highestRatingDate     DateTime?
+  ratingDelta           Int?      @default(0) // rating change in comparison to previous rating
+  accOpponentsRating    Int?      @default(0) // accumulator of opponents rating to calculate average opponent rating = acc / matchesPlayed
+  highestRatingOpponent Int?      @default(0)
+  matchesWon            Int?      @default(0)
+  matchesDraw           Int?      @default(0)
+  matchesLost           Int?      @default(0)
+  matchesGoalsFor       Int?      @default(0)
+  matchesGoalsAgainst   Int?      @default(0)
+  cmsVideoGameHandleId  String?   @db.Uuid // CMS Handle ID of Video Game model
+  metadata              Json?     @default("{}")
+  owner                 Student   @relation(fields: [ownerId], references: [id])
+  ownerId               String    @unique @db.Uuid
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 }
 
 model ChatRoom {

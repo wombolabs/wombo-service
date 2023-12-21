@@ -16,7 +16,7 @@ export const listChallenges = async (filters = {}) => {
     studentId, // list challenges from studentId
     notStudentId, // avoid list challenges from studentId
     competitionId, // list challenges from competitionId
-    videoGameId, // list challenges from videoGameId
+    cmsVideoGameHandleId, // list challenges from cmsVideoGameHandleId
     limit, // limit of challenges
   } = filters
 
@@ -51,8 +51,8 @@ export const listChallenges = async (filters = {}) => {
   if (uuidValidate(competitionId)) {
     where.competitionId = { equals: competitionId }
   }
-  if (notNilNorEmpty(videoGameId)) {
-    where.videoGameId = { equals: videoGameId }
+  if (notNilNorEmpty(cmsVideoGameHandleId)) {
+    where.cmsVideoGameHandleId = { equals: cmsVideoGameHandleId }
   }
 
   const query = {

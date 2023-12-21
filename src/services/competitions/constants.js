@@ -1,10 +1,8 @@
 export const DEFAULT_COMPETITION_FIELDS = [
   'id',
   'codename',
-  'type',
-  'start',
-  'end',
-  'videoGame',
+  'videoGameId',
+  'cmsVideoGameHandleId',
   'status',
   'registrationStatus',
   'participants',
