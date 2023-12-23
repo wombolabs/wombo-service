@@ -3,16 +3,13 @@ import R from 'ramda'
 export const DEFAULT_CHALLENGE_FIELDS = [
   'id',
   'videoGame',
-  'type',
   'status',
-  'ranking',
-  'server',
-  'description',
   'metadata',
   'betAmount',
   'fee',
   'ownerScore',
   'challengerScore',
+  'cmsVideoGameHandleId',
   'owner',
   'challenger',
   'competition',
@@ -23,6 +20,7 @@ export const DEFAULT_CHALLENGE_FIELDS = [
 
 export const CHALLENGE_STATUSES = {
   PUBLISHED: 'published',
+  AWAITING_OWNER_APPROVAL: 'awaiting_owner_approval',
   IN_PROGRESS: 'in_progress',
   AWAITING_OWNER_REPORT: 'awaiting_owner_report',
   AWAITING_CHALLENGER_REPORT: 'awaiting_challenger_report',
@@ -38,6 +36,7 @@ export const CHALLENGE_RESULTS = {
 }
 
 const STATUSES_ORDER = {
+  awaiting_owner_approval: 8,
   in_progress: 7,
   awaiting_owner_report: 6,
   awaiting_challenger_report: 5,
@@ -47,5 +46,5 @@ const STATUSES_ORDER = {
   cancelled: 1,
 }
 export const statusesComparator = R.comparator((a, b) =>
-  R.gt(STATUSES_ORDER[R.prop('status', a)], STATUSES_ORDER[R.prop('status', b)])
+  R.gt(STATUSES_ORDER[R.prop('status', a)], STATUSES_ORDER[R.prop('status', b)]),
 )

@@ -11,9 +11,6 @@ import { STUDENT_WALLET_TRANSACTION_TYPES, createStudentWallet } from '../studen
  * @param {object} challengeData - The challenge data.
  *  @param {string} challengeData.id - The challenge ID.
  *  @param {string} challengeData.videoGame - The challenge video game
- *  @param {string} challengeData.type - The challenge type (1v1, 2v2, etc)
- *  @param {string} challengeData.description - The challenge description.
- *  @param {string} challengeData.server - The challenge server.
  *  @param {number} challengeData.betAmount - The challenge bet amount.
  *  @param {number} challengeData.fee - The challenge fee.
  *  @param {object} challengeData.metadata - The challenge metadata.

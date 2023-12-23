@@ -8,7 +8,6 @@ export const serializeStat = R.curry((stats) =>
       country: stats.owner?.metadata?.profile?.country,
     }),
     R.assoc('totalMatches', stats.matchesWon + stats.matchesDraw + stats.matchesLost),
-    R.assoc('winRate', Math.round((stats.matchesWon / (stats.matchesWon + stats.matchesLost)) * 100)),
     R.assoc(
       'avgOpponentsRating',
       Math.round(stats.accOpponentsRating / (stats.matchesWon + stats.matchesDraw + stats.matchesLost)),
