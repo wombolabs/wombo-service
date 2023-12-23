@@ -1,3 +1,12 @@
+# [1.58.0](https://github.com/wombolabs/wombo-service/compare/v1.57.0...v1.58.0) (2023-12-23)
+
+
+### Features
+
+* add query filter on list stats endpoint ([67765d5](https://github.com/wombolabs/wombo-service/commit/67765d569a443863a41361d9378aac157002a84e))
+* changes ([1b05b83](https://github.com/wombolabs/wombo-service/commit/1b05b83a7d0c7d25a4acbe96e17f83a33cb0f1b5))
+* changes ([76a541c](https://github.com/wombolabs/wombo-service/commit/76a541c9f2cd2838a303c7c8f528a0d7f3a0c86f))
+
 # [1.57.0](https://github.com/wombolabs/wombo-service/compare/v1.56.0...v1.57.0) (2023-10-26)
 
 
