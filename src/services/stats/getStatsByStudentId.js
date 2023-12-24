@@ -1,6 +1,6 @@
+import { validate as uuidValidate } from 'uuid'
 import prisma from '~/services/prisma'
 import { InsufficientDataError } from '~/errors'
-import { validate as uuidValidate } from 'uuid'
 
 export const getStatsByStudentId = async (studentId) => {
   if (!uuidValidate(studentId)) {
@@ -18,7 +18,7 @@ export const getStatsByStudentId = async (studentId) => {
     },
   }
 
-  const result = await prisma.stat.findFirst(query)
+  const result = await prisma.stat.findMany(query)
 
   return result ?? {}
 }

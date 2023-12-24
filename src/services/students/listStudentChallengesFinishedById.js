@@ -25,9 +25,10 @@ export const listStudentChallengesFinishedById = async (studentId, filters = {})
         select: {
           username: true,
           metadata: true,
-          stat: {
+          stats: {
             select: {
               rating: true,
+              cmsVideoGameHandleId: true,
             },
           },
         },
@@ -36,9 +37,10 @@ export const listStudentChallengesFinishedById = async (studentId, filters = {})
         select: {
           username: true,
           metadata: true,
-          stat: {
+          stats: {
             select: {
               rating: true,
+              cmsVideoGameHandleId: true,
             },
           },
         },

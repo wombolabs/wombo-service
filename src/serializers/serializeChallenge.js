@@ -5,19 +5,20 @@ const serializeStudent = R.curry((student) =>
   R.unless(
     R.isNil,
     R.pipe(
-      R.pick(['id', 'username', 'metadata', 'stat']),
+      R.pick(['id', 'username', 'metadata', 'stats']),
       R.evolve({
         metadata: R.curry((metadata) =>
           R.pipe(
             R.pick(['profile']),
             R.evolve({
               profile: R.curry((profile) => R.pick(['picture', 'country'])(profile)),
-            })
-          )(metadata)
+            }),
+          )(metadata),
         ),
-      })
-    )
-  )(student)
+        stats: R.curry((stats) => R.unless(R.isNil, R.map(R.pick(['rating', 'cmsVideoGameHandleId'])))(stats)),
+      }),
+    ),
+  )(student),
 )
 
 export const serializeChallenge = R.curry((challenge) =>
@@ -26,6 +27,6 @@ export const serializeChallenge = R.curry((challenge) =>
     R.evolve({
       owner: serializeStudent,
       challenger: serializeStudent,
-    })
-  )(challenge)
+    }),
+  )(challenge),
 )

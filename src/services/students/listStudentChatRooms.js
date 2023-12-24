@@ -28,11 +28,6 @@ export const listStudentChatRooms = async (studentId, filters = {}) => {
               id: true,
               username: true,
               metadata: true,
-              stat: {
-                select: {
-                  rating: true,
-                },
-              },
             },
           },
         },

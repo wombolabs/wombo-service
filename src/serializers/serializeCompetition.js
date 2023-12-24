@@ -5,7 +5,7 @@ import { serializeChallenges } from './serializeChallenges'
 const serializeParticipants = R.curry((participants) =>
   R.map(
     R.pipe(
-      R.pick(['id', 'username', 'metadata', 'stat']),
+      R.pick(['id', 'username', 'metadata', 'stats']),
       R.evolve({
         metadata: R.curry((metadata) =>
           R.pipe(
@@ -15,6 +15,7 @@ const serializeParticipants = R.curry((participants) =>
             }),
           )(metadata),
         ),
+        stats: R.curry((stats) => R.unless(R.isNil, R.map(R.pick(['rating', 'cmsVideoGameHandleId'])))(stats)),
       }),
     ),
   )(participants),

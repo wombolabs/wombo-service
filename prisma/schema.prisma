@@ -186,7 +186,7 @@ model Student {
   challengesOwner      Challenge[]           @relation("ChallengeOwner")
   challengesChallenger Challenge[]           @relation("ChallengeChallenger")
   wallet               Wallet?
-  stat                 Stat?
+  stats                Stat[]
   chatRooms            ChatRoomsOnStudents[]
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
@@ -353,8 +353,8 @@ model Stat {
   matchesGoalsAgainst   Int?      @default(0)
   cmsVideoGameHandleId  String?   @db.Uuid // CMS Handle ID of Video Game model
   metadata              Json?     @default("{}")
-  owner                 Student   @relation(fields: [ownerId], references: [id])
-  ownerId               String    @unique @db.Uuid
+  owner                 Student   @relation(fields: [ownerId], references: [id], map: "fk_studentId_ref_Student")
+  ownerId               String    @db.Uuid
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 }
