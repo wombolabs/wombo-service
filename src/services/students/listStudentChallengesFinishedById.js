@@ -10,39 +10,33 @@ export const listStudentChallengesFinishedById = async (studentId, filters = {})
   }
 
   const {
+    cmsVideoGameHandleId, // list challenges from cmsVideoGameHandleId
     limit, // limit of challenges
   } = filters
 
+  const where = {
+    isActive: true,
+    status: { in: [CHALLENGE_STATUSES.FINISHED] },
+    OR: [{ ownerId: { equals: studentId } }, { challengerId: { equals: studentId } }],
+    competitionId: { equals: null },
+  }
+  if (notNilNorEmpty(cmsVideoGameHandleId)) {
+    where.cmsVideoGameHandleId = { equals: cmsVideoGameHandleId }
+  }
+
   const query = {
-    where: {
-      isActive: true,
-      status: { in: [CHALLENGE_STATUSES.FINISHED] },
-      OR: [{ ownerId: { equals: studentId } }, { challengerId: { equals: studentId } }],
-      competitionId: { equals: null },
-    },
+    where,
     select: {
       owner: {
         select: {
           username: true,
           metadata: true,
-          stats: {
-            select: {
-              rating: true,
-              cmsVideoGameHandleId: true,
-            },
-          },
         },
       },
       challenger: {
         select: {
           username: true,
           metadata: true,
-          stats: {
-            select: {
-              rating: true,
-              cmsVideoGameHandleId: true,
-            },
-          },
         },
       },
       ownerScore: true,
