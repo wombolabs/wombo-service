@@ -21,9 +21,10 @@ export const getCompetitionByCodename = async (codename, filters = {}) => {
         id: true,
         username: true,
         metadata: true,
-        stat: {
+        stats: {
           select: {
             rating: true,
+            cmsVideoGameHandleId: true,
           },
         },
       },

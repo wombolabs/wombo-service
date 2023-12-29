@@ -4,7 +4,7 @@ import { DEFAULT_STUDENT_CHAT_ROOM_FIELDS } from '~/services/students'
 const serializeMembers = R.curry((members) =>
   R.map((m) =>
     R.pipe(
-      R.pick(['id', 'username', 'metadata', 'stat']),
+      R.pick(['id', 'username', 'metadata']),
       R.evolve({
         metadata: R.curry((metadata) =>
           R.pipe(

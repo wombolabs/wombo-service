@@ -7,7 +7,7 @@ export const getStudentByEmail = async (email, filters = {}) => {
     throw new InsufficientDataError('Email field is required.')
   }
 
-  const { withCompetitions, withWallet, withStat } = filters
+  const { withCompetitions, withWallet, withStats } = filters
 
   const include = {}
   if (withCompetitions) {
@@ -16,8 +16,8 @@ export const getStudentByEmail = async (email, filters = {}) => {
   if (withWallet) {
     include.wallet = true
   }
-  if (withStat) {
-    include.stat = true
+  if (withStats) {
+    include.stats = true
   }
 
   const query = {

@@ -17,9 +17,10 @@ export const getChallengeById = async (id, filters) => {
           id: true,
           username: true,
           metadata: true,
-          stat: {
+          stats: {
             select: {
               rating: true,
+              cmsVideoGameHandleId: true,
             },
           },
         },
@@ -29,9 +30,10 @@ export const getChallengeById = async (id, filters) => {
           id: true,
           username: true,
           metadata: true,
-          stat: {
+          stats: {
             select: {
               rating: true,
+              cmsVideoGameHandleId: true,
             },
           },
         },
