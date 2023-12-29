@@ -1,3 +1,10 @@
+# [1.59.0](https://github.com/wombolabs/wombo-service/compare/v1.58.0...v1.59.0) (2023-12-29)
+
+
+### Features
+
+* changes ([e107db7](https://github.com/wombolabs/wombo-service/commit/e107db761c6aa9be36e22ecac142bcef9a778577))
+
 # [1.58.0](https://github.com/wombolabs/wombo-service/compare/v1.57.0...v1.58.0) (2023-12-23)
 
 
