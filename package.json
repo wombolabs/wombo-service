@@ -49,11 +49,11 @@
     "uuid": "9.0.1"
   },
   "devDependencies": {
-    "@babel/core": "7.23.6",
-    "@babel/preset-env": "7.23.6",
+    "@babel/core": "7.23.7",
+    "@babel/preset-env": "7.23.7",
     "@commitlint/cli": "17.6.6",
     "@commitlint/config-conventional": "17.6.6",
-    "@eclass/semantic-release-sentry-releases": "3.0.0",
+    "@eclass/semantic-release-sentry-releases": "3.1.0",
     "@google/semantic-release-replace-plugin": "1.2.7",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/commit-analyzer": "10.0.1",

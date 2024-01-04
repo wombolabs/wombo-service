@@ -2,9 +2,9 @@ import R from 'ramda'
 import { DEFAULT_STUDENT_FIELDS } from '~/services/students'
 import { serializeChallenges } from './serializeChallenges'
 
-const DEFAULT_COMPETITION_FIELD = 'codename'
+const DEFAULT_COMPETITION_FIELD = ['id', 'start', 'metadata']
 
-const serializeCompetitions = R.curry((competitions) => R.pluck(DEFAULT_COMPETITION_FIELD)(competitions))
+const serializeCompetitions = R.curry((competitions) => R.project(DEFAULT_COMPETITION_FIELD)(competitions))
 
 export const serializeStudentInternal = R.curry((student) =>
   R.pipe(
