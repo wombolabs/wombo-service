@@ -2,12 +2,13 @@ import R from 'ramda'
 import prisma from '~/services/prisma'
 import { ResourceNotFoundError, InsufficientDataError } from '~/errors'
 import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
+import { isNilOrEmpty } from '~/utils/isNilOrEmpty'
 import { DEFAULT_CHALLENGE_FIELDS } from '../challenges/constants'
 
 const SELECTED_CHALLENGE_FIELDS = R.pipe(
   R.map((f) => [f, true]),
   R.fromPairs,
-  R.omit(['owner', 'challenger'])
+  R.omit(['owner', 'challenger']),
 )(DEFAULT_CHALLENGE_FIELDS)
 const INCLUDED_CHALLENGE_FIELDS = {
   select: {
@@ -45,7 +46,7 @@ const INCLUDED_WALLET_FIELDS = {
 }
 
 export const getStudentByUsernameInternal = async (username, filters = {}) => {
-  if (!username) {
+  if (isNilOrEmpty(username)) {
     throw new InsufficientDataError('Username field is required.')
   }
 
@@ -63,7 +64,7 @@ export const getStudentByUsernameInternal = async (username, filters = {}) => {
     include.wallet = INCLUDED_WALLET_FIELDS
   }
 
-  const query = { where: { username: { equals: username, mode: 'insensitive' } } }
+  const query = { where: { username: { equals: username?.trim(), mode: 'insensitive' } } }
   if (notNilNorEmpty(include)) {
     query.include = include
   }

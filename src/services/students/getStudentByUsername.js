@@ -7,7 +7,7 @@ export const getStudentByUsername = async (username) => {
     throw new InsufficientDataError('Username field is required.')
   }
 
-  const query = { where: { username: { equals: username, mode: 'insensitive' }, isActive: true } }
+  const query = { where: { username: { equals: username?.trim(), mode: 'insensitive' }, isActive: true } }
 
   const result = await prisma.student.findFirst(query)
 
