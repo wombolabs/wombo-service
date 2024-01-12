@@ -11,7 +11,7 @@ const serializeStudent = R.curry((student) =>
           R.pipe(
             R.pick(['profile']),
             R.evolve({
-              profile: R.curry((profile) => R.pick(['picture', 'country'])(profile)),
+              profile: R.curry((profile) => R.pick(['picture', 'geoInfo'])(profile)),
             }),
           )(metadata),
         ),
