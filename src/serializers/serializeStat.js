@@ -7,7 +7,7 @@ export const serializeStat = R.curry((stat) =>
     R.pipe(
       R.assoc('student', {
         username: stat.owner?.username,
-        country: stat.owner?.metadata?.profile?.country,
+        countryCode: stat.owner?.metadata?.profile?.geoInfo?.countryCode ?? {},
       }),
       R.assoc('totalMatches', stat.matchesWon + stat.matchesDraw + stat.matchesLost),
       R.assoc(

@@ -10,7 +10,7 @@ const serializeMembers = R.curry((members) =>
           R.pipe(
             R.pick(['profile']),
             R.evolve({
-              profile: R.curry((profile) => R.pick(['picture', 'country'])(profile)),
+              profile: R.curry((profile) => R.pick(['picture', 'geoInfo'])(profile)),
             }),
           )(metadata),
         ),

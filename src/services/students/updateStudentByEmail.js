@@ -3,7 +3,6 @@ import prisma from '~/services/prisma'
 import { ResourceNotFoundError } from '~/errors'
 import { isNilOrEmpty } from '~/utils/isNilOrEmpty'
 import { getStudentByEmail } from './getStudentByEmail'
-import { listVideoGames } from '../videoGames'
 
 const studentMetadataProperties = ['profile']
 
@@ -22,19 +21,12 @@ export const updateStudentByEmail = async (email, student = {}) => {
   delete updatedStudent.email
   delete updatedStudent.password // TODO implement change password for WP users
 
-  const videoGames = await listVideoGames({ isActive: true })
-
   R.forEach((prop) => {
     updatedStudent.metadata[prop] = R.mergeDeepLeft(
-      (newStudent.metadata && newStudent.metadata[prop]) ?? {},
-      (savedStudent.metadata && savedStudent.metadata[prop]) ?? {},
+      newStudent?.metadata?.[prop] ?? {},
+      savedStudent?.metadata?.[prop] ?? {},
     )
-  })([...studentMetadataProperties, ...R.pluck('codename')(videoGames)])
-
-  updatedStudent.metadata.videoGames = R.pipe(
-    R.concat(newStudent.metadata?.videoGames ?? []),
-    R.uniq,
-  )(savedStudent.metadata?.videoGames ?? [])
+  })([...studentMetadataProperties])
 
   const result = await prisma.student.update({
     where: { email },
