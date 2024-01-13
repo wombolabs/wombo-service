@@ -1,4 +1,4 @@
-import serverlessExpress from '@vendia/serverless-express'
+import serverlessExpress from '@codegenie/serverless-express'
 import express from 'express'
 import helmet from 'helmet'
 import Router from 'express-promise-router'
