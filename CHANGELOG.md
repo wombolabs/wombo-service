@@ -1,3 +1,10 @@
+# [1.60.0](https://github.com/wombolabs/wombo-service/compare/v1.59.0...v1.60.0) (2024-01-20)
+
+
+### Features
+
+* add twitch oauth provider on student model ([a88e2fc](https://github.com/wombolabs/wombo-service/commit/a88e2fc9af70d0b8e87a39fb832c23d53c8cbfb9))
+
 # [1.59.0](https://github.com/wombolabs/wombo-service/compare/v1.58.0...v1.59.0) (2023-12-29)
 
 
