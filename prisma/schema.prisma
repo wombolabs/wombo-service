@@ -175,6 +175,7 @@ model Student {
   google               Json                  @default("{}")
   facebook             Json                  @default("{}")
   twitter              Json                  @default("{}")
+  twitch               Json                  @default("{}")
   locale               Language?
   timeZone             String?
   orders               Order[]
