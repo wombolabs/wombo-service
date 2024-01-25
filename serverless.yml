@@ -30,6 +30,7 @@ provider:
     apiKeys:
       - name: ${env:SUBDOMAIN}-apiKey
         value: ${env:DEFAULT_API_KEY}
+  timeout: 10 # Default timeout for all functions (default is 6)
   environment:
     SUBDOMAIN: ${env:SUBDOMAIN}
     DEFAULT_API_KEY: ${env:DEFAULT_API_KEY}
