@@ -34,7 +34,7 @@ export const txPayPrizeChallenge = async (userId, challengeId, betAmount, fee, c
       data: {
         amount: prizeAmount,
         type: STUDENT_WALLET_TRANSACTION_TYPES.WON_CHALLENGE,
-        description: `${challengeResult} challenge ${challengeId}`,
+        description: `${challengeId}`,
         wallet: { connect: { id: wallet.id } },
       },
     }),
@@ -46,7 +46,7 @@ export const txPayPrizeChallenge = async (userId, challengeId, betAmount, fee, c
         data: {
           amount: -feeAmount,
           type: STUDENT_WALLET_TRANSACTION_TYPES.CHALLENGE_FEE,
-          description: `fee challenge ${challengeId}`,
+          description: `${challengeId}`,
           wallet: { connect: { id: wallet.id } },
         },
       }),
