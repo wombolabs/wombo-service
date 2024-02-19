@@ -1,3 +1,10 @@
+# [1.61.0](https://github.com/wombolabs/wombo-service/compare/v1.60.0...v1.61.0) (2024-02-19)
+
+
+### Features
+
+* **internals:** add finish challenge endpoint ([5530f9a](https://github.com/wombolabs/wombo-service/commit/5530f9a05cd8c579dccafd605a4a9f832842a86f))
+
 # [1.60.0](https://github.com/wombolabs/wombo-service/compare/v1.59.0...v1.60.0) (2024-01-20)
 
 
