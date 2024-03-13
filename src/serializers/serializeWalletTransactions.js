@@ -4,9 +4,9 @@ import { DEFAULT_STUDENT_WALLET_FIELDS } from '~/services/students'
 const serializeTransactions = R.curry((transactions) =>
   R.map(
     R.pipe(
-      R.pick(['id', 'amount', 'type', 'createdAt']),
+      R.pick(['id', 'amount', 'type', 'description', 'createdAt']),
       R.evolve({
-        type: R.replace('t_', '', R.__),
+        type: R.pipe(R.replace('t_', '', R.__), R.replace(/_/g, ' '), R.trim, R.toUpper),
       }),
     ),
   )(transactions),

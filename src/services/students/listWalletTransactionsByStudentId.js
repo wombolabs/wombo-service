@@ -12,6 +12,7 @@ export const listWalletTransactionsByStudentId = async (studentId) => {
           id: true,
           amount: true,
           type: true,
+          description: true,
           createdAt: true,
         },
         orderBy: {
