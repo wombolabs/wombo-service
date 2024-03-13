@@ -344,14 +344,3 @@ functions:
           private: true
           caching:
             enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
-  # Challenge - Matchmaking
-  removeMatchmakingDynamoDB:
-    handler: src/index.removeMatchmakingHandler
-    events:
-      - stream:
-          type: dynamodb
-          arn: arn:aws:dynamodb:us-east-1:067112320023:table/Matchmaking/stream/2024-02-02T01:36:19.265
-          maximumRetryAttempts: 1
-          batchSize: 1
-          filterPatterns:
-            - eventName: [REMOVE]
