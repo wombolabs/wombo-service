@@ -39,7 +39,7 @@ export const txPayAndCreateChallenge = async (ownerId, challengeData) => {
       data: {
         amount: -betAmount,
         type: STUDENT_WALLET_TRANSACTION_TYPES.CREATE_CHALLENGE,
-        description: `create challenge ${challengeData?.id}`,
+        description: `${challengeData?.id}`,
         wallet: { connect: { id: walletId } },
       },
     }),
