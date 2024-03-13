@@ -1,3 +1,10 @@
+# [1.62.0](https://github.com/wombolabs/wombo-service/compare/v1.61.0...v1.62.0) (2024-03-13)
+
+
+### Features
+
+* add dynamodb stream handler ([1ff31fb](https://github.com/wombolabs/wombo-service/commit/1ff31fb23efdfe6a9bb2aba6e2256befa1b6acb4))
+
 # [1.61.0](https://github.com/wombolabs/wombo-service/compare/v1.60.0...v1.61.0) (2024-02-19)
 
 
