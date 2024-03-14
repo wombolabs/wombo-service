@@ -332,7 +332,14 @@ functions:
     events:
       - http:
           path: /challenges/internals/{id}/finish
-          method: patch
+          method: post
+          private: true
+  cancelChallengeInternal:
+    handler: src/index.cancelChallengeInternalHandler
+    events:
+      - http:
+          path: /challenges/internals/{id}/cancel
+          method: post
           private: true
   # Stat
   listStats:

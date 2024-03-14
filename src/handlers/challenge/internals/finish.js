@@ -1,17 +1,12 @@
 import { CHALLENGE_RESULTS, CHALLENGE_STATUSES, txPayPrizeChallenge, finishChallengeById } from '~/services/challenges'
-import { buildHandler, notNilNorEmpty } from '~/utils'
+import { buildHandler } from '~/utils'
 import { authenticationInternalMiddleware } from '~/middlewares'
 
 const handler = async ({ params: { id }, body }, res) => {
   const updatedChallenge = await finishChallengeById(id, body)
 
-  const isFinished = notNilNorEmpty(updatedChallenge)
-  if (
-    isFinished &&
-    updatedChallenge?.status === CHALLENGE_STATUSES.FINISHED &&
-    updatedChallenge?.competitionId == null &&
-    updatedChallenge?.betAmount > 0
-  ) {
+  const isFinished = updatedChallenge?.status === CHALLENGE_STATUSES.FINISHED
+  if (isFinished && updatedChallenge?.competitionId == null && updatedChallenge?.betAmount > 0) {
     const { id: challengeId, ownerId, ownerScore, challengerId, challengerScore, betAmount, fee } = updatedChallenge
 
     if (ownerScore > challengerScore) {
@@ -32,6 +27,6 @@ const handler = async ({ params: { id }, body }, res) => {
   res.json({ finished: isFinished })
 }
 
-export const finishChallengeInternalHandler = buildHandler('/challenges/internals/:id/finish', 'patch', handler, {
+export const finishChallengeInternalHandler = buildHandler('/challenges/internals/:id/finish', 'post', handler, {
   middlewares: [authenticationInternalMiddleware],
 })
