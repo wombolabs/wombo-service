@@ -27,6 +27,6 @@ const handler = async ({ params: { id }, body }, res) => {
   res.json({ finished: isFinished })
 }
 
-export const finishChallengeInternalHandler = buildHandler('/challenges/internals/:id/finish', 'patch', handler, {
+export const finishChallengeInternalHandler = buildHandler('/challenges/internals/:id/finish', 'post', handler, {
   middlewares: [authenticationInternalMiddleware],
 })
