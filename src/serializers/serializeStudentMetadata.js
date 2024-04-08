@@ -16,7 +16,7 @@ export const serializeStudentMetadata = R.curry((metadata) =>
   R.unless(
     R.isNil,
     R.pipe(
-      R.pick(['profile']),
+      R.pick(['isAdmin', 'profile']),
       R.evolve({
         profile: serializeMetadataProfile,
       }),
