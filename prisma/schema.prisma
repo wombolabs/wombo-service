@@ -101,6 +101,8 @@ enum ChallengeType {
   player_vs_player
   two_vs_two
   team_vs_team
+  anonymous_player_vs_player
+  matchmaking_player_vs_player
 }
 
 enum ChallengeStatus {
@@ -293,8 +295,8 @@ model Challenge {
   videoGame            String?
   type                 ChallengeType?
   status               ChallengeStatus @default(published)
-  server               String?
-  description          String?
+  server               String? // DEPRECATED
+  description          String? // DEPRECATED
   isPublic             Boolean         @default(true)
   metadata             Json            @default("{}")
   betAmount            Float           @default(0)
@@ -302,8 +304,8 @@ model Challenge {
   cmsVideoGameHandleId String?         @db.Uuid // CMS Handle ID of Video Game model
   ownerScore           Int?
   challengerScore      Int?
-  owner                Student         @relation("ChallengeOwner", fields: [ownerId], references: [id])
-  ownerId              String          @db.Uuid
+  owner                Student?        @relation("ChallengeOwner", fields: [ownerId], references: [id])
+  ownerId              String?         @db.Uuid
   challenger           Student?        @relation("ChallengeChallenger", fields: [challengerId], references: [id])
   challengerId         String?         @db.Uuid
   competition          Competition?    @relation(fields: [competitionId], references: [id])

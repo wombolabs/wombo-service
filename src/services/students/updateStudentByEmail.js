@@ -4,7 +4,7 @@ import { ResourceNotFoundError } from '~/errors'
 import { isNilOrEmpty } from '~/utils/isNilOrEmpty'
 import { getStudentByEmail } from './getStudentByEmail'
 
-const studentMetadataProperties = ['profile']
+const studentMetadataProperties = ['system', 'profile']
 
 export const updateStudentByEmail = async (email, student = {}) => {
   const savedStudent = await getStudentByEmail(email)

@@ -13,6 +13,7 @@ import { STUDENT_WALLET_TRANSACTION_TYPES, createStudentWallet } from '../studen
  *  @param {string} challengeData.videoGame - The challenge video game
  *  @param {number} challengeData.betAmount - The challenge bet amount.
  *  @param {number} challengeData.fee - The challenge fee.
+ *  @param {string} challengeData.type - The challenge type.
  *  @param {object} challengeData.metadata - The challenge metadata.
  *  @param {boolean} challengeData.isPublic - The challenge is public.
  * @returns {Promise<object>} The created challenge.

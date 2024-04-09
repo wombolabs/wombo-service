@@ -3,6 +3,7 @@ import R from 'ramda'
 export const DEFAULT_CHALLENGE_FIELDS = [
   'id',
   'videoGame',
+  'type',
   'status',
   'metadata',
   'betAmount',
