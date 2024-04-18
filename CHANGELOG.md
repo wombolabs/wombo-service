@@ -1,3 +1,10 @@
+# [1.64.0](https://github.com/wombolabs/wombo-service/compare/v1.63.0...v1.64.0) (2024-04-18)
+
+
+### Features
+
+* add sports betting on challenge type ([2bfbbf6](https://github.com/wombolabs/wombo-service/commit/2bfbbf6dff4fac0e39f94f00cd3baec09eebdfe0))
+
 # [1.63.0](https://github.com/wombolabs/wombo-service/compare/v1.62.0...v1.63.0) (2024-03-14)
 
 
