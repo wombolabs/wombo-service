@@ -10,7 +10,7 @@
     "prisma:client-proxy": "npx prisma generate --data-proxy",
     "prisma:reset": "npx dotenv -e .env.local -- npx prisma migrate reset",
     "prisma:seed": "npx dotenv -e .env.local -- npx prisma db seed",
-    "migrate:dev": "npx dotenv -e .env.local -- npx prisma migrate dev --name student_oauth_provider",
+    "migrate:dev": "npx dotenv -e .env.local -- npx prisma migrate dev --name challege_add_type",
     "migrate:deploy": "npx dotenv -e .env.production -- npx prisma migrate deploy",
     "build:local": "npx serverless webpack --stage local",
     "build:test": "npx serverless webpack --stage test",
