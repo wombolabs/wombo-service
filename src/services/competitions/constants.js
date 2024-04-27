@@ -4,6 +4,7 @@ export const DEFAULT_COMPETITION_FIELDS = [
   'videoGameId',
   'cmsVideoGameHandleId',
   'status',
+  'metadata',
   'registrationStatus',
   'participants',
   'challenges',

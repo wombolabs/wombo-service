@@ -281,6 +281,14 @@ functions:
           path: /competitions/internals
           method: post
           private: true
+  createCompetitionBracketsInternal:
+    handler: src/index.createCompetitionBracketsInternalHandler
+    events:
+      - http:
+          path: /competitions/internals/{codename}/brackets
+          method: post
+          private: true
+          async: true
   # Challenge
   listChallenges:
     handler: src/index.listChallengesHandler

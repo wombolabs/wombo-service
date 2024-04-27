@@ -1,6 +1,7 @@
 import { CHALLENGE_RESULTS, CHALLENGE_STATUSES, txPayPrizeChallenge, finishChallengeById } from '~/services/challenges'
-import { buildHandler } from '~/utils'
+import { buildHandler, notNilNorEmpty } from '~/utils'
 import { authenticationInternalMiddleware } from '~/middlewares'
+import { updateCompetitionBrackets } from '~/services/competitions'
 
 const handler = async ({ params: { id }, body }, res) => {
   const updatedChallenge = await finishChallengeById(id, body)
@@ -22,6 +23,10 @@ const handler = async ({ params: { id }, body }, res) => {
         txPayPrizeChallenge(challengerId, challengeId, betAmount, fee, CHALLENGE_RESULTS.DRAW),
       ])
     }
+  }
+
+  if (updatedChallenge?.status === CHALLENGE_STATUSES.FINISHED && notNilNorEmpty(updatedChallenge?.competitionId)) {
+    await updateCompetitionBrackets(updatedChallenge)
   }
 
   res.json({ finished: isFinished })
