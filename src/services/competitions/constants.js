@@ -8,6 +8,7 @@ export const DEFAULT_COMPETITION_FIELDS = [
   'registrationStatus',
   'participants',
   'challenges',
+  'predictions',
   'isActive',
   'createdAt',
   'updatedAt',

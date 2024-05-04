@@ -18,6 +18,7 @@ export const createCompetitionTournament = async (codename, challengeData = {}) 
   if (notNilNorEmpty(participants) && participants.length >= 2) {
     const challenges = []
 
+    // Create challenges for each pair of participants
     for (let i = 0; i < participants.length - 1; i++) {
       for (let j = i + 1; j < participants.length; j++) {
         challenges.push([participants[i], participants[j]])

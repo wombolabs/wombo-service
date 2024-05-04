@@ -192,6 +192,7 @@ model Student {
   wallet               Wallet?
   stats                Stat[]
   chatRooms            ChatRoomsOnStudents[]
+  predictions          Prediction[]
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
   deletedAt            DateTime?
@@ -285,6 +286,7 @@ model Competition {
   participants         Student[]
   metadata             Json                          @default("{}")
   challenges           Challenge[]
+  predictions          Prediction[]
   isActive             Boolean                       @default(true)
   createdAt            DateTime                      @default(now())
   updatedAt            DateTime                      @updatedAt
@@ -381,4 +383,17 @@ model ChatRoomsOnStudents {
   createdAt  DateTime @default(now())
 
   @@id([chatRoomId, studentId])
+}
+
+model Prediction {
+  id            String       @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  owner         Student      @relation(fields: [ownerId], references: [id])
+  ownerId       String       @db.Uuid
+  competition   Competition? @relation(fields: [competitionId], references: [id])
+  competitionId String?      @db.Uuid
+  metadata      Json?        @default("{}")
+  points        Int?         @default(0)
+  isActive      Boolean      @default(true)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
