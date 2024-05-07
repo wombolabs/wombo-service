@@ -1,3 +1,11 @@
+# [1.65.0](https://github.com/wombolabs/wombo-service/compare/v1.64.0...v1.65.0) (2024-05-07)
+
+
+### Features
+
+* add brackets to competition ([a4fb320](https://github.com/wombolabs/wombo-service/commit/a4fb320e3378b0ce95cfc30b1c3808bd174daa16))
+* add events prediction to competition ([8093ea0](https://github.com/wombolabs/wombo-service/commit/8093ea0eb9ff7aae3103c113fa791902ab1d817d))
+
 # [1.64.0](https://github.com/wombolabs/wombo-service/compare/v1.63.0...v1.64.0) (2024-04-18)
 
 
