@@ -36,12 +36,41 @@ const serializeParticipants = R.curry((participants) =>
   )(participants),
 )
 
+const serializePredictions = R.curry((predictions) =>
+  R.map(
+    R.pipe(
+      R.pick(['id', 'metadata', 'createdAt', 'owner']),
+      R.evolve({
+        owner: R.curry((owner) =>
+          R.pipe(
+            R.pick(['id', 'username', 'metadata']),
+            R.evolve({
+              metadata: R.curry((metadata) =>
+                R.unless(
+                  R.isNil,
+                  R.pipe(
+                    R.pick(['profile']),
+                    R.evolve({
+                      profile: serializeMetadataProfile,
+                    }),
+                  ),
+                )(metadata),
+              ),
+            }),
+          )(owner),
+        ),
+      }),
+    ),
+  )(predictions),
+)
+
 export const serializeCompetition = R.curry((competition) =>
   R.pipe(
     R.pick([...DEFAULT_COMPETITION_FIELDS]),
     R.evolve({
       participants: serializeParticipants,
       challenges: serializeChallenges,
+      predictions: serializePredictions,
     }),
   )(competition),
 )

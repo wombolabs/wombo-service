@@ -55,13 +55,14 @@ export const getCompetitionByCodename = async (codename, filters = {}) => {
       select: {
         id: true,
         metadata: true,
-        points: true,
         owner: {
           select: {
             id: true,
             username: true,
+            metadata: true,
           },
         },
+        createdAt: true,
       },
     }
   }

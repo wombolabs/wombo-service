@@ -11,8 +11,8 @@ import { enrollForCompetition } from '~/services/competitions'
  *    - {string} codename
  *  @param {object} user
  *  @param {object} body
- *   - {object} metadata // student data
- *   - {object} predictions
+ *    - {object} metadata // student data
+ *    - {object} predictions
  * @param {object} res
  * @returns {Promise<void>}
  */
