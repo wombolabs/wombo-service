@@ -1,7 +1,7 @@
 import { validate as uuidValidate } from 'uuid'
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
-import { isNilOrEmpty } from '~/utils'
+import { isNilOrEmpty, notNilNorEmpty } from '~/utils'
 import { STUDENT_WALLET_TRANSACTION_TYPES, createStudentWallet } from '../students'
 import { CHALLENGE_STATUSES } from './constants'
 
@@ -20,9 +20,13 @@ export const txPayAndEnrollChallenge = async (challengerId, challengeData) => {
     throw new InsufficientDataError('Student ID and challenge data are required.')
   }
 
-  const { betAmount = 0 } = challengeData
+  const { betAmount = 0, challengerBetAmount } = challengeData
 
   const { id: walletId, balance } = await createStudentWallet(challengerId)
+
+  if (notNilNorEmpty(challengerBetAmount) && balance < challengerBetAmount) {
+    throw new InsufficientDataError('Insufficient funds.')
+  }
 
   if (balance < betAmount) {
     throw new InsufficientDataError('Insufficient funds.')
@@ -31,9 +35,9 @@ export const txPayAndEnrollChallenge = async (challengerId, challengeData) => {
   const result = await prisma.$transaction([
     prisma.walletTransaction.create({
       data: {
-        amount: -betAmount,
+        amount: notNilNorEmpty(challengerBetAmount) ? -challengerBetAmount : -betAmount,
         type: STUDENT_WALLET_TRANSACTION_TYPES.ENROLL_CHALLENGE,
-        description: `accept challenge ${challengeData?.id}`,
+        description: challengeData?.id,
         wallet: { connect: { id: walletId } },
       },
     }),
@@ -42,7 +46,7 @@ export const txPayAndEnrollChallenge = async (challengerId, challengeData) => {
         id: walletId,
       },
       data: {
-        balance: balance - betAmount,
+        balance: balance - (notNilNorEmpty(challengerBetAmount) ? challengerBetAmount : betAmount),
       },
     }),
     prisma.challenge.update({

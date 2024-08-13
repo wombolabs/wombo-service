@@ -10,7 +10,7 @@
     "prisma:client-proxy": "npx prisma generate --data-proxy",
     "prisma:reset": "npx dotenv -e .env.local -- npx prisma migrate reset",
     "prisma:seed": "npx dotenv -e .env.local -- npx prisma db seed",
-    "migrate:dev": "npx dotenv -e .env.local -- npx prisma migrate dev --name add_prediction_model",
+    "migrate:dev": "npx dotenv -e .env.local -- npx prisma migrate dev --name modify_challenger_bet_amount",
     "migrate:deploy": "npx dotenv -e .env.production -- npx prisma migrate deploy",
     "build:local": "npx serverless webpack --stage local",
     "build:test": "npx serverless webpack --stage test",
@@ -34,7 +34,7 @@
   "homepage": "https://github.com/wombolabs/wombo-service#readme",
   "dependencies": {
     "@codegenie/serverless-express": "4.14.1",
-    "@prisma/client": "5.13.0",
+    "@prisma/client": "5.17.0",
     "@sentry/integrations": "7.114.0",
     "@sentry/serverless": "7.114.0",
     "@sentry/tracing": "7.114.0",
@@ -46,12 +46,12 @@
     "helmet": "7.1.0",
     "jsonwebtoken": "9.0.2",
     "openapi-validator-middleware": "3.2.6",
-    "ramda": "0.30.0",
-    "uuid": "9.0.1"
+    "ramda": "0.30.1",
+    "uuid": "10.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.24.5",
-    "@babel/preset-env": "7.24.5",
+    "@babel/core": "7.24.9",
+    "@babel/preset-env": "7.24.8",
     "@commitlint/cli": "17.6.6",
     "@commitlint/config-conventional": "17.6.6",
     "@eclass/semantic-release-sentry-releases": "3.1.0",
@@ -74,8 +74,8 @@
     "eslint-plugin-import": "2.27.5",
     "husky": "8.0.3",
     "lint-staged": "13.2.3",
-    "prettier": "3.1.1",
-    "prisma": "5.13.0",
+    "prettier": "3.3.3",
+    "prisma": "5.17.0",
     "semantic-release": "21.0.1",
     "serverless": "3.38.0",
     "serverless-api-gateway-caching": "1.10.3",
@@ -85,7 +85,7 @@
     "serverless-prune-plugin": "2.0.2",
     "serverless-webpack": "5.13.0",
     "serverless-webpack-prisma": "1.2.0",
-    "webpack": "5.91.0",
+    "webpack": "5.93.0",
     "webpack-node-externals": "3.0.0"
   },
   "prisma": {

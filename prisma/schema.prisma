@@ -303,6 +303,7 @@ model Challenge {
   isPublic             Boolean         @default(true)
   metadata             Json            @default("{}")
   betAmount            Float           @default(0)
+  challengerBetAmount  Float?
   fee                  Float           @default(0) // Wombo fee
   cmsVideoGameHandleId String?         @db.Uuid // CMS Handle ID of Video Game model
   ownerScore           Int?

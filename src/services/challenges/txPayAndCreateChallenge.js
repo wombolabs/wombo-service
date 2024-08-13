@@ -1,7 +1,7 @@
 import { validate as uuidValidate } from 'uuid'
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
-import { isNilOrEmpty } from '~/utils'
+import { isNilOrEmpty, notNilNorEmpty } from '~/utils'
 import { STUDENT_WALLET_TRANSACTION_TYPES, createStudentWallet } from '../students'
 
 /**
@@ -23,10 +23,14 @@ export const txPayAndCreateChallenge = async (ownerId, challengeData) => {
     throw new InsufficientDataError('Student ID and challenge data are required.')
   }
 
-  const { betAmount = 0 } = challengeData
+  const { betAmount = 0, challengerBetAmount } = challengeData
 
   if (betAmount <= 0) {
-    throw new InsufficientDataError('Amount or fee value is invalid.')
+    throw new InsufficientDataError('Bet amount must be greater than 0.')
+  }
+
+  if (notNilNorEmpty(challengerBetAmount) && challengerBetAmount <= 0) {
+    throw new InsufficientDataError('Challenger bet amount must be greater than 0.')
   }
 
   const { id: walletId, balance } = await createStudentWallet(ownerId)
@@ -40,7 +44,7 @@ export const txPayAndCreateChallenge = async (ownerId, challengeData) => {
       data: {
         amount: -betAmount,
         type: STUDENT_WALLET_TRANSACTION_TYPES.CREATE_CHALLENGE,
-        description: `${challengeData?.id}`,
+        description: challengeData?.id,
         wallet: { connect: { id: walletId } },
       },
     }),
