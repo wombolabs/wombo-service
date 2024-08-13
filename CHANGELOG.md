@@ -1,3 +1,10 @@
+# [1.66.0](https://github.com/wombolabs/wombo-service/compare/v1.65.0...v1.66.0) (2024-08-13)
+
+
+### Features
+
+* add field challenger bet amount to challenge ([d62796a](https://github.com/wombolabs/wombo-service/commit/d62796a41b298c33c9197ca7c17e43b3738d1ddb))
+
 # [1.65.0](https://github.com/wombolabs/wombo-service/compare/v1.64.0...v1.65.0) (2024-05-07)
 
 
