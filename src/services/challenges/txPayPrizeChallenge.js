@@ -1,27 +1,50 @@
 import { validate as uuidValidate } from 'uuid'
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
+import { notNilNorEmpty } from '~/utils'
 import { STUDENT_WALLET_TRANSACTION_TYPES, getWalletByStudentId } from '../students'
-import { CHALLENGE_RESULTS } from './constants'
+import { CHALLENGE_RESULTS, CHALLENGE_USER_TYPE } from './constants'
 
 /**
  * Pay prize pool of challenge.
  *
- * @param {string} userId The user ID.
- * @param {string} challengeId The challenge ID.
- * @param {number} feeAmount The challenge fee amount.
- * @param {number} prizeAmount The challenge prize amount.
- * @param {string} challengeResult The challenge result.
- * @returns {Promise<object>} The created challenge.
+ * @param {string} userType - The user type. OWNER or CHALLENGER.
+ * @param {string} userId - The user ID.
+ * @param {string} challengeId - The challenge ID.
+ * @param {number} betAmount - The owner bet amount.
+ * @param {number} challengerBetAmount - The challenger bet amount.
+ * @param {number} fee - The challenge fee.
+ * @param {string} challengeResult - The challenge result. WON or DRAW.
+ * @returns {Promise<object>} The transaction result.
  */
-export const txPayPrizeChallenge = async (userId, challengeId, betAmount, fee, challengeResult) => {
+export const txPayPrizeChallenge = async (
+  userType, // OWNER or CHALLENGER
+  userId,
+  challengeId,
+  betAmount, // ownerBetAmount or totalBetAmount if challengerBetAmount is null
+  challengerBetAmount,
+  fee,
+  challengeResult,
+) => {
   if (!uuidValidate(userId) || !uuidValidate(challengeId)) {
     throw new InsufficientDataError('User ID and Challenge ID are required.')
   }
 
-  const participants = challengeResult === CHALLENGE_RESULTS.DRAW ? 1 : 2 // if draw, divide prize by 2
-  const feeAmount = fee > 0 ? betAmount * participants * (fee / 100) : 0
-  const prizeAmount = betAmount * participants
+  let feeAmount = 0
+  let prizeAmount = 0
+  if (notNilNorEmpty(challengerBetAmount) && challengerBetAmount > 0) {
+    if (challengeResult === CHALLENGE_RESULTS.WON) {
+      feeAmount = fee > 0 ? (betAmount + challengerBetAmount) * (fee / 100) : 0
+      prizeAmount = betAmount + challengerBetAmount
+    } else {
+      feeAmount = fee > 0 ? (userType === CHALLENGE_USER_TYPE.OWNER ? betAmount : challengerBetAmount) * (fee / 100) : 0
+      prizeAmount = (userType === CHALLENGE_USER_TYPE.OWNER ? betAmount : challengerBetAmount)
+    }
+  } else {
+    const participants = challengeResult === CHALLENGE_RESULTS.DRAW ? 1 : 2 // if draw, divide prize by 2
+    feeAmount = fee > 0 ? betAmount * participants * (fee / 100) : 0
+    prizeAmount = betAmount * participants
+  }
 
   if (prizeAmount <= 0) {
     throw new InsufficientDataError('Prize amount is invalid.')
@@ -34,7 +57,7 @@ export const txPayPrizeChallenge = async (userId, challengeId, betAmount, fee, c
       data: {
         amount: prizeAmount,
         type: STUDENT_WALLET_TRANSACTION_TYPES.WON_CHALLENGE,
-        description: `${challengeId}`,
+        description: challengeId,
         wallet: { connect: { id: wallet.id } },
       },
     }),
@@ -46,7 +69,7 @@ export const txPayPrizeChallenge = async (userId, challengeId, betAmount, fee, c
         data: {
           amount: -feeAmount,
           type: STUDENT_WALLET_TRANSACTION_TYPES.CHALLENGE_FEE,
-          description: `${challengeId}`,
+          description: challengeId,
           wallet: { connect: { id: wallet.id } },
         },
       }),

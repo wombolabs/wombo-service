@@ -1,17 +1,22 @@
-import { CHALLENGE_STATUSES, cancelChallengeByIdInternals, txPayRefundChallenge } from '~/services/challenges'
+import {
+  CHALLENGE_STATUSES,
+  CHALLENGE_USER_TYPE,
+  cancelChallengeByIdInternals,
+  txPayRefundChallenge,
+} from '~/services/challenges'
 import { buildHandler } from '~/utils'
 import { authenticationInternalMiddleware } from '~/middlewares'
 
 const handler = async ({ params: { id } }, res) => {
   const updatedChallenge = await cancelChallengeByIdInternals(id)
-console.log('updatedChallenge', updatedChallenge)
+
   const isCancelled = updatedChallenge?.status === CHALLENGE_STATUSES.CANCELLED
   if (isCancelled && updatedChallenge?.betAmount > 0) {
-    const { id: challengeId, ownerId, challengerId, betAmount } = updatedChallenge
+    const { id: challengeId, ownerId, challengerId, betAmount, challengerBetAmount } = updatedChallenge
 
     await Promise.allSettled([
-      txPayRefundChallenge(ownerId, challengeId, betAmount),
-      txPayRefundChallenge(challengerId, challengeId, betAmount),
+      txPayRefundChallenge(CHALLENGE_USER_TYPE.OWNER, ownerId, challengeId, betAmount, challengerBetAmount),
+      txPayRefundChallenge(CHALLENGE_USER_TYPE.CHALLENGER, challengerId, challengeId, betAmount, challengerBetAmount),
     ])
   }
 
