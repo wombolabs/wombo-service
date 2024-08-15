@@ -38,6 +38,11 @@ export const CHALLENGE_RESULTS = {
   LOST: 'lost',
 }
 
+export const CHALLENGE_USER_TYPE = {
+  OWNER: 'owner',
+  CHALLENGER: 'challenger',
+}
+
 const STATUSES_ORDER = {
   awaiting_owner_approval: 8,
   in_progress: 7,
