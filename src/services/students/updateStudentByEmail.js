@@ -1,7 +1,9 @@
 import R from 'ramda'
-import prisma from '~/services/prisma'
+
 import { ResourceNotFoundError } from '~/errors'
+import prisma from '~/services/prisma'
 import { isNilOrEmpty } from '~/utils/isNilOrEmpty'
+
 import { getStudentByEmail } from './getStudentByEmail'
 
 const studentMetadataProperties = ['system', 'profile']

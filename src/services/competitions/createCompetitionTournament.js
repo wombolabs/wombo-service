@@ -1,5 +1,6 @@
 import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
 import { notNilNorEmpty } from '~/utils'
+
 import { createChallenge } from '../challenges'
 import { addChallengeToCompetition } from './addChallengeToCompetition'
 import { getCompetitionByCodename } from './getCompetitionByCodename'
@@ -30,7 +31,7 @@ export const createCompetitionTournament = async (codename, challengeData = {}) 
         const challenge = await createChallenge(owner.id, challengeData, challenger.id)
 
         await addChallengeToCompetition(codename, challenge.id)
-      })
+      }),
     )
   }
 }

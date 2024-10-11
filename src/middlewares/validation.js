@@ -1,4 +1,5 @@
 import OpenapiValidator from 'openapi-validator-middleware'
+
 import { ValidationError } from '~/errors'
 
 OpenapiValidator.init('openapi-schema.yaml', {

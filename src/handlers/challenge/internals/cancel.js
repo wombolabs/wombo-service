@@ -1,11 +1,11 @@
+import { authenticationInternalMiddleware } from '~/middlewares'
 import {
+  cancelChallengeByIdInternals,
   CHALLENGE_STATUSES,
   CHALLENGE_USER_TYPE,
-  cancelChallengeByIdInternals,
   txPayRefundChallenge,
 } from '~/services/challenges'
 import { buildHandler } from '~/utils'
-import { authenticationInternalMiddleware } from '~/middlewares'
 
 const handler = async ({ params: { id } }, res) => {
   const updatedChallenge = await cancelChallengeByIdInternals(id)

@@ -1,8 +1,10 @@
 import R from 'ramda'
+
+import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
 import prisma from '~/services/prisma'
-import { ResourceNotFoundError, InsufficientDataError } from '~/errors'
-import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
 import { isNilOrEmpty } from '~/utils/isNilOrEmpty'
+import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
+
 import { DEFAULT_CHALLENGE_FIELDS } from '../challenges/constants'
 
 const SELECTED_CHALLENGE_FIELDS = R.pipe(

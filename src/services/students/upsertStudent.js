@@ -1,6 +1,7 @@
-import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
 import { ResourceNotFoundError } from '~/errors'
 import { isNilOrEmpty } from '~/utils/isNilOrEmpty'
+import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
+
 import { createStudent } from './createStudent'
 import { getStudentByEmail } from './getStudentByEmail'
 import { updateStudentByEmail } from './updateStudentByEmail'

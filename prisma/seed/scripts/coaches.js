@@ -8,8 +8,8 @@ const createCoaches = async () => {
         where: { email: coach.email },
         update: {},
         create: coach,
-      })
-    )
+      }),
+    ),
   )
   res.forEach(({ status, reason }) => {
     if (status === 'rejected') {

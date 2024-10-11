@@ -1,6 +1,6 @@
+import { authenticationMiddleware } from '~/middlewares'
 import { getStudentOrders } from '~/services/students'
 import { buildHandler } from '~/utils'
-import { authenticationMiddleware } from '~/middlewares'
 
 const handler = async ({ user, query }, res) => {
   const result = await getStudentOrders(user.email?.toLowerCase(), query)

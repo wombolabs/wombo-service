@@ -1,8 +1,10 @@
 import { validate as uuidValidate } from 'uuid'
+
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
 import { notNilNorEmpty } from '~/utils'
-import { STUDENT_WALLET_TRANSACTION_TYPES, getWalletByStudentId } from '../students'
+
+import { getWalletByStudentId, STUDENT_WALLET_TRANSACTION_TYPES } from '../students'
 import { CHALLENGE_USER_TYPE } from './constants'
 
 /**

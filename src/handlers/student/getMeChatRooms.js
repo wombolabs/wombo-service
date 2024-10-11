@@ -1,7 +1,7 @@
-import { buildHandler } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
-import { listStudentChatRooms } from '~/services/students'
 import { serializeChatRooms } from '~/serializers'
+import { listStudentChatRooms } from '~/services/students'
+import { buildHandler } from '~/utils'
 
 const handler = async ({ user, query }, res) => {
   const result = await listStudentChatRooms(user?.id, query)

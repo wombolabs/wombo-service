@@ -1,7 +1,9 @@
 import { validate as uuidValidate } from 'uuid'
-import prisma from '~/services/prisma'
+
 import { InsufficientDataError } from '~/errors'
+import prisma from '~/services/prisma'
 import { notNilNorEmpty } from '~/utils/notNilNorEmpty'
+
 import { CHALLENGE_STATUSES } from '../challenges/constants'
 
 export const listStudentChallengesFinishedById = async (studentId, filters = {}) => {

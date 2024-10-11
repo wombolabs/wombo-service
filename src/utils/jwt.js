@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+
 import { jwt as jwtConfig } from '~/config'
 
 export const jwtSign = (payload) =>

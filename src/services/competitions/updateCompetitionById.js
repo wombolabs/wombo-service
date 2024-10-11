@@ -1,6 +1,7 @@
 import { validate as uuidValidate } from 'uuid'
+
+import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
 import prisma from '~/services/prisma'
-import { ResourceNotFoundError, InsufficientDataError } from '~/errors'
 
 export const updateCompetitionById = async (id, competitionData) => {
   if (!uuidValidate(id)) {

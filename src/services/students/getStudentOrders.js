@@ -1,6 +1,7 @@
 import R from 'ramda'
-import prisma from '~/services/prisma'
+
 import { InsufficientDataError } from '~/errors'
+import prisma from '~/services/prisma'
 
 export const getStudentOrders = async (email, filters = {}) => {
   if (!email) {

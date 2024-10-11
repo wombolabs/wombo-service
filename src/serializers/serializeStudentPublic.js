@@ -1,4 +1,5 @@
 import R from 'ramda'
+
 import { serializeStudentMetadata } from './serializeStudentMetadata'
 
 export const serializeStudentPublic = R.curry((student) =>

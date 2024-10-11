@@ -1,11 +1,12 @@
 import * as Sentry from '@sentry/serverless'
 import jwt from 'jsonwebtoken'
+
 import {
   AuthenticationError,
-  UnauthenticatedAccessError,
-  TokenExpiredError,
-  TokenCorruptedError,
   ResourceNotFoundError,
+  TokenCorruptedError,
+  TokenExpiredError,
+  UnauthenticatedAccessError,
 } from '~/errors'
 import { getStudentById } from '~/services/students'
 import { isNilOrEmpty } from '~/utils/isNilOrEmpty'

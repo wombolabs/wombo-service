@@ -1,6 +1,6 @@
+import { serializeCoupon } from '~/serializers'
 import { getCouponByName } from '~/services/coupons'
 import { buildHandler } from '~/utils'
-import { serializeCoupon } from '~/serializers'
 
 const handler = async ({ params: { name }, query: { extraFields = [] } }, res) => {
   const result = await getCouponByName(name)

@@ -1,4 +1,5 @@
 import R from 'ramda'
+
 import { DEFAULT_STAT_FIELDS } from '~/services/stats'
 
 export const serializeStat = R.curry((stat) =>

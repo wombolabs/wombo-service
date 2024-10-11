@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/serverless'
+
 import { isOffline, isProduction } from '~/config'
 import { ResourceNotFoundError, ValidationError } from '~/errors'
 

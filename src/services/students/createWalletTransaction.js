@@ -1,6 +1,8 @@
 import { validate as uuidValidate } from 'uuid'
+
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
+
 import { DECREMENT_BALANCE_TRANSACTION_TYPES } from './constants'
 
 export const createWalletTransaction = async (walletId, amount, type, description) => {

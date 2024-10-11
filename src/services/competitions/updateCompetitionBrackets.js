@@ -1,10 +1,12 @@
-import { InMemoryDatabase } from 'brackets-memory-db'
 import { BracketsManager } from 'brackets-manager'
+import { InMemoryDatabase } from 'brackets-memory-db'
+
 import { notNilNorEmpty } from '~/utils'
+
 import { createChallenge } from '../challenges'
 import { addChallengeToCompetition } from './addChallengeToCompetition'
-import { updateCompetitionById } from './updateCompetitionById'
 import { getCompetitionById } from './getCompetitionById'
+import { updateCompetitionById } from './updateCompetitionById'
 
 export const updateCompetitionBrackets = async (challengeData) => {
   const competition = await getCompetitionById(challengeData?.competitionId)

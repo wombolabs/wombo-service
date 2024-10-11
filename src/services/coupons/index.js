@@ -1,2 +1,2 @@
-export * from './getCouponByName'
 export * from './constants'
+export * from './getCouponByName'

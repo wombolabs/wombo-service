@@ -1,7 +1,7 @@
-import { buildHandler } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
-import { createStudentChatRoom } from '~/services/students'
 import { serializeChatRoom } from '~/serializers'
+import { createStudentChatRoom } from '~/services/students'
+import { buildHandler } from '~/utils'
 
 const handler = async ({ user, body = {} }, res) => {
   const result = await createStudentChatRoom({ ...body, studentIdFrom: user?.id })

@@ -1,6 +1,6 @@
+import { authenticationMiddleware } from '~/middlewares'
 import { createChallenge, txPayAndCreateChallenge } from '~/services/challenges'
 import { buildHandler, notNilNorEmpty } from '~/utils'
-import { authenticationMiddleware } from '~/middlewares'
 
 const handler = async ({ user, body }, res) => {
   let result

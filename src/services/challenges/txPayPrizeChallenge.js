@@ -1,8 +1,10 @@
 import { validate as uuidValidate } from 'uuid'
+
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
 import { notNilNorEmpty } from '~/utils'
-import { STUDENT_WALLET_TRANSACTION_TYPES, getWalletByStudentId } from '../students'
+
+import { getWalletByStudentId, STUDENT_WALLET_TRANSACTION_TYPES } from '../students'
 import { CHALLENGE_RESULTS, CHALLENGE_USER_TYPE } from './constants'
 
 /**
@@ -38,7 +40,7 @@ export const txPayPrizeChallenge = async (
       prizeAmount = betAmount + challengerBetAmount
     } else {
       feeAmount = fee > 0 ? (userType === CHALLENGE_USER_TYPE.OWNER ? betAmount : challengerBetAmount) * (fee / 100) : 0
-      prizeAmount = (userType === CHALLENGE_USER_TYPE.OWNER ? betAmount : challengerBetAmount)
+      prizeAmount = userType === CHALLENGE_USER_TYPE.OWNER ? betAmount : challengerBetAmount
     }
   } else {
     const participants = challengeResult === CHALLENGE_RESULTS.DRAW ? 1 : 2 // if draw, divide prize by 2

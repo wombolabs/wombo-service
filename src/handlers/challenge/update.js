@@ -1,3 +1,4 @@
+import { authenticationMiddleware } from '~/middlewares'
 import {
   CHALLENGE_RESULTS,
   CHALLENGE_STATUSES,
@@ -5,9 +6,8 @@ import {
   txPayPrizeChallenge,
   updateChallengeById,
 } from '~/services/challenges'
-import { buildHandler, notNilNorEmpty } from '~/utils'
-import { authenticationMiddleware } from '~/middlewares'
 import { updateCompetitionBrackets } from '~/services/competitions'
+import { buildHandler, notNilNorEmpty } from '~/utils'
 
 const handler = async ({ params: { id }, user, body }, res) => {
   const updatedChallenge = await updateChallengeById(id, body, user?.id)

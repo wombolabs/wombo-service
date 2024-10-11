@@ -1,6 +1,7 @@
 import { validate as uuidValidate } from 'uuid'
-import prisma from '~/services/prisma'
+
 import { InsufficientDataError } from '~/errors'
+import prisma from '~/services/prisma'
 
 export const getStatsByStudentId = async (studentId) => {
   if (!uuidValidate(studentId)) {

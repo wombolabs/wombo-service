@@ -1,6 +1,6 @@
+import { serializeCompetition } from '~/serializers'
 import { getCompetitionByCodename } from '~/services/competitions'
 import { buildHandler } from '~/utils'
-import { serializeCompetition } from '~/serializers'
 
 const handler = async ({ params: { codename }, query }, res) => {
   const result = await getCompetitionByCodename(codename, query)

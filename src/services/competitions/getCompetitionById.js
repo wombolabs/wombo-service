@@ -1,4 +1,5 @@
 import { validate as uuidValidate } from 'uuid'
+
 import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
 import prisma from '~/services/prisma'
 

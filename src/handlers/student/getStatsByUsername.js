@@ -1,7 +1,7 @@
-import { buildHandler } from '~/utils'
-import { getStudentByUsername } from '~/services/students'
-import { getStatsByStudentId } from '~/services/stats'
 import { serializeStats } from '~/serializers'
+import { getStatsByStudentId } from '~/services/stats'
+import { getStudentByUsername } from '~/services/students'
+import { buildHandler } from '~/utils'
 
 const handler = async ({ params: { username } }, res) => {
   const { id: studentId } = await getStudentByUsername(username)

@@ -1,5 +1,7 @@
 import R from 'ramda'
+
 import { DEFAULT_STUDENT_FIELDS } from '~/services/students'
+
 import { serializeChallenges } from './serializeChallenges'
 import { serializeStudentMetadata } from './serializeStudentMetadata'
 
@@ -16,6 +18,6 @@ export const serializeStudentInternal = R.curry((student) =>
       competitions: serializeCompetitions,
       challengesOwner: serializeChallenges,
       challengesChallenger: serializeChallenges,
-    })
-  )(student)
+    }),
+  )(student),
 )

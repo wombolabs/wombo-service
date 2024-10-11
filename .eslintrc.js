@@ -29,6 +29,7 @@ module.exports = {
       webpack: {},
     },
   },
+  plugins: ['prettier', 'simple-import-sort'],
   rules: {
     // Possible Errors
     'no-console': RULES.OFF,
@@ -60,5 +61,10 @@ module.exports = {
 
     // Imports
     'import/prefer-default-export': RULES.OFF,
+    'import/order': RULES.OFF, // Avoid conflicts with `simple-import-sort` plugin
+    'sort-imports': RULES.OFF, // Avoid conflicts with `simple-import-sort` plugin
+    'simple-import-sort/imports': RULES.ERROR,
+    'simple-import-sort/exports': RULES.ERROR,
+    'import/no-duplicates': RULES.ERROR, // Merges import statements of the same file. (autofixable, mostly)
   },
 }

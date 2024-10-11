@@ -1,7 +1,9 @@
 import R from 'ramda'
 import { validate as uuidValidate } from 'uuid'
+
 import prisma from '~/services/prisma'
 import { notNilNorEmpty } from '~/utils'
+
 import { statusesComparator } from './constants'
 
 export const listChallenges = async (filters = {}) => {

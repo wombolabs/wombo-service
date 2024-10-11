@@ -53,11 +53,11 @@ class MethodNotAllowedError extends RequestError {
 }
 
 export {
-  RequestError,
-  ForbiddenDataError,
-  ResourceNotFoundError,
-  InsufficientDataError,
   DuplicateResourceError,
-  UnsupportedMediaTypeError,
+  ForbiddenDataError,
+  InsufficientDataError,
   MethodNotAllowedError,
+  RequestError,
+  ResourceNotFoundError,
+  UnsupportedMediaTypeError,
 }
