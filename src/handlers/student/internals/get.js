@@ -1,7 +1,7 @@
-import { buildHandler } from '~/utils'
+import { authenticationInternalMiddleware } from '~/middlewares'
 import { serializeStudentInternal } from '~/serializers'
 import { getStudentByUsernameInternal } from '~/services/students'
-import { authenticationInternalMiddleware } from '~/middlewares'
+import { buildHandler } from '~/utils'
 
 const handler = async ({ params: { username }, query }, res) => {
   const result = await getStudentByUsernameInternal(username, query)

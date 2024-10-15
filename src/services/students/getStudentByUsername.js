@@ -1,5 +1,5 @@
+import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
 import prisma from '~/services/prisma'
-import { ResourceNotFoundError, InsufficientDataError } from '~/errors'
 import { isNilOrEmpty } from '~/utils/isNilOrEmpty'
 
 export const getStudentByUsername = async (username) => {

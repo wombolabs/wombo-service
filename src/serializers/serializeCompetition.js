@@ -1,5 +1,7 @@
 import R from 'ramda'
+
 import { DEFAULT_COMPETITION_FIELDS } from '~/services/competitions'
+
 import { serializeChallenges } from './serializeChallenges'
 
 const serializeMetadataProfile = R.curry((profile) =>

@@ -1,6 +1,3 @@
-import R from 'ramda';
+import R from 'ramda'
 
-export const notNilNorEmpty = R.complement(R.either(
-  R.isNil,
-  R.isEmpty,
-));
+export const notNilNorEmpty = R.complement(R.either(R.isNil, R.isEmpty))

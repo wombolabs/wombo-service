@@ -1,7 +1,7 @@
-import { buildHandler } from '~/utils'
+import { ASYNC_API_GATEWAY_EVENT_SOURCE_NAME, asyncApiGateway } from '~/eventSources'
 import { authenticationInternalMiddleware } from '~/middlewares'
 import { createCompetitionTournament } from '~/services/competitions'
-import { ASYNC_API_GATEWAY_EVENT_SOURCE_NAME, asyncApiGateway } from '~/eventSources'
+import { buildHandler } from '~/utils'
 
 const handler = async ({ params: { codename }, body }, res) => {
   await createCompetitionTournament(codename, body)
@@ -17,5 +17,5 @@ export const createCompetitionTournamentInternalHandler = buildHandler(
     middlewares: [authenticationInternalMiddleware],
     eventSourceName: ASYNC_API_GATEWAY_EVENT_SOURCE_NAME,
     eventSource: asyncApiGateway,
-  }
+  },
 )

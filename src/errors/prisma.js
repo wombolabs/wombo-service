@@ -24,4 +24,4 @@ class PrismaUnknownError extends PrismaError {
   }
 }
 
-export { PrismaError, PrismaValidationError, PrismaUnknownError }
+export { PrismaError, PrismaUnknownError, PrismaValidationError }

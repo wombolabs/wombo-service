@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import { prisma as prismaConfig, isOffline, isPrismaDataProxyEnabled, isProduction } from '~/config'
+import { isOffline, isPrismaDataProxyEnabled, isProduction, prisma as prismaConfig } from '~/config'
 
 // eslint-disable-next-line import/no-mutable-exports
 let prisma

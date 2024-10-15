@@ -1,12 +1,12 @@
+import { InsufficientDataError } from '~/errors'
+import { authenticationInternalMiddleware } from '~/middlewares'
 import {
-  DECREMENT_BALANCE_TRANSACTION_TYPES,
   createStudentWallet,
   createWalletTransaction,
+  DECREMENT_BALANCE_TRANSACTION_TYPES,
   getStudentByUsername,
 } from '~/services/students'
 import { buildHandler, notNilNorEmpty } from '~/utils'
-import { authenticationInternalMiddleware } from '~/middlewares'
-import { InsufficientDataError } from '~/errors'
 
 const handler = async ({ params: { username }, body }, res) => {
   const { amount, type, description } = body
@@ -37,5 +37,5 @@ export const createWalletTransactionInternalHandler = buildHandler(
   handler,
   {
     middlewares: [authenticationInternalMiddleware],
-  }
+  },
 )

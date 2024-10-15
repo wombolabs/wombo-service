@@ -1,5 +1,6 @@
-import prisma from '~/services/prisma'
 import R from 'ramda'
+
+import prisma from '~/services/prisma'
 
 export const getOrderIdByBookingId = async (bookingId) => {
   const result = await prisma.$queryRaw`

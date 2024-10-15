@@ -1,7 +1,7 @@
-import { DECREMENT_BALANCE_TRANSACTION_TYPES, createStudentWallet, createWalletTransaction } from '~/services/students'
-import { buildHandler, notNilNorEmpty } from '~/utils'
-import { authenticationMiddleware } from '~/middlewares'
 import { InsufficientDataError } from '~/errors'
+import { authenticationMiddleware } from '~/middlewares'
+import { createStudentWallet, createWalletTransaction, DECREMENT_BALANCE_TRANSACTION_TYPES } from '~/services/students'
+import { buildHandler, notNilNorEmpty } from '~/utils'
 
 const handler = async ({ user, body }, res) => {
   const { amount, type, description } = body

@@ -1,6 +1,6 @@
+import { serializeCompetitions } from '~/serializers'
 import { listCompetitions } from '~/services/competitions'
 import { buildHandler } from '~/utils'
-import { serializeCompetitions } from '~/serializers'
 
 const handler = async ({ query }, res) => {
   const result = await listCompetitions(query)

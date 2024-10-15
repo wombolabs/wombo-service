@@ -31,4 +31,4 @@ class TokenCorruptedError extends AuthenticationError {
   }
 }
 
-export { AuthenticationError, UnauthenticatedAccessError, TokenExpiredError, TokenCorruptedError }
+export { AuthenticationError, TokenCorruptedError, TokenExpiredError, UnauthenticatedAccessError }

@@ -1,8 +1,10 @@
-import { InMemoryDatabase } from 'brackets-memory-db'
 import { BracketsManager } from 'brackets-manager'
-import prisma from '~/services/prisma'
+import { InMemoryDatabase } from 'brackets-memory-db'
+
 import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
+import prisma from '~/services/prisma'
 import { isNilOrEmpty, notNilNorEmpty } from '~/utils'
+
 import { createChallenge } from '../challenges'
 import { addChallengeToCompetition } from './addChallengeToCompetition'
 

@@ -1,4 +1,4 @@
-import { buildHandler, notNilNorEmpty } from '~/utils'
+import { RequestError } from '~/errors'
 import { authenticationMiddleware } from '~/middlewares'
 import {
   CHALLENGE_STATUSES,
@@ -6,7 +6,7 @@ import {
   getChallengeById,
   txPayAndEnrollChallenge,
 } from '~/services/challenges'
-import { RequestError } from '~/errors'
+import { buildHandler, notNilNorEmpty } from '~/utils'
 
 const handler = async ({ params: { id }, user }, res) => {
   const savedChallenge = await getChallengeById(id, { isActive: true })

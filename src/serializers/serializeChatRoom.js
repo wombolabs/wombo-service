@@ -1,4 +1,5 @@
 import R from 'ramda'
+
 import { DEFAULT_STUDENT_CHAT_ROOM_FIELDS } from '~/services/students'
 
 const serializeMetadataProfile = R.curry((profile) =>

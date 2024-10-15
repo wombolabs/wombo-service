@@ -1,6 +1,6 @@
+import { serializeChallenges } from '~/serializers'
 import { listChallenges } from '~/services/challenges'
 import { buildHandler } from '~/utils'
-import { serializeChallenges } from '~/serializers'
 
 const handler = async ({ query }, res) => {
   const result = await listChallenges({ ...query, studentId: null })

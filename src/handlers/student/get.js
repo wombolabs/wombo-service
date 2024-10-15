@@ -1,6 +1,6 @@
-import { buildHandler } from '~/utils'
 import { serializeStudentPublic } from '~/serializers'
 import { getStudentByUsername } from '~/services/students'
+import { buildHandler } from '~/utils'
 
 const handler = async ({ params: { username }, query }, res) => {
   const result = await getStudentByUsername(username, query)

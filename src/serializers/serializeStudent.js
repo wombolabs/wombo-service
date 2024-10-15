@@ -1,5 +1,7 @@
 import R from 'ramda'
+
 import { DEFAULT_STUDENT_FIELDS } from '~/services/students'
+
 import { serializeStudentMetadata } from './serializeStudentMetadata'
 
 const DEFAULT_COMPETITION_FIELD = 'codename'

@@ -1,4 +1,5 @@
 import R from 'ramda'
+
 import { DEFAULT_STUDENT_WALLET_FIELDS } from '~/services/students'
 
 const serializeTransactions = R.curry((transactions) =>

@@ -1,7 +1,7 @@
-import { buildHandler } from '~/utils'
 import { authenticationInternalMiddleware } from '~/middlewares'
-import { addChallengeToCompetition } from '~/services/competitions'
 import { createChallenge } from '~/services/challenges'
+import { addChallengeToCompetition } from '~/services/competitions'
+import { buildHandler } from '~/utils'
 
 const handler = async ({ params: { codename }, body }, res) => {
   const { ownerId, challengerId, ...challengeData } = body
@@ -19,5 +19,5 @@ export const createChallengeCompetitionInternalHandler = buildHandler(
   handler,
   {
     middlewares: [authenticationInternalMiddleware],
-  }
+  },
 )

@@ -1,8 +1,10 @@
 import { validate as uuidValidate } from 'uuid'
+
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
 import { isNilOrEmpty, notNilNorEmpty } from '~/utils'
-import { STUDENT_WALLET_TRANSACTION_TYPES, createStudentWallet } from '../students'
+
+import { createStudentWallet, STUDENT_WALLET_TRANSACTION_TYPES } from '../students'
 
 /**
  * Pay and create a challenge.

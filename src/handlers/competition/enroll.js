@@ -1,7 +1,7 @@
-import { buildHandler, notNilNorEmpty } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
-import { updateStudentByEmail } from '~/services/students'
 import { enrollForCompetition } from '~/services/competitions'
+import { updateStudentByEmail } from '~/services/students'
+import { buildHandler, notNilNorEmpty } from '~/utils'
 
 /**
  * Enroll for a competition

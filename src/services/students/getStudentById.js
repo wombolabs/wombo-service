@@ -1,7 +1,8 @@
-import prisma from '~/services/prisma'
-import { ResourceNotFoundError, InsufficientDataError } from '~/errors'
-import { validate as uuidValidate } from 'uuid'
 import R from 'ramda'
+import { validate as uuidValidate } from 'uuid'
+
+import { InsufficientDataError, ResourceNotFoundError } from '~/errors'
+import prisma from '~/services/prisma'
 
 const processFields = R.reduce((acc, value) => {
   acc[value] = true

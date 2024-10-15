@@ -1,10 +1,11 @@
 import serverlessExpress from '@codegenie/serverless-express'
 import express from 'express'
-import helmet from 'helmet'
 import Router from 'express-promise-router'
 import { queryParser } from 'express-query-parser'
+import helmet from 'helmet'
+
+import { errorMiddleware, prismaErrorMiddleware, validationMiddleware } from '~/middlewares'
 import { wrapHandler } from '~/services/sentry'
-import { errorMiddleware, validationMiddleware, prismaErrorMiddleware } from '~/middlewares'
 
 /**
  * @callback handlerCallback
@@ -29,7 +30,7 @@ export const buildHandler = (
   route,
   method,
   handler,
-  { middlewares = [validationMiddleware], ...proxyOptions } = {}
+  { middlewares = [validationMiddleware], ...proxyOptions } = {},
 ) => {
   const app = express()
   const router = Router()

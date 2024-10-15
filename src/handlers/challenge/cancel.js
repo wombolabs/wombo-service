@@ -1,7 +1,7 @@
-import { buildHandler } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
-import { CHALLENGE_STATUSES, cancelChallengeById } from '~/services/challenges'
-import { STUDENT_WALLET_TRANSACTION_TYPES, createWalletTransaction, getWalletByStudentId } from '~/services/students'
+import { cancelChallengeById, CHALLENGE_STATUSES } from '~/services/challenges'
+import { createWalletTransaction, getWalletByStudentId, STUDENT_WALLET_TRANSACTION_TYPES } from '~/services/students'
+import { buildHandler } from '~/utils'
 
 const handler = async ({ params: { id }, user }, res) => {
   const challenge = await cancelChallengeById(id, user?.id)
@@ -13,7 +13,7 @@ const handler = async ({ params: { id }, user }, res) => {
       wallet?.id,
       challenge.betAmount,
       STUDENT_WALLET_TRANSACTION_TYPES.REFUND,
-      `cancelled challenge ${challenge?.id}`
+      `cancelled challenge ${challenge?.id}`,
     )
   }
 

@@ -1,7 +1,7 @@
-import { updateStudentByEmail } from '~/services/students'
-import { buildHandler } from '~/utils'
 import { authenticationMiddleware } from '~/middlewares'
 import { serializeStudent } from '~/serializers'
+import { updateStudentByEmail } from '~/services/students'
+import { buildHandler } from '~/utils'
 
 const handler = async ({ user, body }, res) => {
   const result = await updateStudentByEmail(user.email?.toLowerCase(), body)

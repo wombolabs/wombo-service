@@ -1,13 +1,13 @@
+import { authenticationInternalMiddleware } from '~/middlewares'
 import {
   CHALLENGE_RESULTS,
   CHALLENGE_STATUSES,
-  txPayPrizeChallenge,
-  finishChallengeById,
   CHALLENGE_USER_TYPE,
+  finishChallengeById,
+  txPayPrizeChallenge,
 } from '~/services/challenges'
-import { buildHandler, notNilNorEmpty } from '~/utils'
-import { authenticationInternalMiddleware } from '~/middlewares'
 import { updateCompetitionBrackets } from '~/services/competitions'
+import { buildHandler, notNilNorEmpty } from '~/utils'
 
 const handler = async ({ params: { id }, body }, res) => {
   const updatedChallenge = await finishChallengeById(id, body)

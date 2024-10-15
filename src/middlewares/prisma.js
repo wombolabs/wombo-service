@@ -1,5 +1,6 @@
-import { DuplicateResourceError, PrismaValidationError, PrismaError, ResourceNotFoundError } from '~/errors'
 import { Prisma } from '@prisma/client'
+
+import { DuplicateResourceError, PrismaError, PrismaValidationError, ResourceNotFoundError } from '~/errors'
 
 /**
  * @callback nextCallback
