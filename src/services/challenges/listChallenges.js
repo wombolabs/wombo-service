@@ -19,6 +19,8 @@ export const listChallenges = async (filters = {}) => {
     notStudentId, // avoid list challenges from studentId
     competitionId, // list challenges from competitionId
     cmsVideoGameHandleId, // list challenges from cmsVideoGameHandleId
+    groupId, // list challenges from groupId
+    isBelongGroup, // list challenges that belong to a group
     limit, // limit of challenges
   } = filters
 
@@ -55,6 +57,12 @@ export const listChallenges = async (filters = {}) => {
   }
   if (notNilNorEmpty(cmsVideoGameHandleId)) {
     where.cmsVideoGameHandleId = { equals: cmsVideoGameHandleId }
+  }
+  if (uuidValidate(groupId)) {
+    where.groupId = { equals: groupId }
+  }
+  if (typeof isBelongGroup === 'boolean') {
+    where.groupId = isBelongGroup ? { not: null } : { equals: null }
   }
 
   const query = {
