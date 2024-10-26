@@ -1,6 +1,7 @@
 export * from './challenge'
 export * from './competition'
 export * from './coupon'
+export * from './group'
 export * from './stat'
 export * from './student'
 export * from './videoGame'

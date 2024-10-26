@@ -359,3 +359,32 @@ functions:
           private: true
           caching:
             enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
+  # Group
+  createGroup:
+    handler: src/index.createGroupHandler
+    events:
+      - http:
+          path: /groups
+          method: post
+          private: true
+  getGroup:
+    handler: src/index.getGroupHandler
+    events:
+      - http:
+          path: /groups/{id}
+          method: get
+          private: true
+  updateGroup:
+    handler: src/index.updateGroupHandler
+    events:
+      - http:
+          path: /groups/{id}
+          method: patch
+          private: true
+  joinGroup:
+    handler: src/index.joinGroupHandler
+    events:
+      - http:
+          path: /groups/{id}/join
+          method: post
+          private: true
