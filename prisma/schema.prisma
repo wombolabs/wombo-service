@@ -136,6 +136,11 @@ enum WalletTransactionType {
   t_donation_
 }
 
+enum GroupCategoryType {
+  general
+  premium
+}
+
 model VideoGame {
   id        String            @id(map: "primary") @db.Uuid
   codename  String
@@ -193,6 +198,8 @@ model Student {
   stats                Stat[]
   chatRooms            ChatRoomsOnStudents[]
   predictions          Prediction[]
+  groups               GroupsOnStudents[]
+  groupsOwner          Group[]               @relation("GroupOwner")
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
   deletedAt            DateTime?
@@ -314,6 +321,8 @@ model Challenge {
   challengerId         String?         @db.Uuid
   competition          Competition?    @relation(fields: [competitionId], references: [id])
   competitionId        String?         @db.Uuid
+  group                Group?          @relation(fields: [groupId], references: [id])
+  groupId              String?         @db.Uuid
   isActive             Boolean         @default(true)
   createdAt            DateTime        @default(now())
   updatedAt            DateTime        @updatedAt
@@ -397,4 +406,38 @@ model Prediction {
   isActive      Boolean      @default(true)
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
+}
+
+model Group {
+  id              String             @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name            String
+  owner           Student            @relation("GroupOwner", fields: [ownerId], references: [id])
+  ownerId         String             @db.Uuid
+  members         GroupsOnStudents[]
+  category        GroupCategory      @relation("GroupCategory", fields: [groupCategoryId], references: [id])
+  groupCategoryId String             @db.Uuid
+  challenges      Challenge[]
+  isPublic        Boolean            @default(false)
+  isActive        Boolean            @default(true)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  deletedAt       DateTime?
+}
+
+model GroupsOnStudents {
+  group     Group    @relation(fields: [groupId], references: [id])
+  groupId   String   @db.Uuid
+  student   Student  @relation(fields: [studentId], references: [id])
+  studentId String   @db.Uuid
+  createdAt DateTime @default(now())
+
+  @@id([groupId, studentId])
+}
+
+model GroupCategory {
+  id        String            @id(map: "primary") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type      GroupCategoryType @default(general)
+  fee       Float             @default(10) // Wombo fee
+  groups    Group[]           @relation("GroupCategory")
+  createdAt DateTime          @default(now())
 }
