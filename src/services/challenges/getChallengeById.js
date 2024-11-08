@@ -39,6 +39,7 @@ export const getChallengeById = async (id, filters) => {
           },
         },
       },
+      group: { select: { id: true, name: true } },
       competition: { select: { id: true } },
     },
   }

@@ -17,7 +17,7 @@ export const DEFAULT_CHALLENGE_FIELDS = [
   'challenger',
   'competition',
   'isPublic',
-  'groupId',
+  'group',
   'createdAt',
   'updatedAt',
 ]
