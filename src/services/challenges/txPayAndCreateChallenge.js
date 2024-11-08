@@ -18,6 +18,7 @@ import { createStudentWallet, STUDENT_WALLET_TRANSACTION_TYPES } from '../studen
  *  @param {string} challengeData.type - The challenge type.
  *  @param {object} challengeData.metadata - The challenge metadata.
  *  @param {boolean} challengeData.isPublic - The challenge is public.
+ *  @param {string} challengeData.groupId - The group ID.
  * @returns {Promise<object>} The created challenge.
  */
 export const txPayAndCreateChallenge = async (ownerId, challengeData) => {
@@ -25,7 +26,7 @@ export const txPayAndCreateChallenge = async (ownerId, challengeData) => {
     throw new InsufficientDataError('Student ID and challenge data are required.')
   }
 
-  const { betAmount = 0, challengerBetAmount } = challengeData
+  const { betAmount = 0, challengerBetAmount, groupId, ...challengeDataFields } = challengeData
 
   if (betAmount <= 0) {
     throw new InsufficientDataError('Bet amount must be greater than 0.')
@@ -60,9 +61,14 @@ export const txPayAndCreateChallenge = async (ownerId, challengeData) => {
     }),
     prisma.challenge.create({
       data: {
-        ...challengeData,
+        betAmount,
+        challengerBetAmount,
+        ...challengeDataFields,
         owner: {
           connect: { id: ownerId },
+        },
+        group: {
+          connect: { id: groupId },
         },
       },
     }),
