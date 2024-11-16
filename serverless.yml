@@ -207,6 +207,14 @@ functions:
           path: /students/internals/transactions
           method: get
           private: true
+  # Student Me Groups
+  listStudentMeGroups:
+    handler: src/index.listStudentMeGroupsHandler
+    events:
+      - http:
+          path: /students/me/groups
+          method: get
+          private: true
   # VideoGames
   listVideoGames:
     handler: src/index.listVideoGamesHandler

@@ -1,8 +1,15 @@
+import { validate as uuidValidate } from 'uuid'
+
 import prisma from '~/services/prisma'
 import { notNilNorEmpty } from '~/utils'
 
-export const listGroups = async (groupId, studentId, filters = {}) => {
-  const { isActive, isPublic, limit } = filters
+export const listGroups = async (filters = {}) => {
+  const {
+    isActive,
+    isPublic,
+    studentId, // groups from studentId
+    limit,
+  } = filters
 
   const where = {}
   if (typeof isActive === 'boolean') {
@@ -10,6 +17,13 @@ export const listGroups = async (groupId, studentId, filters = {}) => {
   }
   if (typeof isPublic === 'boolean') {
     where.isPublic = isPublic
+  }
+  if (uuidValidate(studentId)) {
+    where.members = {
+      some: {
+        studentId,
+      },
+    }
   }
 
   const query = {
