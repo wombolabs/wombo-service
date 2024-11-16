@@ -367,6 +367,13 @@ functions:
           path: /groups
           method: post
           private: true
+  listGroups:
+    handler: src/index.listGroupsHandler
+    events:
+      - http:
+          path: /groups
+          method: get
+          private: true
   getGroup:
     handler: src/index.getGroupHandler
     events:
