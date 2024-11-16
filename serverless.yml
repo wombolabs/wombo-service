@@ -374,6 +374,13 @@ functions:
           path: /groups/{id}
           method: get
           private: true
+  getGroupBasic:
+    handler: src/index.getGroupBasicHandler
+    events:
+      - http:
+          path: /groups/{id}/basic
+          method: get
+          private: true
   updateGroup:
     handler: src/index.updateGroupHandler
     events:

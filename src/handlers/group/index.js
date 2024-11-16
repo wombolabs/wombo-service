@@ -1,4 +1,5 @@
 export * from './create'
 export * from './get'
+export * from './getBasic'
 export * from './join'
 export * from './update'
