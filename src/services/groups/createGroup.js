@@ -9,6 +9,7 @@ const validate = async (ownerId, groupData) => {
     Joi.assert(ownerId, Joi.string().uuid().required(), 'owner')
 
     await Joi.object({
+      id: Joi.string().uuid(),
       name: Joi.string().max(50).required(),
       members: Joi.array().items(Joi.string().uuid().required()),
       categoryId: Joi.string().uuid().required(),
@@ -24,7 +25,7 @@ const validate = async (ownerId, groupData) => {
 export const createGroup = async (ownerId, groupData = {}) => {
   await validate(ownerId, groupData)
 
-  const { name, members, categoryId } = groupData
+  const { id, name, members, categoryId } = groupData
 
   const data = {
     name,
@@ -37,6 +38,10 @@ export const createGroup = async (ownerId, groupData = {}) => {
     category: {
       connect: { id: categoryId },
     },
+  }
+
+  if (notNilNorEmpty(id)) {
+    data.id = id
   }
 
   // If there are members, connect them to the group
