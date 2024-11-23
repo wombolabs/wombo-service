@@ -1,11 +1,8 @@
+import R from 'ramda'
+
 import { RequestError } from '~/errors'
 import { authenticationMiddleware } from '~/middlewares'
-import {
-  CHALLENGE_STATUSES,
-  enrollForChallengeById,
-  getChallengeById,
-  txPayAndEnrollChallenge,
-} from '~/services/challenges'
+import { CHALLENGE_STATUSES, getChallengeById, txPayAndEnrollChallenge } from '~/services/challenges'
 import { buildHandler, notNilNorEmpty } from '~/utils'
 
 const handler = async ({ params: { id }, user }, res) => {
@@ -21,12 +18,10 @@ const handler = async ({ params: { id }, user }, res) => {
     throw new RequestError(null, 'Status error on enroll challenge.')
   }
 
-  let result
-  if (savedChallenge?.betAmount > 0) {
-    result = await txPayAndEnrollChallenge(user?.id, savedChallenge)
-  } else {
-    result = await enrollForChallengeById(id, user?.id)
-  }
+  const result = await txPayAndEnrollChallenge(
+    user?.id,
+    R.pick(['id', 'betAmount', 'challengerBetAmount'], savedChallenge),
+  )
 
   res.json({ enrolled: notNilNorEmpty(result) })
 }
