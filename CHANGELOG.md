@@ -1,3 +1,20 @@
+# [1.68.0](https://github.com/wombolabs/wombo-service/compare/v1.67.0...v1.68.0) (2024-11-26)
+
+
+### Features
+
+* add group basic endpoint ([410b160](https://github.com/wombolabs/wombo-service/commit/410b16071a66eee19149e7b731629bfb3747477e))
+* add group filter on challenges ([ad0130f](https://github.com/wombolabs/wombo-service/commit/ad0130f2fe5a2fcf1f81ccbe178a13ce721e0634))
+* add group to challenge by id service ([1c79d90](https://github.com/wombolabs/wombo-service/commit/1c79d90e7e6b6ca77028f8982554a5ad77773ff8))
+* add groupid on create challenge service ([083bea2](https://github.com/wombolabs/wombo-service/commit/083bea205e27eeddc28009c2c359daf11cb6be6d))
+* add groups endpoints ([0ba4f9b](https://github.com/wombolabs/wombo-service/commit/0ba4f9b4294bb9e1c213e88d67af8988ce4b2a95))
+* add id as optional param on create group endpoint ([8fb9042](https://github.com/wombolabs/wombo-service/commit/8fb9042ec538cd163a18a9bad917e82134c40203))
+* add list groups endpoint ([a06e32c](https://github.com/wombolabs/wombo-service/commit/a06e32c2323ed27816c5976f71d9d85cb2088db3))
+* add migration ([6d12b25](https://github.com/wombolabs/wombo-service/commit/6d12b25c1992b21ddcc6b5e2f9f79e243d75148c))
+* add student me  groups endpoint ([d93d7a4](https://github.com/wombolabs/wombo-service/commit/d93d7a416dafc31bd55418196644828759add5d4))
+* create groups schema ([58c1821](https://github.com/wombolabs/wombo-service/commit/58c1821630a0140ab278e6af95361c7db5560b13))
+* improve pay and create/enroll challenge services ([36461b4](https://github.com/wombolabs/wombo-service/commit/36461b415c8117a959a8410bf278308cbff5d9c7))
+
 # [1.67.0](https://github.com/wombolabs/wombo-service/compare/v1.66.0...v1.67.0) (2024-10-15)
 
 
