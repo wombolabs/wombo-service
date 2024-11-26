@@ -1,26 +1,31 @@
-import { validate as uuidValidate } from 'uuid'
+import Joi from 'joi'
 
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
-import { isNilOrEmpty, notNilNorEmpty } from '~/utils'
+import { notNilNorEmpty } from '~/utils'
 
 import { createStudentWallet, STUDENT_WALLET_TRANSACTION_TYPES } from '../students'
 import { CHALLENGE_STATUSES } from './constants'
 
-/**
- * Pay and enroll a challenge.
- *
- * @param {string} challengerId - The challenger ID.
- * @param {object} challengeData - The challenge data.
- *  @param {string} challengeData.id - The challenge ID.
- *  @param {number} challengeData.betAmount - The challenge bet amount.
- *  @param {number} challengeData.fee - The challenge fee.
- * @returns {Promise<object>} The updated challenge.
- */
-export const txPayAndEnrollChallenge = async (challengerId, challengeData) => {
-  if (!uuidValidate(challengerId) || isNilOrEmpty(challengeData)) {
-    throw new InsufficientDataError('Student ID and challenge data are required.')
+const validate = async (challengerId, challengeData) => {
+  try {
+    Joi.assert(challengerId, Joi.string().uuid().required(), 'challenger')
+
+    await Joi.object({
+      id: Joi.string().uuid().required(),
+      betAmount: Joi.number().integer().min(1).required(),
+      challengerBetAmount: Joi.number().integer().min(1).allow(null).optional(),
+    }).validateAsync(challengeData)
+  } catch (error) {
+    if (error instanceof Joi.ValidationError) {
+      throw new InsufficientDataError(error.message)
+    }
+    throw error
   }
+}
+
+export const txPayAndEnrollChallenge = async (challengerId, challengeData) => {
+  await validate(challengerId, challengeData)
 
   const { betAmount = 0, challengerBetAmount } = challengeData
 

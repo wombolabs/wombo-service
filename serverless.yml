@@ -207,6 +207,14 @@ functions:
           path: /students/internals/transactions
           method: get
           private: true
+  # Student Me Groups
+  listStudentMeGroups:
+    handler: src/index.listStudentMeGroupsHandler
+    events:
+      - http:
+          path: /students/me/groups
+          method: get
+          private: true
   # VideoGames
   listVideoGames:
     handler: src/index.listVideoGamesHandler
@@ -359,3 +367,46 @@ functions:
           private: true
           caching:
             enabled: ${self:custom.apiGatewayCachingEnabled.${self:provider.stage}}
+  # Group
+  createGroup:
+    handler: src/index.createGroupHandler
+    events:
+      - http:
+          path: /groups
+          method: post
+          private: true
+  listGroups:
+    handler: src/index.listGroupsHandler
+    events:
+      - http:
+          path: /groups
+          method: get
+          private: true
+  getGroup:
+    handler: src/index.getGroupHandler
+    events:
+      - http:
+          path: /groups/{id}
+          method: get
+          private: true
+  getGroupBasic:
+    handler: src/index.getGroupBasicHandler
+    events:
+      - http:
+          path: /groups/{id}/basic
+          method: get
+          private: true
+  updateGroup:
+    handler: src/index.updateGroupHandler
+    events:
+      - http:
+          path: /groups/{id}
+          method: patch
+          private: true
+  joinGroup:
+    handler: src/index.joinGroupHandler
+    events:
+      - http:
+          path: /groups/{id}/join
+          method: post
+          private: true

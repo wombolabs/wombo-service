@@ -1,12 +1,12 @@
 import { authenticationMiddleware } from '~/middlewares'
-import { txPayAndCreateChallenge } from '~/services/challenges'
+import { createGroup } from '~/services/groups'
 import { buildHandler, notNilNorEmpty } from '~/utils'
 
 const handler = async ({ user, body }, res) => {
-  const result = await txPayAndCreateChallenge(user?.id, body)
+  const result = await createGroup(user?.id, body)
   res.json({ created: notNilNorEmpty(result) })
 }
 
-export const createChallengeHandler = buildHandler('/challenges', 'post', handler, {
+export const createGroupHandler = buildHandler('/groups', 'post', handler, {
   middlewares: [authenticationMiddleware],
 })

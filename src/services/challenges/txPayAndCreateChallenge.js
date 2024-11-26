@@ -1,44 +1,59 @@
-import { validate as uuidValidate } from 'uuid'
+import Joi from 'joi'
 
 import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
-import { isNilOrEmpty, notNilNorEmpty } from '~/utils'
+import { notNilNorEmpty } from '~/utils'
 
 import { createStudentWallet, STUDENT_WALLET_TRANSACTION_TYPES } from '../students'
 
-/**
- * Pay and create a challenge.
- *
- * @param {string} ownerId - The owner ID.
- * @param {object} challengeData - The challenge data.
- *  @param {string} challengeData.id - The challenge ID.
- *  @param {string} challengeData.videoGame - The challenge video game
- *  @param {number} challengeData.betAmount - The challenge bet amount.
- *  @param {number} challengeData.fee - The challenge fee.
- *  @param {string} challengeData.type - The challenge type.
- *  @param {object} challengeData.metadata - The challenge metadata.
- *  @param {boolean} challengeData.isPublic - The challenge is public.
- * @returns {Promise<object>} The created challenge.
- */
+const validate = async (ownerId, challengeData) => {
+  try {
+    Joi.assert(ownerId, Joi.string().uuid().required(), 'owner')
+
+    await Joi.object({
+      id: Joi.string().uuid(),
+      videoGame: Joi.string().max(50),
+      betAmount: Joi.number().integer().min(1).required(),
+      challengerBetAmount: Joi.number().integer().min(1).allow(null).optional(),
+      fee: Joi.number().integer().min(1),
+      type: Joi.string().max(40),
+      description: Joi.string().min(0).max(500).allow(null).optional(),
+      metadata: Joi.object().allow(null).optional(),
+      isPublic: Joi.boolean(),
+      cmsVideoGameHandleId: Joi.string().uuid(),
+      groupId: Joi.string().uuid().allow(null).optional(),
+    }).validateAsync(challengeData)
+  } catch (error) {
+    if (error instanceof Joi.ValidationError) {
+      throw new InsufficientDataError(error.message)
+    }
+    throw error
+  }
+}
+
 export const txPayAndCreateChallenge = async (ownerId, challengeData) => {
-  if (!uuidValidate(ownerId) || isNilOrEmpty(challengeData)) {
-    throw new InsufficientDataError('Student ID and challenge data are required.')
-  }
+  await validate(ownerId, challengeData)
 
-  const { betAmount = 0, challengerBetAmount } = challengeData
-
-  if (betAmount <= 0) {
-    throw new InsufficientDataError('Bet amount must be greater than 0.')
-  }
-
-  if (notNilNorEmpty(challengerBetAmount) && challengerBetAmount <= 0) {
-    throw new InsufficientDataError('Challenger bet amount must be greater than 0.')
-  }
+  const { betAmount = 0, challengerBetAmount, groupId, ...challengeDataFields } = challengeData
 
   const { id: walletId, balance } = await createStudentWallet(ownerId)
 
   if (balance < betAmount) {
     throw new InsufficientDataError('Insufficient funds.')
+  }
+
+  const createChallengeData = {
+    betAmount,
+    challengerBetAmount,
+    ...challengeDataFields,
+    owner: {
+      connect: { id: ownerId },
+    },
+  }
+  if (notNilNorEmpty(groupId)) {
+    createChallengeData.group = {
+      connect: { id: groupId },
+    }
   }
 
   const result = await prisma.$transaction([
@@ -59,12 +74,7 @@ export const txPayAndCreateChallenge = async (ownerId, challengeData) => {
       },
     }),
     prisma.challenge.create({
-      data: {
-        ...challengeData,
-        owner: {
-          connect: { id: ownerId },
-        },
-      },
+      data: createChallengeData,
     }),
   ])
 
