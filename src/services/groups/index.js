@@ -1,5 +1,6 @@
 export * from './constants'
 export * from './createGroup'
+export * from './getGroupBasicById'
 export * from './getGroupById'
 export * from './getGroupCategoryById'
 export * from './joinGroupById'

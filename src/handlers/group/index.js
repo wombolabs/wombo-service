@@ -1,6 +1,7 @@
 export * from './create'
 export * from './get'
 export * from './getBasic'
+export * from './getCategory'
 export * from './join'
 export * from './list'
 export * from './update'

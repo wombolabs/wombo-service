@@ -1,13 +1,13 @@
 import { authenticationMiddleware } from '~/middlewares'
 import { serializeGroup } from '~/serializers'
-import { getGroupBasicById } from '~/services/groups'
+import { getGroupCategoryById } from '~/services/groups'
 import { buildHandler } from '~/utils'
 
 const handler = async ({ params: { id } }, res) => {
-  const result = await getGroupBasicById(id)
+  const result = await getGroupCategoryById(id)
   return res.json(serializeGroup(result))
 }
 
-export const getGroupBasicHandler = buildHandler('/groups/:id/basic', 'get', handler, {
+export const getGroupCategoryHandler = buildHandler('/groups/:id/category', 'get', handler, {
   middlewares: [authenticationMiddleware],
 })

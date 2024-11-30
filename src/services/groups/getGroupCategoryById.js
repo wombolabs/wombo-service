@@ -24,10 +24,9 @@ export const getGroupCategoryById = async (groupId, filters = {}) => {
       id: groupId,
       isActive: isActive ?? true,
     },
-    include: {
+    select: {
       category: {
         select: {
-          id: true,
           type: true,
           fee: true,
         },
