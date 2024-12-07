@@ -4,6 +4,7 @@ import { InsufficientDataError } from '~/errors'
 import prisma from '~/services/prisma'
 import { notNilNorEmpty } from '~/utils'
 
+import { getGroupCategoryById } from '../groups'
 import { createStudentWallet, STUDENT_WALLET_TRANSACTION_TYPES } from '../students'
 
 const validate = async (ownerId, challengeData) => {
@@ -15,7 +16,7 @@ const validate = async (ownerId, challengeData) => {
       videoGame: Joi.string().max(50),
       betAmount: Joi.number().integer().min(1).required(),
       challengerBetAmount: Joi.number().integer().min(1).allow(null).optional(),
-      fee: Joi.number().integer().min(1),
+      fee: Joi.number().integer().min(1).required(),
       type: Joi.string().max(40),
       description: Joi.string().min(0).max(500).allow(null).optional(),
       metadata: Joi.object().allow(null).optional(),
@@ -34,7 +35,7 @@ const validate = async (ownerId, challengeData) => {
 export const txPayAndCreateChallenge = async (ownerId, challengeData) => {
   await validate(ownerId, challengeData)
 
-  const { betAmount = 0, challengerBetAmount, groupId, ...challengeDataFields } = challengeData
+  const { betAmount = 0, challengerBetAmount, groupId, fee: challengeFee, ...challengeDataFields } = challengeData
 
   const { id: walletId, balance } = await createStudentWallet(ownerId)
 
@@ -42,9 +43,17 @@ export const txPayAndCreateChallenge = async (ownerId, challengeData) => {
     throw new InsufficientDataError('Insufficient funds.')
   }
 
+  let fee = challengeFee
+
+  if (notNilNorEmpty(groupId)) {
+    const group = await getGroupCategoryById(groupId, { isActive: true })
+    fee = group?.category?.fee
+  }
+
   const createChallengeData = {
     betAmount,
     challengerBetAmount,
+    fee,
     ...challengeDataFields,
     owner: {
       connect: { id: ownerId },
