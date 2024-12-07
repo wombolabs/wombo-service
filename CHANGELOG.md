@@ -1,3 +1,11 @@
+# [1.69.0](https://github.com/wombolabs/wombo-service/compare/v1.68.0...v1.69.0) (2024-12-07)
+
+
+### Features
+
+* add group category endpoint ([8d517b5](https://github.com/wombolabs/wombo-service/commit/8d517b5f03d62240b0d3c253a3778d699cb91349))
+* create challenge from group with category group fee ([f6979d2](https://github.com/wombolabs/wombo-service/commit/f6979d2e8775fe9cd21e5c5e65203c986e6acdba))
+
 # [1.68.0](https://github.com/wombolabs/wombo-service/compare/v1.67.0...v1.68.0) (2024-11-26)
 
 
