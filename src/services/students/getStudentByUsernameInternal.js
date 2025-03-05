@@ -42,6 +42,7 @@ const INCLUDED_WALLET_FIELDS = {
           createdAt: 'desc',
         },
       ],
+      take: 200,
     },
     updatedAt: true,
   },
