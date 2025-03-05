@@ -1,3 +1,10 @@
+# [1.70.0](https://github.com/wombolabs/wombo-service/compare/v1.69.0...v1.70.0) (2025-03-05)
+
+
+### Features
+
+* add limit to wallet transactions ([2f02e9a](https://github.com/wombolabs/wombo-service/commit/2f02e9ae61ce489dd5cb42b058f30bf6d40f7a4f))
+
 # [1.69.0](https://github.com/wombolabs/wombo-service/compare/v1.68.0...v1.69.0) (2024-12-07)
 
 
