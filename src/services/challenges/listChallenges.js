@@ -62,7 +62,7 @@ export const listChallenges = async (filters = {}) => {
     where.groupId = { equals: groupId }
   }
   if (typeof isBelongGroup === 'boolean') {
-    where.groupId = isBelongGroup ? { not: null } : { equals: null }
+    where.groupId = isBelongGroup ? { not: null } : null
   }
 
   const query = {
@@ -94,6 +94,7 @@ export const listChallenges = async (filters = {}) => {
         },
       },
       competition: { select: { id: true } },
+      group: { select: { id: true } },
     },
     orderBy: [
       {
