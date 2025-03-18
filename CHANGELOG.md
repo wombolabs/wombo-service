@@ -1,3 +1,10 @@
+# [1.71.0](https://github.com/wombolabs/wombo-service/compare/v1.70.0...v1.71.0) (2025-03-18)
+
+
+### Features
+
+* add group field to list challenges ([a2acf4b](https://github.com/wombolabs/wombo-service/commit/a2acf4bc49d9f2d5a93c61f0c953c67f29e6986c))
+
 # [1.70.0](https://github.com/wombolabs/wombo-service/compare/v1.69.0...v1.70.0) (2025-03-05)
 
 
